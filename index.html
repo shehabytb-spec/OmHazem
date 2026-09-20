@@ -13,9 +13,6 @@
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Three.js for 3D Interactive Background -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
         /* ==========================================
@@ -52,13 +49,14 @@
             color: var(--text-light);
             overflow-x: hidden;
             line-height: 1.7;
+            position: relative;
         }
 
         body[dir="ltr"] {
             font-family: var(--font-english);
         }
 
-        /* Ambient SVG Pattern Overlay */
+        /* Ambient Islamic Pattern Overlay */
         .pattern-overlay {
             position: fixed;
             top: 0;
@@ -66,20 +64,28 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
-            opacity: 0.04;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><path fill="%23D4AF37" d="M40 0l10 30h30l-24 18 9 30-25-18-25 18 9-30-24-18h30z"/></svg>');
+            z-index: 0;
+            opacity: 0.07;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><g fill="none" stroke="%23D4AF37" stroke-width="1"><path d="M60 0 L120 60 L60 120 L0 60 Z"/><path d="M60 15 L105 60 L60 105 L15 60 Z"/><rect x="30" y="30" width="60" height="60"/><rect x="30" y="30" width="60" height="60" transform="rotate(45 60 60)"/><circle cx="60" cy="60" r="25"/><circle cx="60" cy="60" r="10"/><path d="M0 0 L120 120 M120 0 L0 120"/></g></svg>');
             background-repeat: repeat;
         }
 
-        #canvas-container {
+        /* Static Background Watermark */
+        .background-watermark {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-arabic-heading);
+            font-size: min(12vw, 110px);
+            font-weight: 700;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(212, 175, 55, 0.12);
+            text-align: center;
+            white-space: nowrap;
             pointer-events: none;
+            z-index: 0;
+            user-select: none;
         }
 
         .container {
@@ -263,17 +269,6 @@
             font-size: 1rem;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-            color: var(--secondary-navy);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5);
-        }
-
         .btn-whatsapp {
             background: #25D366;
             color: #FFF;
@@ -321,49 +316,27 @@
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
-        /* ==========================================
-           4. COUNTERS SECTION
-        ========================================== */
-        .stats-section {
-            padding: 40px 0;
-            margin-top: -30px;
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 10px;
+            text-align: start;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 25px;
-            border-radius: 16px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold-primary);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--gold-light);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             color: var(--text-muted);
-            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li i {
+            color: var(--gold-primary);
         }
 
         /* ==========================================
-           5. SERVICES & PROGRAMS
+           4. SECTIONS COMMON STYLES
         ========================================== */
         .section-padding {
             padding: 90px 0;
@@ -424,7 +397,52 @@
         }
 
         /* ==========================================
-           6. PLAYLIST SECTION (نماذج التلاوات)
+           5. STEPS SECTION
+        ========================================== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .step-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(12px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .step-card h4 {
+            color: var(--gold-light);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================
+           6. PLAYLIST SECTION
         ========================================== */
         .playlist-container {
             display: flex;
@@ -526,105 +544,48 @@
         }
 
         /* ==========================================
-           7. TIMEZONE & CONVERTER SCHEDULER
+           7. TESTIMONIALS SECTION
         ========================================== */
-        .scheduler-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 40px;
-            backdrop-filter: blur(16px);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-size: 0.9rem;
-            color: var(--gold-light);
-        }
-
-        .form-control {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid var(--glass-border);
-            padding: 12px 18px;
-            border-radius: 10px;
-            color: #FFF;
-            font-family: inherit;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-        }
-
-        .timezone-preview-box {
-            background: rgba(6, 78, 59, 0.5);
-            border: 1px solid var(--gold-primary);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            margin-top: 20px;
-            color: var(--gold-light);
-            font-size: 0.95rem;
-        }
-
-        /* ==========================================
-           8. PRICING & FAQ
-        ========================================== */
-        .pricing-card {
+        .testimonial-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 35px 25px;
-            text-align: center;
-            transition: var(--transition);
+            padding: 30px;
+            position: relative;
             backdrop-filter: blur(12px);
         }
 
-        .pricing-card.featured {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        .testimonial-stars {
+            color: var(--gold-primary);
+            margin-bottom: 15px;
         }
 
-        .price {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--gold-light);
-            margin: 20px 0;
+        .testimonial-text {
+            color: var(--text-light);
+            font-style: italic;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
         }
 
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 30px;
-            text-align: start;
-        }
-
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-muted);
+        .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .pricing-features li i {
-            color: var(--gold-primary);
+        .author-info h5 {
+            color: var(--gold-light);
+            font-size: 1rem;
         }
 
+        .author-info span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ==========================================
+           8. FAQ SECTION
+        ========================================== */
         .faq-accordion {
             max-width: 800px;
             margin: 0 auto;
@@ -739,11 +700,11 @@
 </head>
 <body>
 
-    <!-- SVG Ambient Background -->
+    <!-- Islamic Decorative Ambient Background -->
     <div class="pattern-overlay"></div>
 
-    <!-- 3D Three.js Interactive Geometry & Starfield Canvas -->
-    <div id="canvas-container"></div>
+    <!-- Static Background Watermark Text -->
+    <div class="background-watermark" id="bgWatermark"></div>
 
     <!-- HEADER / NAVIGATION -->
     <header id="header">
@@ -751,19 +712,12 @@
             <a href="#" class="logo">
                 <div class="logo-icon"><i class="fa-solid fa-book-quran"></i></div>
                 <div class="logo-text">
-                    <h1 data-ar="تحفيظ أونلاين" data-en="Tahfeez Online">تحفيظ أونلاين</h1>
-                    <span data-ar="منصة تعليم القرآن الكريم والتجويد" data-en="Online Quran & Tajweed Academy">منصة تعليم القرآن الكريم والتجويد</span>
+                    <h1 id="logoTitle"></h1>
+                    <span id="logoSub"></span>
                 </div>
             </a>
 
-            <ul class="nav-links">
-                <li><a href="#about" data-ar="عن المعلمة" data-en="About">عن المعلمة</a></li>
-                <li><a href="#services" data-ar="البرامج" data-en="Programs">البرامج</a></li>
-                <li><a href="#playlist" data-ar="نماذج التلاوات" data-en="Recitations">نماذج التلاوات</a></li>
-                <li><a href="#schedule" data-ar="حجز حصة" data-en="Book Class">حجز حصة</a></li>
-                <li><a href="#pricing" data-ar="الباقات" data-en="Pricing">الباقات</a></li>
-                <li><a href="#faq" data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</a></li>
-            </ul>
+            <ul class="nav-links" id="navLinks"></ul>
 
             <button class="lang-switch" onclick="toggleLanguage()">
                 <i class="fa-solid fa-globe"></i>
@@ -776,20 +730,12 @@
     <section class="hero" id="home">
         <div class="container hero-grid">
             <div class="hero-content">
-                <span class="hero-title-badge" data-ar="✨ جلسات فردية خاصة عبر الزوم والتليجرام" data-en="✨ 1-on-1 Private Live Classes">✨ جلسات فردية خاصة عبر الزوم والتليجرام</span>
-                <h2 data-ar="تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span>" data-en="Learn Quran Online with <span>Tahfeez Online</span>">
-                    تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span>
-                </h2>
-                <p data-ar="أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، حفظ كتاب الله، ودراسة أحكام التجويد على يد محفظة معتمدة ومجازة بالسند المتصل." data-en="Specialized academy for women and children. Learn Quran recitation, memorization, and Tajweed with certified tutors.">
-                    أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، حفظ كتاب الله، ودراسة أحكام التجويد على يد محفظة معتمدة ومجازة بالسند المتصل.
-                </p>
-
+                <span class="hero-title-badge" id="heroBadge"></span>
+                <h2 id="heroTitle"></h2>
+                <p id="heroDesc"></p>
                 <div class="cta-group">
-                    <a href="https://wa.me/201004675704?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D9%8F%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%AD%D8%AC%D8%B2%20%D8%AD%D8%B5%D8%A9%20%D8%AA%D8%AC%D8%B1%D9%8A%D8%A8%D9%8A%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%88%D9%82%D8%B9%20%D8%AA%D8%AD%D9%81%D9%8A%D8%B8%20%D8%A3%D9%88%D9%86%D9%84%D8%A7%D9%8A%D9%86" target="_blank" class="btn btn-whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> <span data-ar="حجز حصة تجريبية مجاناً" data-en="Book Free Trial">حجز حصة تجريبية مجاناً</span>
-                    </a>
-                    <a href="https://t.me/+201004675704" target="_blank" class="btn btn-telegram">
-                        <i class="fa-brands fa-telegram"></i> <span data-ar="تواصل عبر تليجرام" data-en="Telegram Contact">تواصل عبر تليجرام</span>
+                    <a href="#" target="_blank" class="btn btn-whatsapp js-wa-link">
+                        <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text"></span>
                     </a>
                 </div>
             </div>
@@ -799,39 +745,24 @@
                 <div class="bio-badge">
                     <div class="bio-avatar"></div>
                     <div>
-                        <h4 style="color: var(--gold-light);" data-ar="الشيخة / معلّمة التلاوة" data-en="Certified Quran Tutor">الشيخة / معلّمة التلاوة</h4>
-                        <span style="color: var(--text-muted); font-size: 0.85rem;" data-ar="معلمة القرآن والتجويد بالمنصة" data-en="Quran & Tajweed Instructor">معلمة القرآن والتجويد بالمنصة</span>
+                        <h4 style="color: var(--gold-light);" id="bioName"></h4>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;" id="bioSub"></span>
                     </div>
                 </div>
                 <hr style="border-color: var(--glass-border); margin-bottom: 15px;">
-                <ul class="pricing-features">
-                    <li><i class="fa-solid fa-certificate"></i> <span data-ar="حاصلة على إجازة بالسند المتصل برواية حفص عن عاصم" data-en="Certified Ijazah with Connected Chain of Narration">حاصلة على إجازة بالسند المتصل برواية حفص عن عاصم</span></li>
-                    <li><i class="fa-solid fa-clock"></i> <span data-ar="خبرة أكثر من 7 سنوات في التدريس أونلاين" data-en="7+ Years of Online Teaching Experience">خبرة أكثر من 7 سنوات في التدريس أونلاين</span></li>
-                    <li><i class="fa-solid fa-child-reaching"></i> <span data-ar="متخصصة في التعامل مع الأطفال والنساء فقط" data-en="Specialized for Women & Children">متخصصة في التعامل مع الأطفال والنساء فقط</span></li>
-                </ul>
+                <ul class="pricing-features" id="bioFeatures"></ul>
             </div>
         </div>
     </section>
 
-    <!-- STATS COUNTER SECTION -->
-    <section class="stats-section">
-        <div class="container stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" data-target="500">0</div>
-                <div class="stat-label" data-ar="طالب وطالبة" data-en="Students Taught">طالب وطالبة</div>
+    <!-- WHY CHOOSE US SECTION -->
+    <section class="section-padding" id="why-us" style="background: rgba(6, 78, 59, 0.1);">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="whyUsTitle"></h3>
+                <p id="whyUsSub"></p>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="120">0</div>
-                <div class="stat-label" data-ar="خاتم وخاتمة" data-en="Quran Graduates">خاتم وخاتمة</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="15">0</div>
-                <div class="stat-label" data-ar="دولة حول العالم" data-en="Countries Reached">دولة حول العالم</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" data-target="100">0</div>
-                <div class="stat-label" data-ar="% نسبة الرضا والاتقان" data-en="% Satisfaction Rate">% نسبة الرضا والاتقان</div>
-            </div>
+            <div class="cards-grid" id="whyUsGrid"></div>
         </div>
     </section>
 
@@ -839,202 +770,43 @@
     <section class="section-padding" id="services">
         <div class="container">
             <div class="section-title">
-                <h3 data-ar="برامجنا التعليمية" data-en="Our Educational Programs">برامجنا التعليمية</h3>
-                <p data-ar="خطط دراسية مخصصة تناسب كافة المستويات والأعمار" data-en="Customized study plans designed for all ages and levels">خطط دراسية مخصصة تناسب كافة المستويات والأعمار</p>
+                <h3 id="servicesTitle"></h3>
+                <p id="servicesSub"></p>
             </div>
-
-            <div class="cards-grid">
-                <div class="glass-card">
-                    <div class="card-icon"><i class="fa-solid fa-baby"></i></div>
-                    <h4 data-ar="تحفيظ الأطفال والناشئة" data-en="Kids Quran Memorization">تحفيظ الأطفال والناشئة</h4>
-                    <p data-ar="أسلوب شيق ومبسط لترسيخ الحفظ لدى الأطفال مع تعليم نور البيان والقراءة الصحيحة بالتحفيز والتشجيع." data-en="Fun and interactive methods to help kids memorize Quran with proper pronunciation and Noor Al-Bayan.">أسلوب شيق ومبسط لترسيخ الحفظ لدى الأطفال مع تعليم نور البيان والقراءة الصحيحة بالتحفيز والتشجيع.</p>
-                </div>
-
-                <div class="glass-card">
-                    <div class="card-icon"><i class="fa-solid fa-female"></i></div>
-                    <h4 data-ar="برنامج النساء والفتيات" data-en="Women Quran Program">برنامج النساء والفتيات</h4>
-                    <p data-ar="حلقات فردية خاصة للنساء لضبط التلاوة، تصحيح المخارج، وحفظ السور مع شرح أحكام التجويد بطريقة سهلة." data-en="Private 1-on-1 sessions for women focusing on Tajweed rules, memorization, and accurate recitation.">حلقات فردية خاصة للنساء لضبط التلاوة، تصحيح المخارج، وحفظ السور مع شرح أحكام التجويد بطريقة سهلة.</p>
-                </div>
-
-                <div class="glass-card">
-                    <div class="card-icon"><i class="fa-solid fa-scroll"></i></div>
-                    <h4 data-ar="دورة الإجازة بالسند المتصل" data-en="Ijazah Certification Course">دورة الإجازة بالسند المتصل</h4>
-                    <p data-ar="إعداد الطالبة لختم القرآن الكريم كاملاً بقراءة متقنة والحصول على إجازة مسندة للرسول ﷺ." data-en="Complete Quran recitation review leading to an authentic Ijazah linked to Prophet Muhammad ﷺ.">إعداد الطالبة لختم القرآن الكريم كاملاً بقراءة متقنة والحصول على إجازة مسندة للرسول ﷺ.</p>
-                </div>
-            </div>
+            <div class="cards-grid" id="servicesGrid"></div>
         </div>
     </section>
 
-    <!-- RECITATION PLAYLIST SECTION (نماذج التلاوات) -->
-    <section class="section-padding" id="playlist" style="background: rgba(6, 78, 59, 0.15);">
+    <!-- STEPS TO START SECTION -->
+    <section class="section-padding" id="steps" style="background: rgba(6, 78, 59, 0.15);">
         <div class="container">
             <div class="section-title">
-                <h3 data-ar="نماذج من تلاوات الطلاب" data-en="Student Recitation Samples">نماذج من تلاوات الطلاب</h3>
-                <p data-ar="استمع إلى نماذج من تلاوة وضبط أحكام التجويد لطلاب المنصة" data-en="Listen to recitation samples from our academy students">استمع إلى نماذج من تلاوة وضبط أحكام التجويد لطلاب المنصة</p>
+                <h3 id="stepsTitle"></h3>
+                <p id="stepsSub"></p>
             </div>
-
-            <div class="playlist-container">
-                <!-- Track 1 -->
-                <div class="audio-track-card">
-                    <div class="track-info">
-                        <div class="track-icon"><i class="fa-solid fa-child"></i></div>
-                        <div class="track-details">
-                            <h4 data-ar="نموذج تلاوة براعم (سورة الرحمن)" data-en="Kids Sample (Surah Al-Rahman)">نموذج تلاوة براعم (سورة الرحمن)</h4>
-                            <span data-ar="تطبيق أحكام التجويد وتصحيح المخارج" data-en="Tajweed rules & accurate pronunciation">تطبيق أحكام التجويد وتصحيح المخارج</span>
-                        </div>
-                    </div>
-                    <div class="track-controls">
-                        <button class="play-btn-small" onclick="playTrack(1)"><i class="fa-solid fa-play" id="playIcon1"></i></button>
-                        <div class="track-progress" onclick="seekTrack(event, 1)">
-                            <div class="track-progress-fill" id="progressFill1"></div>
-                        </div>
-                    </div>
-                    <audio id="audioTrack1" src="https://server8.mp3quran.net/afs/055.mp3"></audio>
-                </div>
-
-                <!-- Track 2 -->
-                <div class="audio-track-card">
-                    <div class="track-info">
-                        <div class="track-icon"><i class="fa-solid fa-book-open-reader"></i></div>
-                        <div class="track-details">
-                            <h4 data-ar="نموذج تلاوة خاشعة (سورة إبراهيم)" data-en="Student Sample (Surah Ibrahim)">نموذج تلاوة خاشعة (سورة إبراهيم)</h4>
-                            <span data-ar="رواية حفص عن عاصم - إتقان المدود والغنن" data-en="Hafs Narration - Mastering Rules">رواية حفص عن عاصم - إتقان المدود والغنن</span>
-                        </div>
-                    </div>
-                    <div class="track-controls">
-                        <button class="play-btn-small" onclick="playTrack(2)"><i class="fa-solid fa-play" id="playIcon2"></i></button>
-                        <div class="track-progress" onclick="seekTrack(event, 2)">
-                            <div class="track-progress-fill" id="progressFill2"></div>
-                        </div>
-                    </div>
-                    <audio id="audioTrack2" src="https://server8.mp3quran.net/afs/014.mp3"></audio>
-                </div>
-
-                <!-- Track 3 -->
-                <div class="audio-track-card">
-                    <div class="track-info">
-                        <div class="track-icon"><i class="fa-solid fa-star"></i></div>
-                        <div class="track-details">
-                            <h4 data-ar="نموذج حدر وترتيل (سورة الملك)" data-en="Tajweed Sample (Surah Al-Mulk)">نموذج حدر وترتيل (سورة الملك)</h4>
-                            <span data-ar="مراجعة وتثبيت الحفظ للأطفال" data-en="Kids Quran Review">مراجعة وتثبيت الحفظ للأطفال</span>
-                        </div>
-                    </div>
-                    <div class="track-controls">
-                        <button class="play-btn-small" onclick="playTrack(3)"><i class="fa-solid fa-play" id="playIcon3"></i></button>
-                        <div class="track-progress" onclick="seekTrack(event, 3)">
-                            <div class="track-progress-fill" id="progressFill3"></div>
-                        </div>
-                    </div>
-                    <audio id="audioTrack3" src="https://server8.mp3quran.net/afs/067.mp3"></audio>
-                </div>
-            </div>
+            <div class="steps-grid" id="stepsGrid"></div>
         </div>
     </section>
 
-    <!-- SCHEDULER & SMART TIMEZONE CONVERTER SECTION -->
-    <section class="section-padding" id="schedule">
-        <div class="container">
-            <div class="scheduler-card">
-                <div class="section-title" style="margin-bottom: 20px;">
-                    <h3 data-ar="حاسبة المواعيد المباشرة وتحويل التوقيت لمصر" data-en="Smart Schedule & Egypt Time Converter">حاسبة المواعيد المباشرة وتحويل التوقيت لمصر</h3>
-                    <p data-ar="اختر بلدك والوقت المناسب لك، وستقوم الحاسبة بتحويل التوقيت تلقائياً إلى توقيت مصر لضمان دقة الموعد!" data-en="Select your country and preferred time; it auto-converts to Egypt Time for precise booking!">اختر بلدك والوقت المناسب لك، وستقوم الحاسبة بتحويل التوقيت تلقائياً إلى توقيت مصر لضمان دقة الموعد!</p>
-                </div>
-
-                <form id="bookingForm" onsubmit="handleBooking(event)">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label data-ar="اسم الطالب/الطالبة" data-en="Student Name">اسم الطالب/الطالبة</label>
-                            <input type="text" class="form-control" id="studentName" required placeholder="مثال: مريم أحمد">
-                        </div>
-
-                        <div class="form-group">
-                            <label data-ar="دولة الإقامة (حساب التوقيت)" data-en="Your Country (Timezone)">دولة الإقامة (حساب التوقيت)</label>
-                            <select class="form-control" id="countrySelect" onchange="updateTimePreview()">
-                                <option value="0" selected>مصر (توقيت الأم)</option>
-                                <option value="1">السعودية / الكويت / قطر / البحرين (+1 ساعة)</option>
-                                <option value="2">الإمارات / عُمان (+2 ساعة)</option>
-                                <option value="-1">المغرب / تونس / الجزائر (-1 ساعة)</option>
-                                <option value="-1">المملكة المتحدة UK (-1 ساعة)</option>
-                                <option value="-1">أوروبا (ألمانيا/فرنسا) (-1 ساعة)</option>
-                                <option value="-7">أمريكا / كندا (التوقيت الشرقي -7 ساعات)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label data-ar="اليوم المفضل" data-en="Preferred Day">اليوم المفضل</label>
-                            <select class="form-control" id="daySelect">
-                                <option value="السبت">السبت (Saturday)</option>
-                                <option value="الأحد">الأحد (Sunday)</option>
-                                <option value="الإثنين">الإثنين (Monday)</option>
-                                <option value="الثلاثاء">الثلاثاء (Tuesday)</option>
-                                <option value="الأربعاء">الأربعاء (Wednesday)</option>
-                                <option value="الخميس">الخميس (Thursday)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label data-ar="الوقت المناسب (بتوقيت بلدك)" data-en="Preferred Time (Your Time)">الوقت المناسب (بتوقيت بلدك)</label>
-                            <input type="time" class="form-control" id="timeSelect" required onchange="updateTimePreview()" value="18:00">
-                        </div>
-                    </div>
-
-                    <!-- Live Dynamic Time Preview Box -->
-                    <div class="timezone-preview-box" id="timePreviewBox">
-                        <i class="fa-solid fa-clock"></i> <span id="previewText">الوقت بتوقيت بلدك: 06:00 مساءً | يوافق بتوقيت مصر: 06:00 مساءً</span>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 30px;">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa-brands fa-whatsapp"></i> <span data-ar="إرسال طلب الحجز المباشر عبر واتساب" data-en="Send Request via WhatsApp">إرسال طلب الحجز المباشر عبر واتساب</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRICING PACKAGES SECTION -->
-    <section class="section-padding" id="pricing">
+    <!-- RECITATION PLAYLIST SECTION -->
+    <section class="section-padding" id="playlist">
         <div class="container">
             <div class="section-title">
-                <h3 data-ar="باقات الاشتراك الشهرية" data-en="Subscription Plans">باقات الاشتراك الشهرية</h3>
-                <p data-ar="اختاري الباقة المناسبة لاحتياجاتك باشتراكات مخفضة" data-en="Choose the plan that best fits your goals">اختاري الباقة المناسبة لاحتياجاتك باشتراكات مخفضة</p>
+                <h3 id="playlistTitle"></h3>
+                <p id="playlistSub"></p>
             </div>
+            <div class="playlist-container" id="playlistContainer"></div>
+        </div>
+    </section>
 
-            <div class="cards-grid">
-                <div class="pricing-card">
-                    <h4 data-ar="الباقة الأساسية" data-en="Basic Plan">الباقة الأساسية</h4>
-                    <div class="price">8 حصص <span>/ شهرياً</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="حصتان أسبوعياً (30 دقيقة)" data-en="2 Classes / Week (30 Mins)">حصتان أسبوعياً (30 دقيقة)</span></li>
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="جلسات فردية 1-on-1" data-en="Private 1-on-1 Sessions">جلسات فردية 1-on-1</span></li>
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="متابعة وتقارير شهرياً" data-en="Monthly Progress Reports">متابعة وتقارير شهرياً</span></li>
-                    </ul>
-                    <a href="https://wa.me/201004675704?text=%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D8%A3%D8%B3%D8%A7%D8%B3%D9%8A%D8%A9%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%88%D9%82%D8%B9%20%D8%AA%D8%AD%D9%81%D9%8A%D8%B8%20%D8%A3%D9%88%D9%86%D9%84%D8%A7%D9%8A%D9%86" class="btn btn-primary" style="width: 100%; justify-content: center;" data-ar="اختر الباقة" data-en="Select Plan">اختر الباقة</a>
-                </div>
-
-                <div class="pricing-card featured">
-                    <h4 data-ar="الباقة المكثفة" data-en="Intensive Plan">الباقة المكثفة</h4>
-                    <div class="price">12 حصة <span>/ شهرياً</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="3 حصص أسبوعياً (45 دقيقة)" data-en="3 Classes / Week (45 Mins)">3 حصص أسبوعياً (45 دقيقة)</span></li>
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="حفظ مكثف + تجويد عملي" data-en="Intensive Memorization + Tajweed">حفظ مكثف + تجويد عملي</span></li>
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="مرونة كاملة في المواعيد" data-en="Full Schedule Flexibility">مرونة كاملة في المواعيد</span></li>
-                    </ul>
-                    <a href="https://wa.me/201004675704?text=%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D9%83%D8%AB%D9%81%D8%A9%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%88%D9%82%D8%B9%20%D8%AA%D8%AD%D9%81%D9%8A%D8%B8%20%D8%A3%D9%88%D9%86%D9%84%D8%A7%D9%8A%D9%86" class="btn btn-primary" style="width: 100%; justify-content: center;" data-ar="اختر الباقة" data-en="Select Plan">اختر الباقة</a>
-                </div>
-
-                <div class="pricing-card">
-                    <h4 data-ar="باقة الإجازة" data-en="Ijazah Special">باقة الإجازة</h4>
-                    <div class="price">16 حصة <span>/ شهرياً</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="4 حصص أسبوعياً (60 دقيقة)" data-en="4 Classes / Week (60 Mins)">4 حصص أسبوعياً (60 دقيقة)</span></li>
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="إعداد وختم كامل للإجازة" data-en="Full Quran Completion Course">إعداد وختم كامل للإجازة</span></li>
-                        <li><i class="fa-solid fa-check"></i> <span data-ar="شهادة معتمدة ومسندة" data-en="Certified Ijazah Document">شهادة معتمدة ومسندة</span></li>
-                    </ul>
-                    <a href="https://wa.me/201004675704?text=%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D9%81%D9%8A%20%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D8%A5%D8%AC%D8%A7%D8%B2%D8%A9%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%88%D9%82%D8%B9%20%D8%AA%D8%AD%D9%81%D9%8A%D8%B8%20%D8%A3%D9%88%D9%86%D9%84%D8%A7%D9%8A%D9%86" class="btn btn-primary" style="width: 100%; justify-content: center;" data-ar="اختر الباقة" data-en="Select Plan">اختر الباقة</a>
-                </div>
+    <!-- TESTIMONIALS SECTION -->
+    <section class="section-padding" id="testimonials" style="background: rgba(6, 78, 59, 0.1);">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="testimonialsTitle"></h3>
+                <p id="testimonialsSub"></p>
             </div>
+            <div class="cards-grid" id="testimonialsGrid"></div>
         </div>
     </section>
 
@@ -1042,323 +814,40 @@
     <section class="section-padding" id="faq">
         <div class="container">
             <div class="section-title">
-                <h3 data-ar="الأسئلة الشائعة" data-en="Frequently Asked Questions">الأسئلة الشائعة</h3>
-                <p data-ar="إجابات على أبرز التساؤلات قبل البدء معنا" data-en="Find answers to common questions about our online classes">إجابات على أبرز التساؤلات قبل البدء معنا</p>
+                <h3 id="faqTitle"></h3>
+                <p id="faqSub"></p>
             </div>
-
-            <div class="faq-accordion">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span data-ar="كيف يتم إجراء الحصص أونلاين؟" data-en="How are online classes conducted?">كيف يتم إجراء الحصص أونلاين؟</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer" data-ar="تتم الحصص عبر تطبيق Zoom أو Telegram بصوت واضح وجلسات فردية خاصة لضمان التركيز والسرية." data-en="Classes are conducted via Zoom or Telegram in private 1-on-1 audio/video sessions ensuring high focus and privacy.">
-                        تتم الحصص عبر تطبيق Zoom أو Telegram بصوت واضح وجلسات فردية خاصة لضمان التركيز والسرية.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span data-ar="ما هي طرق الدفع المتاحة داخل وخارج مصر؟" data-en="What payment methods are supported?">ما هي طرق الدفع المتاحة داخل وخارج مصر؟</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer" data-ar="نوفر طرق دفع متعددة وسهلة: داخل مصر (فودافون كاش / إنستا باي InstaPay)، وخارج مصر (PayPal / تحويل بنكي / Western Union)." data-en="Inside Egypt: Vodafone Cash or InstaPay. Internationally: PayPal, Bank Transfer, or Western Union.">
-                        نوفر طرق دفع متعددة وسهلة: داخل مصر (فودافون كاش / إنستا باي InstaPay)، وخارج مصر (PayPal / تحويل بنكي / Western Union).
-                    </div>
-                </div>
-            </div>
+            <div class="faq-accordion" id="faqAccordion"></div>
         </div>
     </section>
 
     <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/201004675704?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D9%8F%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%8BD%20%D8%AD%D8%B5%D8%B5%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%20%D8%B9%D8%A8%D8%B1%20%D9%85%D9%88%D9%82%D8%B9%20%D8%AA%D8%AD%D9%81%D9%8A%D8%B8%20%D8%A3%D9%88%D9%86%D9%84%D8%A7%D9%8A%D9%86" target="_blank" class="floating-whatsapp" title="تواصل مباشرة عبر واتساب">
+    <a href="#" target="_blank" class="floating-whatsapp js-wa-link" title="تواصل مباشرة عبر واتساب">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
     <!-- FOOTER -->
     <footer>
         <div class="container">
+            <div class="cta-group" style="justify-content: center; margin-bottom: 30px;">
+                <a href="#" target="_blank" class="btn btn-whatsapp js-wa-link">
+                    <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text"></span>
+                </a>
+                <a href="#" target="_blank" class="btn btn-telegram js-tg-link">
+                    <i class="fa-brands fa-telegram"></i> <span id="footerTgText"></span>
+                </a>
+            </div>
             <div class="footer-links">
-                <a href="https://wa.me/201004675704" target="_blank"><i class="fa-brands fa-whatsapp"></i> واتساب: 01004675704</a>
-                <a href="https://t.me/+201004675704" target="_blank"><i class="fa-brands fa-telegram"></i> تليجرام: 01004675704</a>
+                <a href="#" target="_blank" class="js-wa-link"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText"></span></a>
+                <a href="#" target="_blank" class="js-tg-link"><i class="fa-brands fa-telegram"></i> Telegram</a>
             </div>
             <p style="color: var(--text-muted); font-size: 0.85rem;">
-                &copy; 2026 <span data-ar="منصة تحفيظ أونلاين. جميع الحقوق محفوظة." data-en="Tahfeez Online Academy. All Rights Reserved.">منصة تحفيظ أونلاين. جميع الحقوق محفوظة.</span>
+                &copy; 2026 <span id="footerCopyright"></span>
             </p>
         </div>
     </footer>
 
-    <!-- ==========================================
-       JAVASCRIPT LOGIC
-    ========================================== -->
-    <script>
-        // ----------------------------------------------------
-        // 1. Language Toggle Logic (AR / EN)
-        // ----------------------------------------------------
-        let currentLang = 'ar';
-        function toggleLanguage() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-            document.documentElement.setAttribute('lang', currentLang);
-
-            document.getElementById('langLabel').textContent = currentLang === 'ar' ? 'English' : 'عربي';
-
-            document.querySelectorAll('[data-ar]').forEach(elem => {
-                const text = elem.getAttribute(`data-${currentLang}`);
-                if (elem.children.length === 0 || elem.tagName === 'SPAN' || elem.tagName === 'A' || elem.tagName === 'OPTION' || elem.tagName === 'H4') {
-                    if (text.includes('<span>')) {
-                        elem.innerHTML = text;
-                    } else {
-                        elem.textContent = text;
-                    }
-                }
-            });
-            updateTimePreview();
-        }
-
-        // ----------------------------------------------------
-        // 2. Three.js 3D Interactive Geometric Mesh & Gold Particles
-        // ----------------------------------------------------
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-        scene.add(ambientLight);
-
-        const pointLight = new THREE.PointLight(0xd4af37, 2, 100);
-        pointLight.position.set(10, 10, 10);
-        scene.add(pointLight);
-
-        // Interactive Geometric Ring / Star Object
-        const geometry = new THREE.IcosahedronGeometry(2.5, 0);
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x064e3b,
-            wireframe: true,
-            roughness: 0.2,
-            metalness: 0.8
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
-        // Inner Gold Geometry Core
-        const coreGeo = new THREE.OctahedronGeometry(1.2, 0);
-        const coreMat = new THREE.MeshStandardMaterial({
-            color: 0xd4af37,
-            wireframe: false,
-            metalness: 0.9,
-            roughness: 0.1
-        });
-        const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-        scene.add(coreMesh);
-
-        // Floating Particles Background
-        const particlesCount = 200;
-        const particleGeo = new THREE.BufferGeometry();
-        const positions = new Float32Array(particlesCount * 3);
-
-        for (let i = 0; i < particlesCount * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 20;
-        }
-        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-        const particleMat = new THREE.PointsMaterial({
-            color: 0xd4af37,
-            size: 0.08,
-            transparent: true,
-            opacity: 0.8
-        });
-        const particlesMesh = new THREE.Points(particleGeo, particleMat);
-        scene.add(particlesMesh);
-
-        camera.position.z = 6;
-
-        // Mouse Interactivity
-        let mouseX = 0, mouseY = 0;
-        window.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
-            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            mesh.rotation.x += 0.003;
-            mesh.rotation.y += 0.005;
-
-            coreMesh.rotation.x -= 0.005;
-            coreMesh.rotation.y -= 0.003;
-
-            particlesMesh.rotation.y -= 0.0005;
-
-            camera.position.x += (mouseX - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY - camera.position.y) * 0.05;
-            camera.lookAt(scene.position);
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // ----------------------------------------------------
-        // 3. Playlist Audio Control (نماذج التلاوة)
-        // ----------------------------------------------------
-        let activeAudio = null;
-        let activeTrackNum = null;
-
-        function playTrack(trackNum) {
-            const currentAudio = document.getElementById(`audioTrack${trackNum}`);
-            const currentIcon = document.getElementById(`playIcon${trackNum}`);
-
-            // Pause previous playing track
-            if (activeAudio && activeAudio !== currentAudio) {
-                activeAudio.pause();
-                document.getElementById(`playIcon${activeTrackNum}`).className = 'fa-solid fa-play';
-            }
-
-            if (currentAudio.paused) {
-                currentAudio.play();
-                currentIcon.className = 'fa-solid fa-pause';
-                activeAudio = currentAudio;
-                activeTrackNum = trackNum;
-            } else {
-                currentAudio.pause();
-                currentIcon.className = 'fa-solid fa-play';
-                activeAudio = null;
-                activeTrackNum = null;
-            }
-
-            currentAudio.ontimeupdate = () => {
-                const fill = document.getElementById(`progressFill${trackNum}`);
-                const percent = (currentAudio.currentTime / currentAudio.duration) * 100;
-                fill.style.width = `${percent}%`;
-            };
-        }
-
-        function seekTrack(e, trackNum) {
-            const trackAudio = document.getElementById(`audioTrack${trackNum}`);
-            const container = e.currentTarget;
-            const clickPos = e.clientX - container.getBoundingClientRect().left;
-            const containerWidth = container.offsetWidth;
-            trackAudio.currentTime = (clickPos / containerWidth) * trackAudio.duration;
-        }
-
-        // ----------------------------------------------------
-        // 4. Timezone Converter & Calculator Logic
-        // ----------------------------------------------------
-        function updateTimePreview() {
-            const countryOffset = parseInt(document.getElementById('countrySelect').value);
-            const timeVal = document.getElementById('timeSelect').value;
-
-            if (!timeVal) return;
-
-            let [hours, minutes] = timeVal.split(':').map(Number);
-            
-            // Calculate Egypt time (Egypt = Selected Time - Country Offset)
-            let egyptHours = (hours - countryOffset + 24) % 24;
-
-            const formatTime = (h, m) => {
-                const period = h >= 12 ? 'مساءً' : 'صباحاً';
-                const formattedH = (h % 12) || 12;
-                return `${String(formattedH).padStart(2, '0')}:${String(m).padStart(2, '0')} ${period}`;
-            };
-
-            const userFormatted = formatTime(hours, minutes);
-            const egyptFormatted = formatTime(egyptHours, minutes);
-
-            const previewElem = document.getElementById('previewText');
-            if (currentLang === 'ar') {
-                previewElem.textContent = `الوقت بتوقيت بلدك: (${userFormatted}) ⬅️ يوافق بتوقيت مصر: (${egyptFormatted})`;
-            } else {
-                previewElem.textContent = `Your Time: (${userFormatted}) ⬅️ Equals Egypt Time: (${egyptFormatted})`;
-            }
-        }
-
-        function handleBooking(e) {
-            e.preventDefault();
-            const name = document.getElementById('studentName').value;
-            const countrySelect = document.getElementById('countrySelect');
-            const countryText = countrySelect.options[countrySelect.selectedIndex].text;
-            const countryOffset = parseInt(countrySelect.value);
-            const day = document.getElementById('daySelect').value;
-            const timeVal = document.getElementById('timeSelect').value;
-
-            let [hours, minutes] = timeVal.split(':').map(Number);
-            let egyptHours = (hours - countryOffset + 24) % 24;
-
-            const formatTime = (h, m) => {
-                const period = h >= 12 ? 'مساءً' : 'صباحاً';
-                const formattedH = (h % 12) || 12;
-                return `${String(formattedH).padStart(2, '0')}:${String(m).padStart(2, '0')} ${period}`;
-            };
-
-            const userFormatted = formatTime(hours, minutes);
-            const egyptFormatted = formatTime(egyptHours, minutes);
-
-            const textMsg = `السلام عليكم ورحمة الله وبركاته،%0A` +
-                            `أرغب في حجز حصة تجريبية من منصة (تحفيظ أونلاين):%0A` +
-                            `👤 الاسم: ${encodeURIComponent(name)}%0A` +
-                            `🌍 الدولة/التوقيت: ${encodeURIComponent(countryText)}%0A` +
-                            `📅 اليوم المفضل: ${encodeURIComponent(day)}%0A` +
-                            `⏰ الوقت بتوقيت الطالب: (${encodeURIComponent(userFormatted)})%0A` +
-                            `🇪🇬 التوقيت المقابل في مصر: (${encodeURIComponent(egyptFormatted)})`;
-
-            window.open(`https://wa.me/201004675704?text=${textMsg}`, '_blank');
-        }
-
-        // Initialize preview on page load
-        window.onload = updateTimePreview;
-
-        // ----------------------------------------------------
-        // 5. Scroll Counter & FAQ Logic
-        // ----------------------------------------------------
-        let statsTriggered = false;
-        window.addEventListener('scroll', () => {
-            const statsSection = document.querySelector('.stats-section');
-            if (statsSection) {
-                const rect = statsSection.getBoundingClientRect();
-                if (rect.top <= window.innerHeight && !statsTriggered) {
-                    statsTriggered = true;
-                    document.querySelectorAll('.stat-number').forEach(stat => {
-                        const target = parseInt(stat.getAttribute('data-target'));
-                        let count = 0;
-                        const speed = target / 40;
-                        const updateCount = () => {
-                            count += speed;
-                            if (count < target) {
-                                stat.textContent = Math.ceil(count);
-                                setTimeout(updateCount, 30);
-                            } else {
-                                stat.textContent = target + "+";
-                            }
-                        };
-                        updateCount();
-                    });
-                }
-            }
-
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        function toggleFaq(element) {
-            element.parentElement.classList.toggle('active');
-        }
-    </script>
+    <!-- JS Database & Logic Link -->
+    <script src="content.js"></script>
 </body>
 </html>
