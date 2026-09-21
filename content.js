@@ -28,14 +28,14 @@ const siteData = {
 
     // قسم الواجهة (Hero Section)
     hero: {
-        badge: { ar: "✨ جلسات فردية خاصة عبر الزوم والتليجرام", en: "✨ 1-on-1 Private Live Classes" },
+        badge: { ar: "✨ جلسات فردية خاصة عبر جوجل ميت والتليجرام", en: "✨ 1-on-1 Private Live Classes" },
         title: { 
             ar: "تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span>", 
             en: "Learn Quran Online with <span>Tahfeez Online</span>" 
         },
         description: { 
-            ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، حفظ كتاب الله، ودراسة أحكام التجويد على يد محفظة معتمدة ومجازة بالسند المتصل.", 
-            en: "Specialized academy for women and children. Learn Quran recitation, memorization, and Tajweed with certified tutors." 
+            ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.", 
+            en: "A specialized academy for women and children to teach correct recitation, Tajweed rules, and the memorization of the Holy Quran under the guidance of a female Al-Azhar certified tutor.." 
         },
         ctaButton: { ar: "احجز حصة تجريبية مجانية", en: "Book Free Trial Class" },
         
@@ -44,8 +44,8 @@ const siteData = {
             name: { ar: "الشيخة / معلّمة التلاوة", en: "Certified Quran Tutor" },
             subtitle: { ar: "معلمة القرآن والتجويد بالمنصة", en: "Quran & Tajweed Instructor" },
             features: [
-                { icon: "fa-certificate", text: { ar: "حاصلة على إجازة بالسند المتصل برواية حفص عن عاصم", en: "Certified Ijazah with Connected Chain of Narration" } },
-                { icon: "fa-clock", text: { ar: "خبرة أكثر من 7 سنوات في التدريس أونلاين", en: "7+ Years of Online Teaching Experience" } },
+                { icon: "fa-certificate", text: { ar: "حاصلة على ليسانس الدراسات الإسلامية والعربية شعبة أصول الدين قسم الحديث وعلومه", en: "Certified Ijazah with Connected Chain of Narration" } },
+                { icon: "fa-clock", text: { ar: "خبرة أكثر من 20 سنة في التدريس المباشر والتحفيظ أونلاين", en: "7+ Years of Online Teaching Experience" } },
                 { icon: "fa-child-reaching", text: { ar: "متخصصة في التعامل مع الأطفال والنساء فقط", en: "Specialized for Women & Children" } }
             ]
         }
