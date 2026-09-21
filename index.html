@@ -543,7 +543,7 @@
         }
 
         /* ==========================================
-           7. STUDENT / RECITATION SAMPLES SECTION (3 أعمدة × 3 نماذج = 9 نماذج صوتية)
+           7. STUDENT / RECITATION SAMPLES SECTION
         ========================================== */
         .playlist-columns-grid {
             display: grid;
@@ -625,33 +625,132 @@
         }
 
         /* ==========================================
-           8. TESTIMONIALS SECTION
+           8. TESTIMONIALS & INTERACTIVE COMMENTS SECTION (قسم مشاركة تجارب الحفظ والتعليقات)
         ========================================== */
-        .testimonial-card {
+        .comments-section-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .comment-form-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 30px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .comment-form-card h4 {
+            font-family: var(--font-arabic-heading);
+            color: var(--gold-light);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .comment-form-card p {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(2, 44, 34, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-family: var(--font-arabic-body);
+            font-size: 0.95px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--gold-primary);
+            background: rgba(6, 78, 59, 0.5);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit-comment {
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit-comment:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .comments-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
             position: relative;
             backdrop-filter: blur(12px);
         }
 
         .testimonial-stars {
             color: var(--gold-primary);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .testimonial-text {
             color: var(--text-light);
-            font-style: italic;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
+            font-size: 0.98rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
 
         .testimonial-author {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 12px;
         }
 
         .author-info h5 {
@@ -661,7 +760,7 @@
 
         .author-info span {
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
         }
 
         /* ==========================================
@@ -879,7 +978,7 @@
         </div>
     </section>
 
-    <!-- RECITATION / STUDENT SAMPLES SECTION (3 أعمدة × 3 نماذج صوتية) -->
+    <!-- RECITATION / STUDENT SAMPLES SECTION -->
     <section class="section-padding" id="playlist" style="background: rgba(6, 78, 59, 0.1);">
         <div class="container">
             <div class="section-title">
@@ -890,14 +989,35 @@
         </div>
     </section>
 
-    <!-- TESTIMONIALS SECTION -->
+    <!-- TESTIMONIALS & USER COMMENTS SECTION (قسم مشاركة تجارب الحفظ والتعليقات) -->
     <section class="section-padding" id="testimonials">
         <div class="container">
             <div class="section-title">
                 <h3 id="testimonialsTitle"></h3>
                 <p id="testimonialsSub"></p>
             </div>
-            <div class="cards-grid" id="testimonialsGrid"></div>
+            
+            <div class="comments-section-wrapper">
+                <!-- نموذج كتابة التعليق الجديد -->
+                <div class="comment-form-card">
+                    <h4 id="commentFormTitle">شاركنا رأيك وتجربتك في الحفظ</h4>
+                    <p id="commentFormDesc">اكتب تعليقك أو تجربتك مع المنصة ليراها بقية الزوار والمشتركين</p>
+                    
+                    <form class="comment-form" id="userCommentForm" onsubmit="handleCommentSubmit(event)">
+                        <div class="form-row">
+                            <input type="text" id="commenterName" class="form-input" placeholder="اسمك الكريم (أو ولي الأمر)" required>
+                            <input type="text" id="commenterRole" class="form-input" placeholder=" صفتك (مثلاً: طالبة بالمنصة / ولي أمر)" required>
+                        </div>
+                        <textarea id="commenterText" class="form-textarea" placeholder="اكتب تجربتك أو رأيك حول الحفظ والمنصة هنا..." required></textarea>
+                        <button type="submit" class="btn-submit-comment">
+                            <i class="fa-solid fa-paper-plane"></i> <span id="commentSubmitBtnText">إرسال ونشر التعليق</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- قائمة التعليقات الحالية (تتحدث ديناميكياً) -->
+                <div class="comments-list-container" id="testimonialsGrid"></div>
+            </div>
         </div>
     </section>
 
