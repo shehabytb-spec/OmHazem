@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحفيظ أونلاين | Tahfeez Online</title>
+    <title>تحفيظ أونلاين | منصة تعليم القرآن والتجويد</title>
     <meta name="description" content="منصة تحفيظ أونلاين لتعليم القرآن الكريم وتصحيح التلاوة وإعطاء الإجازات بالسند المتصل للنساء والأطفال أونلاين.">
     
     <!-- Google Fonts -->
@@ -160,7 +160,7 @@
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 22px;
             list-style: none;
             align-items: center;
         }
@@ -169,7 +169,7 @@
             color: var(--text-light);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             transition: var(--transition);
         }
 
@@ -397,7 +397,108 @@
         }
 
         /* ==========================================
-           5. STEPS SECTION
+           5. PRICING PACKAGES SECTION (باقات الحصص)
+        ========================================== */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(12px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package-card.featured {
+            border-color: var(--gold-primary);
+            background: rgba(6, 78, 59, 0.5);
+            transform: scale(1.03);
+        }
+
+        .package-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .package-card h4 {
+            font-family: var(--font-arabic-heading);
+            font-size: 1.6rem;
+            color: var(--gold-light);
+            margin-bottom: 15px;
+        }
+
+        .package-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #FFF;
+            margin-bottom: 20px;
+        }
+
+        .package-price span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: start;
+        }
+
+        .package-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .package-features li i {
+            color: var(--gold-primary);
+        }
+
+        .btn-package {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            background: var(--gold-primary);
+            color: var(--secondary-navy);
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-package:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================
+           6. STEPS SECTION
         ========================================== */
         .steps-grid {
             display: grid;
@@ -442,78 +543,58 @@
         }
 
         /* ==========================================
-           6. PLAYLIST SECTION
+           7. RECITATION PLAYLIST SECTION (3 أعمدة - 4 تسجيلات لكل عمود)
         ========================================== */
-        .playlist-container {
+        .playlist-columns-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .playlist-column {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-width: 850px;
-            margin: 0 auto;
         }
 
-        .audio-track-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
+        .column-header {
+            text-align: center;
+            font-family: var(--font-arabic-heading);
+            color: var(--gold-light);
+            font-size: 1.25rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .audio-track-card-compact {
+            background: rgba(2, 44, 34, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 12px 15px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            backdrop-filter: blur(12px);
+            gap: 12px;
             transition: var(--transition);
         }
 
-        .audio-track-card:hover {
+        .audio-track-card-compact:hover {
             border-color: var(--gold-primary);
-            background: rgba(6, 78, 59, 0.4);
+            background: rgba(6, 78, 59, 0.5);
         }
 
-        .track-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-grow: 1;
-        }
-
-        .track-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(212, 175, 55, 0.2);
-            color: var(--gold-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .track-details h4 {
-            font-size: 1.05rem;
-            color: #FFF;
-        }
-
-        .track-details span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .track-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            min-width: 220px;
-        }
-
-        .play-btn-small {
-            width: 45px;
-            height: 45px;
+        .play-btn-compact {
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             background: var(--gold-primary);
             color: var(--secondary-navy);
             border: none;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -522,12 +603,12 @@
             flex-shrink: 0;
         }
 
-        .play-btn-small:hover {
+        .play-btn-compact:hover {
             transform: scale(1.1);
             background: var(--gold-light);
         }
 
-        .track-progress {
+        .track-progress-compact {
             flex-grow: 1;
             height: 6px;
             background: rgba(255,255,255,0.1);
@@ -536,7 +617,7 @@
             position: relative;
         }
 
-        .track-progress-fill {
+        .track-progress-fill-compact {
             height: 100%;
             background: var(--gold-primary);
             width: 0%;
@@ -544,7 +625,7 @@
         }
 
         /* ==========================================
-           7. TESTIMONIALS SECTION
+           8. TESTIMONIALS SECTION
         ========================================== */
         .testimonial-card {
             background: var(--glass-bg);
@@ -584,7 +665,7 @@
         }
 
         /* ==========================================
-           8. FAQ SECTION
+           9. FAQ SECTION
         ========================================== */
         .faq-accordion {
             max-width: 800px;
@@ -624,7 +705,7 @@
         }
 
         /* ==========================================
-           9. FLOATING BUTTON & FOOTER
+           10. FLOATING BUTTON & FOOTER
         ========================================== */
         .floating-whatsapp {
             position: fixed;
@@ -688,13 +769,12 @@
             .hero-content p { margin: 0 auto 30px auto; }
             .cta-group { justify-content: center; }
             .bio-badge { justify-content: center; }
+            .playlist-columns-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hero-content h2 { font-size: 2.2rem; }
-            .audio-track-card { flex-direction: column; align-items: stretch; }
-            .track-controls { width: 100%; }
         }
     </style>
 </head>
@@ -777,8 +857,19 @@
         </div>
     </section>
 
+    <!-- PACKAGES SECTION (باقات الحصص المضافة) -->
+    <section class="section-padding" id="packages" style="background: rgba(6, 78, 59, 0.15);">
+        <div class="container">
+            <div class="section-title">
+                <h3 id="packagesTitle"></h3>
+                <p id="packagesSub"></p>
+            </div>
+            <div class="packages-grid" id="packagesGrid"></div>
+        </div>
+    </section>
+
     <!-- STEPS TO START SECTION -->
-    <section class="section-padding" id="steps" style="background: rgba(6, 78, 59, 0.15);">
+    <section class="section-padding" id="steps">
         <div class="container">
             <div class="section-title">
                 <h3 id="stepsTitle"></h3>
@@ -788,19 +879,19 @@
         </div>
     </section>
 
-    <!-- RECITATION PLAYLIST SECTION -->
-    <section class="section-padding" id="playlist">
+    <!-- RECITATION PLAYLIST SECTION (3 أعمدة - 4 تسجيلات) -->
+    <section class="section-padding" id="playlist" style="background: rgba(6, 78, 59, 0.1);">
         <div class="container">
             <div class="section-title">
                 <h3 id="playlistTitle"></h3>
                 <p id="playlistSub"></p>
             </div>
-            <div class="playlist-container" id="playlistContainer"></div>
+            <div class="playlist-columns-grid" id="playlistColumnsGrid"></div>
         </div>
     </section>
 
     <!-- TESTIMONIALS SECTION -->
-    <section class="section-padding" id="testimonials" style="background: rgba(6, 78, 59, 0.1);">
+    <section class="section-padding" id="testimonials">
         <div class="container">
             <div class="section-title">
                 <h3 id="testimonialsTitle"></h3>
@@ -811,7 +902,7 @@
     </section>
 
     <!-- FAQ SECTION -->
-    <section class="section-padding" id="faq">
+    <section class="section-padding" id="faq" style="background: rgba(6, 78, 59, 0.15);">
         <div class="container">
             <div class="section-title">
                 <h3 id="faqTitle"></h3>
