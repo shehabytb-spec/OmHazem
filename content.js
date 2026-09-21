@@ -104,10 +104,10 @@ const siteData = {
         items: [
             {
                 title: { ar: "الباقة الأساسية", en: "Basic Package" },
-                price: { ar: "٤ حصص", en: "4 Classes" },
-                priceSub: { ar: "شهرياً (حصة أسبوعياً)", en: "Per Month (1 class/week)" },
+                price: { ar: "8 حصص", en: "8 Classes" },
+                priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 class/week)" },
                 features: [
-                    { ar: "مدة الحصة: 30 دقيقة", en: "Class Duration: 30 mins" },
+                    { ar: "مدة الحصة: 60 دقيقة", en: "Class Duration: 60 mins" },
                     { ar: "متابعة فردية خاصة", en: "Private 1-on-1 Session" },
                     { ar: "تقرير شهري للمستوى", en: "Monthly Progress Report" }
                 ],
@@ -115,8 +115,8 @@ const siteData = {
             },
             {
                 title: { ar: "الباقة الأكثر طلباً", en: "Popular Package" },
-                price: { ar: "٨ حصص", en: "8 Classes" },
-                priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 classes/week)" },
+                price: { ar: "20 حصة", en: "20 Classes" },
+                priceSub: { ar: "5 حصص أسبوعيا", en: "5 sessions per week" },
                 features: [
                     { ar: "مدة الحصة: 45 دقيقة", en: "Class Duration: 45 mins" },
                     { ar: "متابعة فردية خاصة ومكثفة", en: "Intensive 1-on-1 Session" },
