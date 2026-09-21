@@ -172,10 +172,10 @@ const siteData = {
     // قسم نماذج التلاوات / الطلاب (3 أعمدة × 3 نماذج = 9 نماذج لأصوات مشايخ مؤقتاً)
     playlist: {
         title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
-        subtitle: { ar: "نماذج صوتية مختارة لأصوات مشايخ وقراء معتمدة (سيتم إضافة تسجيلات الطالبات قريباً)", en: "Selected sample audio tracks (Student records will be added soon)" },
+        subtitle: { ar: "نماذج تلاوة صوتية من طلابنا", en: "Audio recitation samples from our students" },
         columns: [
             {
-                header: { ar: "العمود الأول: التلاوات المرتلة", en: "Column 1: Murattal Recitations" },
+                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
                 tracks: [
                     { id: 1, audioUrl: "https://server8.mp3quran.net/afs/001.mp3" },
                     { id: 2, audioUrl: "https://server7.mp3quran.net/basit/001.mp3" },
@@ -183,7 +183,7 @@ const siteData = {
                 ]
             },
             {
-                header: { ar: "العمود الثاني: التلاوات المجودة", en: "Column 2: Mujawwad Recitations" },
+                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
                 tracks: [
                     { id: 4, audioUrl: "https://server10.mp3quran.net/minsh/001.mp3" },
                     { id: 5, audioUrl: "https://server11.mp3quran.net/sds/001.mp3" },
@@ -191,7 +191,7 @@ const siteData = {
                 ]
             },
             {
-                header: { ar: "العمود الثالث: أصوات خاشعة", en: "Column 3: Emotional Recitations" },
+                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
                 tracks: [
                     { id: 7, audioUrl: "https://server6.mp3quran.net/maher/001.mp3" },
                     { id: 8, audioUrl: "https://server4.mp3quran.net/yasser/001.mp3" },
