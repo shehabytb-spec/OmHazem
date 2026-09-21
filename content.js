@@ -21,7 +21,7 @@ const siteData = {
             { id: "packages", text: { ar: "باقات الحصص", en: "Packages" } },
             { id: "steps", text: { ar: "خطوات البدء", en: "How to Start" } },
             { id: "playlist", text: { ar: "نماذج التلاوات", en: "Recitations" } },
-            { id: "testimonials", text: { ar: "آراء الطالبات", en: "Reviews" } },
+            { id: "testimonials", text: { ar: "آراء وتجارب الحفظ", en: "Reviews & Comments" } },
             { id: "faq", text: { ar: "الأسئلة الشائعة", en: "FAQ" } }
         ]
     },
@@ -74,7 +74,7 @@ const siteData = {
         ]
     },
 
-    // قسم البرامج التعليمية (Services - مع تعديل البرنامج الأخير لدورة تصحيح التلاوة وتجويد الحروف)
+    // قسم البرامج التعليمية (Services)
     services: {
         title: { ar: "برامجنا التعليمية", en: "Our Educational Programs" },
         subtitle: { ar: "خطط دراسية مخصصة تناسب كافة المستويات والأعمار", en: "Customized study plans designed for all ages and levels" },
@@ -169,7 +169,7 @@ const siteData = {
         ]
     },
 
-    // قسم نماذج التلاوات / الطلاب (3 أعمدة × 3 نماذج = 9 نماذج لأصوات مشايخ مؤقتاً)
+    // قسم نماذج التلاوات الصوتية
     playlist: {
         title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
         subtitle: { ar: "نماذج تلاوة صوتية من طلابنا", en: "Audio recitation samples from our students" },
@@ -201,11 +201,11 @@ const siteData = {
         ]
     },
 
-    // قسم آراء الطالبات (Testimonials)
+    // قسم التعليقات وتجارب الحفظ (Testimonials & Comments)
     testimonials: {
-        title: { ar: "آراء وتجارب الطالبات", en: "Student Testimonials" },
-        subtitle: { ar: "ما تقوله طالباتنا وأمهات الأطفال عن تجربتهن معنا", en: "What our students and parents say about learning with us" },
-        items: [
+        title: { ar: "آراء وتجارب الحفظ", en: "Reviews & Memorization Experiences" },
+        subtitle: { ar: "شاركنا تجربتك في حفظ القرآن الكريم واطلع على تعليقات ومراجعات المشتركين", en: "Share your experience and read reviews from other members" },
+        defaultItems: [
             {
                 text: { ar: "«ما شاء الله المعلمة صبورة جداً مع أطفالي وطريقتها في الشرح وتحفيز الأطفال جعلتهم يحبون حصة القرآن ينتظرونها بشغف.»", en: "«The tutor is very patient with my kids. Her teaching method makes children look forward to Quran class eagerly.»" },
                 author: { ar: "أم عبد الله", en: "Um Abdullah" },
@@ -234,7 +234,7 @@ const siteData = {
                 a: { ar: "تتم الحصص عبر تطبيق Zoom أو Telegram بصوت واضح وجلسات فردية خاصة لضمان التركيز والسرية.", en: "Classes are conducted via Zoom or Telegram in private 1-on-1 audio/video sessions ensuring high focus and privacy." }
             },
             {
-                q: { ar: "ما هي طرق الدفع المتاحة داخل وخارج مصر؟", en: "What payment methods are supported?" },
+                q: { ar: " ما هي طرق الدفع المتاحة داخل وخارج مصر؟", en: "What payment methods are supported?" },
                 a: { ar: "نوفر طرق دفع متعددة وسهلة: داخل مصر (فودافون كاش / إنستا باي InstaPay)، وخارج مصر (PayPal / تحويل بنكي / Western Union).", en: "Inside Egypt: Vodafone Cash or InstaPay. Internationally: PayPal, Bank Transfer, or Western Union." }
             }
         ]
@@ -253,6 +253,15 @@ const siteData = {
 
 let currentLang = 'ar';
 
+// جلب التعليقات المخزنة محلياً إن وجدت لضمان بقائها للمستخدمين
+function getStoredComments() {
+    const saved = localStorage.getItem('site_user_comments');
+    if (saved) {
+        try { return JSON.parse(saved); } catch(e) { return []; }
+    }
+    return [];
+}
+
 function renderPage(lang) {
     currentLang = lang;
     document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
@@ -261,8 +270,6 @@ function renderPage(lang) {
     // 1. WhatsApp Links Update
     const waUrl = `https://wa.me/${siteData.contact.whatsappNumber}?text=${encodeURIComponent(siteData.contact.whatsappMessage)}`;
     document.querySelectorAll('.js-wa-link').forEach(link => link.href = waUrl);
-
-    // Telegram Links Update
     document.querySelectorAll('.js-tg-link').forEach(link => link.href = siteData.contact.telegramLink);
 
     // 2. Language Switcher Label
@@ -284,7 +291,6 @@ function renderPage(lang) {
     document.getElementById('heroDesc').textContent = siteData.hero.description[lang];
     document.querySelectorAll('.js-cta-btn-text').forEach(el => el.textContent = siteData.hero.ctaButton[lang]);
 
-    // Hero Bio Card
     document.getElementById('bioName').textContent = siteData.hero.bioCard.name[lang];
     document.getElementById('bioSub').textContent = siteData.hero.bioCard.subtitle[lang];
     document.getElementById('bioFeatures').innerHTML = siteData.hero.bioCard.features.map(feat => 
@@ -313,7 +319,7 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 7. Packages Section (باقات الحصص)
+    // 7. Packages Section
     document.getElementById('packagesTitle').textContent = siteData.packages.title[lang];
     document.getElementById('packagesSub').textContent = siteData.packages.subtitle[lang];
     document.getElementById('packagesGrid').innerHTML = siteData.packages.items.map(pkg => 
@@ -341,12 +347,13 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 9. Recitation / Student Playlist Section (3 أعمدة × 3 تسجيلات)
+    // 9. Playlist Section
     document.getElementById('playlistTitle').textContent = siteData.playlist.title[lang];
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
     document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
         `<div class="playlist-column">
             <div class="column-header">${col.header[lang]}</div>
+            ${col.tracks.tracks ? '' : ''}
             ${col.tracks.map(track => 
                 `<div class="audio-track-card-compact">
                     <button class="play-btn-compact" onclick="playTrack(${track.id})">
@@ -361,23 +368,32 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 10. Testimonials Section
+    // 10. Testimonials & Comments Section
     document.getElementById('testimonialsTitle').textContent = siteData.testimonials.title[lang];
     document.getElementById('testimonialsSub').textContent = siteData.testimonials.subtitle[lang];
-    document.getElementById('testimonialsGrid').innerHTML = siteData.testimonials.items.map(item => 
-        `<div class="testimonial-card">
+    
+    // دمج التعليقات الافتراضية مع تعليقات المستخدمين الجدد
+    const stored = getStoredComments();
+    const allComments = [...stored, ...siteData.testimonials.defaultItems];
+
+    document.getElementById('testimonialsGrid').innerHTML = allComments.map(item => {
+        const textVal = typeof item.text === 'object' ? item.text[lang] || item.text.ar : item.text;
+        const authorVal = typeof item.author === 'object' ? item.author[lang] || item.author.ar : item.author;
+        const locVal = typeof item.location === 'object' ? item.location[lang] || item.location.ar : item.location;
+
+        return `<div class="testimonial-card">
             <div class="testimonial-stars">
                 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             </div>
-            <p class="testimonial-text">${item.text[lang]}</p>
+            <p class="testimonial-text">«${textVal}»</p>
             <div class="testimonial-author">
                 <div class="author-info">
-                    <h5>${item.author[lang]}</h5>
-                    <span>${item.location[lang]}</span>
+                    <h5>${authorVal}</h5>
+                    <span>${locVal}</span>
                 </div>
             </div>
-        </div>`
-    ).join('');
+        </div>`;
+    }).join('');
 
     // 11. FAQ Section
     document.getElementById('faqTitle').textContent = siteData.faq.title[lang];
@@ -400,13 +416,41 @@ function renderPage(lang) {
     document.getElementById('footerTgText').textContent = siteData.footer.telegramBtn[lang];
 }
 
-// تبديل اللغة عند الضغط على الزر
+// دالة التعامل مع إرسال التعليق الجديد من قبل المستخدم
+function handleCommentSubmit(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('commenterName').value.trim();
+    const role = document.getElementById('commenterRole').value.trim();
+    const text = document.getElementById('commenterText').value.trim();
+
+    if(!name || !role || !text) return;
+
+    const newComment = {
+        text: text,
+        author: name,
+        location: role
+    };
+
+    // حفظ التعليق في التخزين المحلي (LocalStorage) لكي يظهر للمستخدم في نفس المتصفح
+    const currentStored = getStoredComments();
+    currentStored.unshift(newComment);
+    localStorage.setItem('site_user_comments', JSON.stringify(currentStored));
+
+    // إعادة ضبط الحقول وإعادة عرض الصفحة لتحديث قائمة التعليقات فوراً
+    document.getElementById('userCommentForm').reset();
+    renderPage(currentLang);
+    
+    alert(currentLang === 'ar' ? 'تم إرسال ونشر تعليقك بنجاح!' : 'Your comment has been posted successfully!');
+}
+
+// تبديل اللغة
 function toggleLanguage() {
     renderPage(currentLang === 'ar' ? 'en' : 'ar');
 }
 
 /* ==========================================================================
-   مشغل الصوتيات وأحداث الواجهة (Audio & UI Interaction Handlers)
+   مشغل الصوتيات وأحداث الواجهة
    ========================================================================== */
 
 let activeAudio = null;
@@ -465,7 +509,6 @@ function toggleFaq(element) {
     element.parentElement.classList.toggle('active');
 }
 
-// التأثيرات عند التمرير (Scroll Header Effect)
 window.addEventListener('scroll', () => {
     const header = document.getElementById('header');
     if (header) {
@@ -477,7 +520,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// بدء العرض فور تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
     renderPage('ar');
 });
