@@ -74,7 +74,7 @@ const siteData = {
         ]
     },
 
-    // قسم البرامج التعليمية (Services)
+    // قسم البرامج التعليمية (Services - مع تعديل البرنامج الأخير لدورة تصحيح التلاوة وتجويد الحروف)
     services: {
         title: { ar: "برامجنا التعليمية", en: "Our Educational Programs" },
         subtitle: { ar: "خطط دراسية مخصصة تناسب كافة المستويات والأعمار", en: "Customized study plans designed for all ages and levels" },
@@ -90,14 +90,14 @@ const siteData = {
                 desc: { ar: "حلقات فردية خاصة للنساء لضبط التلاوة، تصحيح المخارج، وحفظ السور مع شرح أحكام التجويد بطريقة سهلة.", en: "Private 1-on-1 sessions for women focusing on Tajweed rules, memorization, and accurate recitation." }
             },
             {
-                icon: "fa-scroll",
-                title: { ar: "دورة الإجازة بالسند المتصل", en: "Ijazah Certification Course" },
-                desc: { ar: "إعداد الطالبة لختم القرآن الكريم كاملاً بقراءة متقنة والحصول على إجازة مسندة للرسول ﷺ.", en: "Complete Quran recitation review leading to an authentic Ijazah linked to Prophet Muhammad ﷺ." }
+                icon: "fa-book-open-reader",
+                title: { ar: "دورة تصحيح التلاوة وتجويد الحروف", en: "Correct Recitation & Tajweed Rules Course" },
+                desc: { ar: "تدريب مكثف على مخارج الحروف وصفاتها، وتصحيح الأخطاء الشائعة في التلاوة، وإتقان أحكام التجويد التطبيقي.", en: "Intensive training on letter articulation, correcting common recitation errors, and mastering applied Tajweed rules." }
             }
         ]
     },
 
-    // قسم باقات الحصص المضافة حديثاً (Packages)
+    // قسم باقات الحصص الشهرية (Packages)
     packages: {
         title: { ar: "باقات الحصص الشهرية", en: "Monthly Class Packages" },
         subtitle: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for consistent Quran memorization" },
@@ -169,36 +169,33 @@ const siteData = {
         ]
     },
 
-    // قسم نماذج التلاوات (Playlist موزعة على 3 أعمدة - في كل عمود 4 تسجيلات)
+    // قسم نماذج التلاوات / الطلاب (3 أعمدة × 3 نماذج = 9 نماذج لأصوات مشايخ مؤقتاً)
     playlist: {
-        title: { ar: "نماذج التلاوات القرآنية", en: "Quran Recitation Samples" },
-        subtitle: { ar: "نماذج صوتية مختارة لأصوات مشايخ وقراء لتجربة أداء المشغل", en: "Selected audio samples from renowned reciters" },
+        title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
+        subtitle: { ar: "نماذج صوتية مختارة لأصوات مشايخ وقراء معتمدة (سيتم إضافة تسجيلات الطالبات قريباً)", en: "Selected sample audio tracks (Student records will be added soon)" },
         columns: [
             {
-                header: { ar: "التلاوات المجودة والمرتلة", en: "Mujawwad & Murattal" },
+                header: { ar: "العمود الأول: التلاوات المرتلة", en: "Column 1: Murattal Recitations" },
                 tracks: [
                     { id: 1, audioUrl: "https://server8.mp3quran.net/afs/001.mp3" },
                     { id: 2, audioUrl: "https://server7.mp3quran.net/basit/001.mp3" },
-                    { id: 3, audioUrl: "https://server13.mp3quran.net/hssri/001.mp3" },
-                    { id: 4, audioUrl: "https://server10.mp3quran.net/minsh/001.mp3" }
+                    { id: 3, audioUrl: "https://server13.mp3quran.net/hssri/001.mp3" }
                 ]
             },
             {
-                header: { ar: "تلاوات خاشعة ومؤثرة", en: "Emotional Recitations" },
+                header: { ar: "العمود الثاني: التلاوات المجودة", en: "Column 2: Mujawwad Recitations" },
                 tracks: [
+                    { id: 4, audioUrl: "https://server10.mp3quran.net/minsh/001.mp3" },
                     { id: 5, audioUrl: "https://server11.mp3quran.net/sds/001.mp3" },
-                    { id: 6, audioUrl: "https://server9.mp3quran.net/shur/001.mp3" },
-                    { id: 7, audioUrl: "https://server6.mp3quran.net/maher/001.mp3" },
-                    { id: 8, audioUrl: "https://server4.mp3quran.net/yasser/001.mp3" }
+                    { id: 6, audioUrl: "https://server9.mp3quran.net/shur/001.mp3" }
                 ]
             },
             {
-                header: { ar: "أصوات مختارة للطالبات", en: "Student Samples" },
+                header: { ar: "العمود الثالث: أصوات خاشعة", en: "Column 3: Emotional Recitations" },
                 tracks: [
-                    { id: 9, audioUrl: "https://server12.mp3quran.net/ajm/001.mp3" },
-                    { id: 10, audioUrl: "https://server8.mp3quran.net/afs/002.mp3" },
-                    { id: 11, audioUrl: "https://server7.mp3quran.net/basit/002.mp3" },
-                    { id: 12, audioUrl: "https://server13.mp3quran.net/hssri/002.mp3" }
+                    { id: 7, audioUrl: "https://server6.mp3quran.net/maher/001.mp3" },
+                    { id: 8, audioUrl: "https://server4.mp3quran.net/yasser/001.mp3" },
+                    { id: 9, audioUrl: "https://server12.mp3quran.net/ajm/001.mp3" }
                 ]
             }
         ]
@@ -222,7 +219,7 @@ const siteData = {
             {
                 text: { ar: "«التزام بالوقت، ومرونة عالية، وبيئة هادئة ومريحة جداً أثناء الحصة. جزاكم الله خيراً على هذا المجهود الطيب.»", en: "«Punctual, flexible, and very comfortable learning atmosphere during sessions. May Allah reward you well.»" },
                 author: { ar: "مريم إبراهيم", en: "Mariam I." },
-                location: { ar: "طالبة إجازة - مصر", en: "Student - Egypt" }
+                location: { ar: "طالبة مراجعة - مصر", en: "Student - Egypt" }
             }
         ]
     },
@@ -344,7 +341,7 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 9. Playlist Section (3 أعمدة وكل عمود 4 تسجيلات مصغرة بدون اسم)
+    // 9. Recitation / Student Playlist Section (3 أعمدة × 3 تسجيلات)
     document.getElementById('playlistTitle').textContent = siteData.playlist.title[lang];
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
     document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
