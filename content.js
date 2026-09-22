@@ -1,16 +1,33 @@
 /* ==========================================================================
-   قاعدة بيانات محتوى الموقع (Site Content Database)
+   قاعدة بيانات محتوى الموقع (Site Content Database) + Firebase Integration
    ========================================================================== */
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+// إعدادات مشروعك الحقيقية التي استخرجتها من فايربيس
+const firebaseConfig = {
+    apiKey: "AIzaSyBUx0fDtd32M_9J3BCFihWsFH13xPsXcT4",
+    authDomain: "tahfeez-nline.firebaseapp.com",
+    projectId: "tahfeez-nline",
+    storageBucket: "tahfeez-nline.firebasestorage.app",
+    messagingSenderId: "707326367320",
+    appId: "1:707326367320:web:a1eddd1ae995dd62e25c2d",
+    measurementId: "G-KRFRM3LP1W"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+
 const siteData = {
-    // معلومات التواصل العامة
     contact: {
         whatsappNumber: "201004675704",
         whatsappMessage: "السلام عليكمُ، أرغب في حجز حصة تجريبية مجانية عبر موقع تحفيظ أونلاين",
         telegramLink: "https://t.me/+201004675704"
     },
-
-    // الهيدر والقائمة العلوية
     header: {
         logoTitle: { ar: "تحفيظ أونلاين", en: "Tahfeez Online" },
         logoSub: { ar: "منصة تعليم القرآن الكريم والتجويد", en: "Online Quran & Tajweed Academy" },
@@ -21,211 +38,88 @@ const siteData = {
             { id: "packages", text: { ar: "باقات الحصص", en: "Packages" } },
             { id: "steps", text: { ar: "خطوات البدء", en: "How to Start" } },
             { id: "playlist", text: { ar: "نماذج التلاوات", en: "Recitations" } },
+            { id: "testimonials", text: { ar: "آراء وتجارب الحفظ", en: "Reviews & Comments" } },
             { id: "faq", text: { ar: "الأسئلة الشائعة", en: "FAQ" } }
         ]
     },
-
-    // قسم الواجهة (Hero Section)
     hero: {
         badge: { ar: "✨ جلسات فردية خاصة عبر جوجل ميت والتليجرام", en: "✨ 1-on-1 Private Live Classes" },
-        title: { 
-            ar: "تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span>", 
-            en: "Learn Quran Online with <span>Tahfeez Online</span>" 
-        },
-        description: { 
-            ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.", 
-            en: "A specialized academy for women and children to teach correct recitation, Tajweed rules, and the memorization of the Holy Quran under the guidance of a female Al-Azhar certified tutor." 
-        },
+        title: { ar: "تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span>", en: "Learn Quran Online with <span>Tahfeez Online</span>" },
+        description: { ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.", en: "A specialized academy for women and children to teach correct recitation, Tajweed rules, and memorization." },
         ctaButton: { ar: "احجز حصة تجريبية مجانية", en: "Book Free Trial Class" },
-        
-        // بطاقة المعلمة (Bio Card)
         bioCard: {
             name: { ar: "الشيخة / معلّمة التلاوة", en: "Certified Quran Tutor" },
             subtitle: { ar: "معلمة القرآن والتجويد بالمنصة", en: "Quran & Tajweed Instructor" },
             features: [
-                { icon: "fa-certificate", text: { ar: "حاصلة على ليسانس الدراسات الإسلامية والعربية شعبة أصول الدين", en: "Certified Ijazah with Connected Chain of Narration" } },
-                { icon: "fa-clock", text: { ar: "خبرة أكثر من 20 سنة في التدريس المباشر والتحفيظ أونلاين", en: "7+ Years of Online Teaching Experience" } },
+                { icon: "fa-certificate", text: { ar: "حاصلة على ليسانس الدراسات الإسلامية والعربية شعبة أصول الدين", en: "Certified Al-Azhar Graduate" } },
+                { icon: "fa-clock", text: { ar: "خبرة أكثر من 7 سنوات في التدريس المباشر والتحفيظ أونلاين", en: "7+ Years of Online Teaching Experience" } },
                 { icon: "fa-child-reaching", text: { ar: "متخصصة في التعامل مع الأطفال والنساء فقط", en: "Specialized for Women & Children" } }
             ]
         }
     },
-
-    // قسم مميزات المنصة (Why Us)
     whyUs: {
         title: { ar: "لماذا تختار منصة تحفيظ أونلاين؟", en: "Why Choose Tahfeez Online?" },
-        subtitle: { ar: "نوفر لك بيئة تعليمية إسلامية متكاملة تجمع بين الإتقان والسهولة", en: "We provide an integrated Islamic learning environment combining accuracy and ease" },
+        subtitle: { ar: "نوفر لك بيئة تعليمية إسلامية متكاملة تجمع بين الإتقان والسهولة", en: "We provide an integrated Islamic learning environment" },
         cards: [
-            {
-                icon: "fa-user-shield",
-                title: { ar: "خصوصية وحرية كاملة", en: "100% Privacy" },
-                desc: { ar: "حلقات خاصة ومباشرة فردية (1-on-1) مخصصة للنساء والأطفال فقط مع معلمات متقنات.", en: "Private 1-on-1 sessions dedicated to women and children with qualified female tutors." }
-            },
-            {
-                icon: "fa-calendar-check",
-                title: { ar: "مرونة عالية في المواعيد", en: "Flexible Schedule" },
-                desc: { ar: "نظام أوقات مرن يتناسب مع كافة التوقيتات والدول حول العالم لتحديد المواعيد المناسبة لك.", en: "Flexible timing structured to accommodate students from different time zones worldwide." }
-            },
-            {
-                icon: "fa-chart-line",
-                title: { ar: "متابعة وتقارير دورية", en: "Progress Tracking" },
-                desc: { ar: "خطة دراسية لكل طالب مع متابعة مستمرة لمستوى الحفظ، المراجعة، والتجويد بانتظام.", en: "Personalized study plan with continuous reports tracking memorization and Tajweed progress." }
-            }
+            { icon: "fa-user-shield", title: { ar: "خصوصية وحرية كاملة", en: "100% Privacy" }, desc: { ar: "حلقات خاصة ومباشرة فردية (1-on-1) مخصصة للنساء والأطفال فقط مع معلمات متقنات.", en: "Private 1-on-1 sessions dedicated to women and children." } },
+            { icon: "fa-calendar-check", title: { ar: "مرونة عالية في المواعيد", en: "Flexible Schedule" }, desc: { ar: "نظام أوقات مرن يتناسب مع كافة التوقيتات والدول حول العالم.", en: "Flexible timing structured to accommodate global time zones." } },
+            { icon: "fa-chart-line", title: { ar: "متابعة وتقارير دورية", en: "Progress Tracking" }, desc: { ar: "خطة دراسية لكل طالب مع متابعة مستمرة لمستوى الحفظ والمراجعة.", en: "Personalized study plan with continuous reports." } }
         ]
     },
-
-    // قسم البرامج التعليمية (Services)
     services: {
         title: { ar: "برامجنا التعليمية", en: "Our Educational Programs" },
-        subtitle: { ar: "خطط دراسية مخصصة تناسب كافة المستويات والأعمار", en: "Customized study plans designed for all ages and levels" },
+        subtitle: { ar: "خطط دراسية مخصصة تناسب كافة المستويات والأعمار", en: "Customized study plans designed for all ages" },
         cards: [
-            {
-                icon: "fa-baby",
-                title: { ar: "تحفيظ الأطفال والناشئة", en: "Kids Quran Memorization" },
-                desc: { ar: "أسلوب شيق ومبسط لترسيخ الحفظ لدى الأطفال مع تعليم نور البيان والقراءة الصحيحة بالتحفيز والتشجيع.", en: "Fun and interactive methods to help kids memorize Quran with proper pronunciation and Noor Al-Bayan." }
-            },
-            {
-                icon: "fa-female",
-                title: { ar: "برنامج النساء والفتيات", en: "Women Quran Program" },
-                desc: { ar: "حلقات فردية خاصة للنساء لضبط التلاوة، تصحيح المخارج، وحفظ السور مع شرح أحكام التجويد بطريقة سهلة.", en: "Private 1-on-1 sessions for women focusing on Tajweed rules, memorization, and accurate recitation." }
-            },
-            {
-                icon: "fa-book-open-reader",
-                title: { ar: "دورة تصحيح التلاوة وتجويد الحروف", en: "Correct Recitation & Tajweed Rules Course" },
-                desc: { ar: "تدريب مكثف على مخارج الحروف وصفاتها، وتصحيح الأخطاء الشائعة في التلاوة، وإتقان أحكام التجويد التطبيقي.", en: "Intensive training on letter articulation, correcting common recitation errors, and mastering applied Tajweed rules." }
-            }
+            { icon: "fa-baby", title: { ar: "تحفيظ الأطفال والناشئة", en: "Kids Quran Memorization" }, desc: { ar: "أسلوب شيق ومبسط لترسيخ الحفظ لدى الأطفال مع تعليم نور البيان.", en: "Fun and interactive methods to help kids memorize." } },
+            { icon: "fa-female", title: { ar: "برنامج النساء والفتيات", en: "Women Quran Program" }, desc: { ar: "حلقات خاصة فردية للنساء لضبط التلاوة وتصحيح المخارج.", en: "Private sessions for women focusing on Tajweed." } },
+            { icon: "fa-book-open-reader", title: { ar: "دورة تصحيح التلاوة وتجويد الحروف", en: "Correct Recitation Course" }, desc: { ar: "تدريب مكثف على مخارج الحروف وصفاتها وأحكام التجويد.", en: "Intensive training on letter articulation and Tajweed." } }
         ]
     },
-
-    // قسم باقات الحصص الشهرية (Packages)
     packages: {
         title: { ar: "باقات الحصص الشهرية", en: "Monthly Class Packages" },
-        subtitle: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for consistent Quran memorization" },
+        subtitle: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for consistent memorization" },
         items: [
-            {
-                title: { ar: "الباقة الأساسية", en: "Basic Package" },
-                price: { ar: "8 حصص", en: "8 Classes" },
-                priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 class/week)" },
-                features: [
-                    { ar: "مدة الحصة: 60 دقيقة", en: "Class Duration: 60 mins" },
-                    { ar: "متابعة فردية خاصة", en: "Private 1-on-1 Session" },
-                    { ar: "تقرير شهري للمستوى", en: "Monthly Progress Report" }
-                ],
-                featured: false
-            },
-            {
-                title: { ar: "الباقة الأكثر طلباً", en: "Popular Package" },
-                price: { ar: "20 حصة", en: "20 Classes" },
-                priceSub: { ar: "5 حصص أسبوعيا", en: "5 sessions per week" },
-                features: [
-                    { ar: "مدة الحصة: 45 دقيقة", en: "Class Duration: 45 mins" },
-                    { ar: "متابعة فردية خاصة ومكثفة", en: "Intensive 1-on-1 Session" },
-                    { ar: "خطة مخصصة للحفظ والمراجعة", en: "Custom Memorization Plan" },
-                    { ar: "تقرير دوري أسبوعي", en: "Weekly Progress Report" }
-                ],
-                badge: { ar: "الأكثر طلباً", en: "Most Popular" },
-                featured: true
-            },
-            {
-                title: { ar: "الباقة المكثفة", en: "Intensive Package" },
-                price: { ar: "١٢ حصة", en: "12 Classes" },
-                priceSub: { ar: "شهرياً (3 حصص أسبوعياً)", en: "Per Month (3 classes/week)" },
-                features: [
-                    { ar: "مدة الحصة: 45 دقيقة", en: "Class Duration: 45 mins" },
-                    { ar: "تثبيت الحفظ وإتقان التجويد", en: "Advanced Tajweed & Retention" },
-                    { ar: "أولوية اختيار المواعيد", en: "Priority Schedule Selection" },
-                    { ar: "متابعة مباشرة مستمرة", en: "Continuous Direct Support" }
-                ],
-                featured: false
-            }
+            { title: { ar: "الباقة الأساسية", en: "Basic Package" }, price: { ar: "8 حصص", en: "8 Classes" }, priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 class/week)" }, features: [{ ar: "مدة الحصة: 60 دقيقة", en: "Duration: 60 mins" }, { ar: "متابعة فردية خاصة", en: "Private Session" }], featured: false },
+            { title: { ar: "الباقة الأكثر طلباً", en: "Popular Package" }, price: { ar: "20 حصة", en: "20 Classes" }, priceSub: { ar: "5 حصص أسبوعيا", en: "5 sessions per week" }, features: [{ ar: "مدة الحصة: 45 دقيقة", en: "Duration: 45 mins" }, { ar: "متابعة فردية خاصة ومكثفة", en: "Intensive Session" }], badge: { ar: "الأكثر طلباً", en: "Most Popular" }, featured: true },
+            { title: { ar: "الباقة المكثفة", en: "Intensive Package" }, price: { ar: "١٢ حصة", en: "12 Classes" }, priceSub: { ar: "شهرياً (3 حصص أسبوعياً)", en: "Per Month (3 classes/week)" }, features: [{ ar: "مدة الحصة: 45 دقيقة", en: "Duration: 45 mins" }, { ar: "تثبيت الحفظ وإتقان التجويد", en: "Advanced Tajweed" }], featured: false }
         ]
     },
-
-    // قسم خطوات البدء (Steps)
     steps: {
         title: { ar: "كيف تبدأ رحلتك معنا؟", en: "How to Start Your Journey?" },
-        subtitle: { ar: "خطوات بسيطة وسريعة للانضمام لحلقاتنا القرآنية", en: "Simple and quick steps to join our Quranic classes" },
+        subtitle: { ar: "خطوات بسيطة وسريعة للانضمام لحلقاتنا القرآنية", en: "Simple steps to join our classes" },
         items: [
-            {
-                number: 1,
-                title: { ar: "التواصل والتسجيل", en: "Contact Us" },
-                desc: { ar: "اضغطي على زر الواتساب وتواصلي معنا لتأكيد الرغبة بالانضمام.", en: "Click the WhatsApp button and contact us to request joining." }
-            },
-            {
-                number: 2,
-                title: { ar: "الحصة التجريبية", en: "Free Trial Class" },
-                desc: { ar: "حجز موعد لحصة تجريبية مجانية لتقييم المستوى والتعرف على المعلمة.", en: "Book a free trial class to assess level and get introduced to the tutor." }
-            },
-            {
-                number: 3,
-                title: { ar: "تحديد الخطة والمواعيد", en: "Set Plan & Timing" },
-                desc: { ar: "اختيار أيام المواعيد المناسبة لكِ وصياغة خطة الحفظ المخصصة.", en: "Choose your convenient class days and create a tailored study plan." }
-            },
-            {
-                number: 4,
-                title: { ar: "بدء الدراسة والانتظام", en: "Start Learning" },
-                desc: { ar: "الانطلاق في رحلة الحفظ والمراجعة عبر تطبيق الزوم أو التليجرام.", en: "Begin your memorization journey live via Zoom or Telegram." }
-            }
+            { number: 1, title: { ar: "التواصل والتسجيل", en: "Contact Us" }, desc: { ar: "اضغطي على زر الواتساب وتواصلي معنا.", en: "Click the WhatsApp button to request joining." } },
+            { number: 2, title: { ar: "الحصة التجريبية", en: "Free Trial Class" }, desc: { ar: "حجز موعد لحصة تجريبية مجانية لتقييم المستوى.", en: "Book a free trial class to assess level." } },
+            { number: 3, title: { ar: "تحديد الخطة والمواعيد", en: "Set Plan & Timing" }, desc: { ar: "اختيار الأوقات وصياغة خطة الحفظ.", en: "Choose your convenient days and plan." } },
+            { number: 4, title: { ar: "بدء الدراسة والانتظام", en: "Start Learning" }, desc: { ar: "الانطلاق في رحلة الحفظ عبر زوم أو تليجرام.", en: "Begin your journey live via Zoom or Telegram." } }
         ]
     },
-
-    // قسم نماذج التلاوات الصوتية
     playlist: {
         title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
-        subtitle: { ar: "نماذج تلاوة صوتية من طلابنا", en: "Audio recitation samples from our students" },
+        subtitle: { ar: "نماذج تلاوة صوتية من طلابنا", en: "Audio recitation samples from students" },
         columns: [
-            {
-                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
-                tracks: [
-                    { id: 1, audioUrl: "https://server8.mp3quran.net/afs/001.mp3" },
-                    { id: 2, audioUrl: "https://server7.mp3quran.net/basit/001.mp3" },
-                    { id: 3, audioUrl: "https://server13.mp3quran.net/hssri/001.mp3" }
-                ]
-            },
-            {
-                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
-                tracks: [
-                    { id: 4, audioUrl: "https://server10.mp3quran.net/minsh/001.mp3" },
-                    { id: 5, audioUrl: "https://server11.mp3quran.net/sds/001.mp3" },
-                    { id: 6, audioUrl: "https://server9.mp3quran.net/shur/001.mp3" }
-                ]
-            },
-            {
-                header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitation Samples" },
-                tracks: [
-                    { id: 7, audioUrl: "https://server6.mp3quran.net/maher/001.mp3" },
-                    { id: 8, audioUrl: "https://server4.mp3quran.net/yasser/001.mp3" },
-                    { id: 9, audioUrl: "https://server12.mp3quran.net/ajm/001.mp3" }
-                ]
-            }
+            { header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitations" }, tracks: [{ id: 1, audioUrl: "https://server8.mp3quran.net/afs/001.mp3" }, { id: 2, audioUrl: "https://server7.mp3quran.net/basit/001.mp3" }, { id: 3, audioUrl: "https://server13.mp3quran.net/hssri/001.mp3" }] },
+            { header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitations" }, tracks: [{ id: 4, audioUrl: "https://server10.mp3quran.net/minsh/001.mp3" }, { id: 5, audioUrl: "https://server11.mp3quran.net/sds/001.mp3" }, { id: 6, audioUrl: "https://server9.mp3quran.net/shur/001.mp3" }] },
+            { header: { ar: "نماذج تلاوات الطلاب", en: "Student Recitations" }, tracks: [{ id: 7, audioUrl: "https://server6.mp3quran.net/maher/001.mp3" }, { id: 8, audioUrl: "https://server4.mp3quran.net/yasser/001.mp3" }, { id: 9, audioUrl: "https://server12.mp3quran.net/ajm/001.mp3" }] }
         ]
     },
-
-    // قسم الأسئلة الشائعة (FAQ)
+    testimonials: {
+        title: { ar: "آراء وتجارب الحفظ", en: "Reviews & Memorization Experiences" },
+        subtitle: { ar: "شاركنا تجربتك في حفظ القرآن الكريم واطلع على تعليقات ومراجعات المشتركين", en: "Share your experience and read reviews" }
+    },
     faq: {
         title: { ar: "الأسئلة الشائعة", en: "Frequently Asked Questions" },
-        subtitle: { ar: "إجابات على أبرز التساؤلات قبل البدء معنا", en: "Find answers to common questions about our online classes" },
+        subtitle: { ar: "إجابات على أبرز التساؤلات قبل البدء معنا", en: "Find answers to common questions" },
         items: [
-            {
-                q: { ar: "كيف يتم إجراء الحصص أونلاين؟", en: "How are online classes conducted?" },
-                a: { ar: "تتم الحصص عبر تطبيق Zoom أو Telegram بصوت واضح وجلسات فردية خاصة لضمان التركيز والسرية.", en: "Classes are conducted via Zoom or Telegram in private 1-on-1 audio/video sessions ensuring high focus and privacy." }
-            },
-            {
-                q: { ar: " ما هي طرق الدفع المتاحة داخل وخارج مصر؟", en: "What payment methods are supported?" },
-                a: { ar: "نوفر طرق دفع متعددة وسهلة: داخل مصر (فودافون كاش / إنستا باي InstaPay)، وخارج مصر (PayPal / تحويل بنكي / Western Union).", en: "Inside Egypt: Vodafone Cash or InstaPay. Internationally: PayPal, Bank Transfer, or Western Union." }
-            }
+            { q: { ar: "كيف يتم إجراء الحصص أونلاين؟", en: "How are online classes conducted?" }, a: { ar: "تتم الحصص عبر تطبيق Zoom أو Telegram بصوت واضح وجلسات فردية خاصة.", en: "Classes are conducted via Zoom or Telegram in private sessions." } },
+            { q: { ar: "ما هي طرق الدفع المتاحة داخل وخارج مصر؟", en: "What payment methods are supported?" }, a: { ar: "داخل مصر (فودافون كاش / إنستا باي)، وخارج مصر (PayPal / تحويل بنكي / Western Union).", en: "Inside Egypt via Vodafone Cash/InstaPay, Internationally via PayPal/Western Union." } }
         ]
     },
-
-    // الفوتر (Footer)
     footer: {
         copyright: { ar: "منصة تحفيظ أونلاين. جميع الحقوق محفوظة.", en: "Tahfeez Online Academy. All Rights Reserved." },
         telegramBtn: { ar: "تواصل عبر تليجرام", en: "Telegram Contact" }
     }
 };
-
-/* ==========================================================================
-   منطق بناء وتحديث الصفحة ديناميكياً (Dynamic Rendering Engine)
-   ========================================================================== */
 
 let currentLang = 'ar';
 
@@ -234,25 +128,19 @@ function renderPage(lang) {
     document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     document.documentElement.setAttribute('lang', lang);
 
-    // 1. WhatsApp Links Update
     const waUrl = `https://wa.me/${siteData.contact.whatsappNumber}?text=${encodeURIComponent(siteData.contact.whatsappMessage)}`;
     document.querySelectorAll('.js-wa-link').forEach(link => link.href = waUrl);
     document.querySelectorAll('.js-tg-link').forEach(link => link.href = siteData.contact.telegramLink);
 
-    // 2. Language Switcher Label
     document.getElementById('langLabel').textContent = lang === 'ar' ? 'English' : 'عربي';
-
-    // 3. Header & Logo
     document.getElementById('logoTitle').textContent = siteData.header.logoTitle[lang];
     document.getElementById('logoSub').textContent = siteData.header.logoSub[lang];
     document.getElementById('bgWatermark').textContent = siteData.header.logoTitle[lang];
 
-    const navContainer = document.getElementById('navLinks');
-    navContainer.innerHTML = siteData.header.navLinks.map(link => 
+    document.getElementById('navLinks').innerHTML = siteData.header.navLinks.map(link => 
         `<li><a href="#${link.id}">${link.text[lang]}</a></li>`
     ).join('');
 
-    // 4. Hero Section
     document.getElementById('heroBadge').textContent = siteData.hero.badge[lang];
     document.getElementById('heroTitle').innerHTML = siteData.hero.title[lang];
     document.getElementById('heroDesc').textContent = siteData.hero.description[lang];
@@ -264,7 +152,6 @@ function renderPage(lang) {
         `<li><i class="fa-solid ${feat.icon}"></i> <span>${feat.text[lang]}</span></li>`
     ).join('');
 
-    // 5. Why Choose Us Section
     document.getElementById('whyUsTitle').textContent = siteData.whyUs.title[lang];
     document.getElementById('whyUsSub').textContent = siteData.whyUs.subtitle[lang];
     document.getElementById('whyUsGrid').innerHTML = siteData.whyUs.cards.map(card => 
@@ -275,7 +162,6 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 6. Services Section
     document.getElementById('servicesTitle').textContent = siteData.services.title[lang];
     document.getElementById('servicesSub').textContent = siteData.services.subtitle[lang];
     document.getElementById('servicesGrid').innerHTML = siteData.services.cards.map(card => 
@@ -286,7 +172,6 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 7. Packages Section
     document.getElementById('packagesTitle').textContent = siteData.packages.title[lang];
     document.getElementById('packagesSub').textContent = siteData.packages.subtitle[lang];
     document.getElementById('packagesGrid').innerHTML = siteData.packages.items.map(pkg => 
@@ -303,7 +188,6 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 8. Steps Section
     document.getElementById('stepsTitle').textContent = siteData.steps.title[lang];
     document.getElementById('stepsSub').textContent = siteData.steps.subtitle[lang];
     document.getElementById('stepsGrid').innerHTML = siteData.steps.items.map(step => 
@@ -314,7 +198,6 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 9. Playlist Section
     document.getElementById('playlistTitle').textContent = siteData.playlist.title[lang];
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
     document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
@@ -334,7 +217,9 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 10. FAQ Section
+    document.getElementById('testimonialsTitle').textContent = siteData.testimonials.title[lang];
+    document.getElementById('testimonialsSub').textContent = siteData.testimonials.subtitle[lang];
+
     document.getElementById('faqTitle').textContent = siteData.faq.title[lang];
     document.getElementById('faqSub').textContent = siteData.faq.subtitle[lang];
     document.getElementById('faqAccordion').innerHTML = siteData.faq.items.map(item => 
@@ -349,20 +234,99 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 11. Footer
     document.getElementById('footerCopyright').textContent = siteData.footer.copyright[lang];
     document.getElementById('footerWaText').textContent = `واتساب: ${siteData.contact.whatsappNumber}`;
     document.getElementById('footerTgText').textContent = siteData.footer.telegramBtn[lang];
 }
 
-// تبديل اللغة
+// ==========================================================================
+// Firebase Authentication & Firestore Comments Integration Logic
+// ==========================================================================
+
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const authContainer = document.getElementById('authContainer');
+const commentFormCard = document.getElementById('commentFormCard');
+const userInfoDisplay = document.getElementById('userInfoDisplay');
+const userCommentForm = document.getElementById('userCommentForm');
+const testimonialsGrid = document.getElementById('testimonialsGrid');
+
+loginBtn.addEventListener('click', () => {
+    signInWithPopup(auth, googleProvider).catch((error) => {
+        console.error("خطأ في تسجيل الدخول:", error);
+    });
+});
+
+logoutBtn.addEventListener('click', () => {
+    signOut(auth);
+});
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        authContainer.style.display = 'none';
+        commentFormCard.style.display = 'block';
+        userInfoDisplay.textContent = `مرحباً بك، ${user.displayName} (${user.email})`;
+
+        userCommentForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const textVal = document.getElementById('userCommentInput').value.trim();
+            if(!textVal) return;
+
+            try {
+                await addDoc(collection(db, "comments"), {
+                    name: user.displayName,
+                    avatar: user.photoURL,
+                    text: textVal,
+                    uid: user.uid,
+                    createdAt: serverTimestamp()
+                });
+                document.getElementById('userCommentInput').value = '';
+                alert(currentLang === 'ar' ? 'تم إرسال ونشر تعليقك بنجاح للجميع!' : 'Your comment has been posted successfully!');
+            } catch (err) {
+                console.error("خطأ أثناء حفظ التعليق:", err);
+                alert(currentLang === 'ar' ? 'حدث خطأ، تأكد من إعدادات قاعدة البيانات (Rules).' : 'Error saving comment.');
+            }
+        };
+    } else {
+        authContainer.style.display = 'block';
+        commentFormCard.style.display = 'none';
+    }
+});
+
+const q = query(collection(db, "comments"));
+onSnapshot(q, (snapshot) => {
+    let commentsHTML = '';
+    snapshot.forEach((doc) => {
+        const data = doc.data();
+        commentsHTML += `
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testimonial-text">«${data.text}»</p>
+                <div class="testimonial-author">
+                    <div class="author-info" style="display: flex; align-items: center; gap: 10px;">
+                        ${data.avatar ? `<img src="${data.avatar}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold-primary);">` : ''}
+                        <div>
+                            <h5>${data.name}</h5>
+                            <span>${currentLang === 'ar' ? 'مستخدم مسجل بالموقع' : 'Verified User'}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    if(snapshot.empty) {
+        commentsHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">${currentLang === 'ar' ? 'كن أول من يشاركنا رأيه وتجربته!' : 'Be the first to share your experience!'}</div>`;
+    }
+
+    testimonialsGrid.innerHTML = commentsHTML;
+});
+
 function toggleLanguage() {
     renderPage(currentLang === 'ar' ? 'en' : 'ar');
 }
-
-/* ==========================================================================
-   مشغل الصوتيات وأحداث الواجهة
-   ========================================================================== */
 
 let activeAudio = null;
 let activeTrackNum = null;
