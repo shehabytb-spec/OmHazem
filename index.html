@@ -11,15 +11,16 @@
     
     <style>
         :root {
-            --bg-primary: #0a0f1d;
-            --bg-card: rgba(18, 25, 43, 0.7);
-            --gold-primary: #d4af37;
-            --gold-light: #f3e5ab;
-            --gold-dark: #aa8c2c;
-            --text-main: #f8fafc;
+            --bg-primary: #0b1f15;
+            --bg-card: rgba(16, 42, 28, 0.75);
+            --green-primary: #10b981;
+            --green-light: #34d399;
+            --green-dark: #059669;
+            --accent-gold: #fbbf24;
+            --text-main: #f0fdf4;
             --text-muted: #94a3b8;
-            --border-glass: rgba(212, 175, 55, 0.2);
-            --shadow-glow: 0 0 25px rgba(212, 175, 55, 0.15);
+            --border-glass: rgba(16, 185, 129, 0.25);
+            --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.15);
         }
 
         * {
@@ -44,7 +45,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 15vw;
-            color: rgba(212, 175, 55, 0.02);
+            color: rgba(16, 185, 129, 0.025);
             z-index: -1;
             white-space: nowrap;
             pointer-events: none;
@@ -58,14 +59,14 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(10, 15, 29, 0.85);
+            background: rgba(11, 31, 21, 0.9);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-glass);
             transition: 0.3s;
         }
 
         header.scrolled {
-            padding: 10px 0;
+            padding: 8px 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
@@ -88,7 +89,7 @@
         .logo-icon {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -100,7 +101,7 @@
 
         .logo-text h1 {
             font-size: 1.25rem;
-            color: var(--gold-light);
+            color: var(--green-light);
             font-family: 'Amiri', serif;
         }
 
@@ -125,13 +126,13 @@
         }
 
         .nav-links a:hover {
-            color: var(--gold-primary);
+            color: var(--green-light);
         }
 
         .lang-btn {
             background: transparent;
-            border: 1px solid var(--gold-primary);
-            color: var(--gold-primary);
+            border: 1px solid var(--green-primary);
+            color: var(--green-light);
             padding: 6px 14px;
             border-radius: 20px;
             cursor: pointer;
@@ -140,7 +141,7 @@
         }
 
         .lang-btn:hover {
-            background: var(--gold-primary);
+            background: var(--green-primary);
             color: var(--bg-primary);
         }
 
@@ -157,29 +158,29 @@
 
         .hero-content .badge {
             display: inline-block;
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(16, 185, 129, 0.12);
             border: 1px solid var(--border-glass);
-            color: var(--gold-light);
+            color: var(--green-light);
             padding: 6px 16px;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-bottom: 20px;
         }
 
         .hero-content h2 {
-            font-size: 2.8rem;
+            font-size: 2.7rem;
             font-family: 'Amiri', serif;
             line-height: 1.3;
             margin-bottom: 20px;
         }
 
         .hero-content h2 span {
-            color: var(--gold-primary);
+            color: var(--green-light);
         }
 
         .hero-content p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.7;
             margin-bottom: 30px;
         }
@@ -189,9 +190,9 @@
             gap: 15px;
         }
 
-        .btn-gold {
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-            color: var(--bg-primary);
+        .btn-green {
+            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+            color: #ffffff;
             padding: 14px 30px;
             border-radius: 30px;
             text-decoration: none;
@@ -203,7 +204,7 @@
             transition: 0.3s;
         }
 
-        .btn-gold:hover {
+        .btn-green:hover {
             transform: translateY(-3px);
             opacity: 0.95;
         }
@@ -223,7 +224,7 @@
             width: 100px;
             height: 100px;
             margin: 0 auto 15px;
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -234,7 +235,7 @@
 
         .bio-card h3 {
             font-size: 1.3rem;
-            color: var(--gold-light);
+            color: var(--green-light);
             margin-bottom: 5px;
         }
 
@@ -261,7 +262,7 @@
         }
 
         .bio-features i {
-            color: var(--gold-primary);
+            color: var(--green-light);
         }
 
         /* General Sections */
@@ -279,7 +280,7 @@
         .section-title h3 {
             font-size: 2.2rem;
             font-family: 'Amiri', serif;
-            color: var(--gold-light);
+            color: var(--green-light);
             margin-bottom: 10px;
         }
 
@@ -306,19 +307,19 @@
 
         .glass-card:hover {
             transform: translateY(-8px);
-            border-color: var(--gold-primary);
+            border-color: var(--green-light);
             box-shadow: var(--shadow-glow);
         }
 
         .card-icon {
             width: 60px;
             height: 60px;
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(16, 185, 129, 0.1);
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--gold-primary);
+            color: var(--green-light);
             font-size: 1.5rem;
             margin-bottom: 20px;
         }
@@ -326,7 +327,7 @@
         .glass-card h4 {
             font-size: 1.25rem;
             margin-bottom: 12px;
-            color: var(--gold-light);
+            color: var(--green-light);
         }
 
         .glass-card p {
@@ -354,7 +355,7 @@
         }
 
         .package-card.featured {
-            border-color: var(--gold-primary);
+            border-color: var(--green-light);
             box-shadow: var(--shadow-glow);
             transform: scale(1.03);
         }
@@ -363,8 +364,8 @@
             position: absolute;
             top: -15px;
             right: 30px;
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-            color: var(--bg-primary);
+            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+            color: #ffffff;
             padding: 4px 15px;
             border-radius: 20px;
             font-size: 0.75rem;
@@ -373,14 +374,14 @@
 
         .package-card h4 {
             font-size: 1.4rem;
-            color: var(--gold-light);
+            color: var(--green-light);
             margin-bottom: 15px;
         }
 
         .package-price {
             font-size: 1.8rem;
             font-weight: 900;
-            color: var(--gold-primary);
+            color: var(--green-light);
             margin-bottom: 25px;
         }
 
@@ -406,15 +407,15 @@
         }
 
         .package-features i {
-            color: var(--gold-primary);
+            color: var(--green-light);
         }
 
         .btn-package {
             display: block;
             text-align: center;
             background: transparent;
-            border: 1px solid var(--gold-primary);
-            color: var(--gold-primary);
+            border: 1px solid var(--green-primary);
+            color: var(--green-light);
             padding: 12px;
             border-radius: 12px;
             text-decoration: none;
@@ -423,8 +424,8 @@
         }
 
         .package-card.featured .btn-package, .btn-package:hover {
-            background: var(--gold-primary);
-            color: var(--bg-primary);
+            background: var(--green-primary);
+            color: #ffffff;
         }
 
         /* Steps */
@@ -445,8 +446,8 @@
         .step-number {
             width: 50px;
             height: 50px;
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold-primary);
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--green-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -459,7 +460,7 @@
 
         .step-card h4 {
             margin-bottom: 10px;
-            color: var(--gold-light);
+            color: var(--green-light);
         }
 
         .step-card p {
@@ -483,7 +484,7 @@
 
         .column-header {
             font-size: 1.1rem;
-            color: var(--gold-light);
+            color: var(--green-light);
             margin-bottom: 15px;
             text-align: center;
             font-family: 'Amiri', serif;
@@ -503,10 +504,10 @@
         .play-btn-compact {
             width: 35px;
             height: 35px;
-            background: var(--gold-primary);
+            background: var(--green-primary);
             border: none;
             border-radius: 50%;
-            color: var(--bg-primary);
+            color: #ffffff;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -528,11 +529,11 @@
         .track-progress-fill-compact {
             height: 100%;
             width: 0%;
-            background: var(--gold-primary);
+            background: var(--green-primary);
             border-radius: 3px;
         }
 
-        /* Testimonials & Firebase Comments */
+        /* Testimonials */
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -561,7 +562,7 @@
         }
 
         .testimonial-author h5 {
-            color: var(--gold-light);
+            color: var(--green-light);
             font-size: 1rem;
         }
 
@@ -613,7 +614,7 @@
 
         .comment-form-card textarea {
             width: 100%;
-            background: rgba(10, 15, 29, 0.6);
+            background: rgba(11, 31, 21, 0.6);
             border: 1px solid var(--border-glass);
             border-radius: 12px;
             padding: 15px;
@@ -626,7 +627,7 @@
 
         .comment-form-card textarea:focus {
             outline: none;
-            border-color: var(--gold-primary);
+            border-color: var(--green-light);
         }
 
         .user-info-bar {
@@ -635,7 +636,7 @@
             align-items: center;
             margin-bottom: 15px;
             font-size: 0.9rem;
-            color: var(--gold-light);
+            color: var(--green-light);
         }
 
         .btn-logout {
@@ -671,7 +672,7 @@
             align-items: center;
             cursor: pointer;
             font-weight: 600;
-            color: var(--gold-light);
+            color: var(--green-light);
         }
 
         .faq-answer {
@@ -691,7 +692,7 @@
 
         /* Footer */
         footer {
-            background: rgba(5, 8, 15, 0.95);
+            background: rgba(5, 18, 11, 0.95);
             border-top: 1px solid var(--border-glass);
             padding: 50px 20px 20px;
             text-align: center;
@@ -712,9 +713,9 @@
         }
 
         .social-btn {
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(16, 185, 129, 0.1);
             border: 1px solid var(--border-glass);
-            color: var(--gold-primary);
+            color: var(--green-light);
             padding: 10px 20px;
             border-radius: 30px;
             text-decoration: none;
@@ -725,8 +726,8 @@
         }
 
         .social-btn:hover {
-            background: var(--gold-primary);
-            color: var(--bg-primary);
+            background: var(--green-primary);
+            color: #ffffff;
         }
 
         .copyright {
@@ -738,7 +739,6 @@
             padding-top: 20px;
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -764,7 +764,6 @@
 
     <div class="bg-watermark" id="bgWatermark">تحفيظ أونلاين</div>
 
-    <!-- Header -->
     <header id="header">
         <div class="nav-container">
             <a href="#" class="logo-box">
@@ -779,14 +778,13 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="about">
         <div class="hero-content">
             <div class="badge" id="heroBadge">✨ جلسات فردية خاصة عبر جوجل ميت والتليجرام</div>
             <h2 id="heroTitle">تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span></h2>
             <p id="heroDesc">أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.</p>
             <div class="hero-btns">
-                <a href="#" class="btn-gold js-wa-link" target="_blank">
+                <a href="#" class="btn-green js-wa-link" target="_blank">
                     <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text">احجز حصة تجريبية مجانية</span>
                 </a>
             </div>
@@ -799,7 +797,6 @@
         </div>
     </section>
 
-    <!-- Why Us -->
     <section id="why-us">
         <div class="section-title">
             <h3 id="whyUsTitle">لماذا تختار منصة تحفيظ أونلاين؟</h3>
@@ -808,7 +805,6 @@
         <div class="grid-3" id="whyUsGrid"></div>
     </section>
 
-    <!-- Services -->
     <section id="services">
         <div class="section-title">
             <h3 id="servicesTitle">برامجنا التعليمية</h3>
@@ -817,7 +813,6 @@
         <div class="grid-3" id="servicesGrid"></div>
     </section>
 
-    <!-- Packages -->
     <section id="packages">
         <div class="section-title">
             <h3 id="packagesTitle">باقات الحصص الشهرية</h3>
@@ -826,7 +821,6 @@
         <div class="packages-grid" id="packagesGrid"></div>
     </section>
 
-    <!-- Steps -->
     <section id="steps">
         <div class="section-title">
             <h3 id="stepsTitle">كيف تبدأ رحلتك معنا؟</h3>
@@ -835,7 +829,6 @@
         <div class="steps-grid" id="stepsGrid"></div>
     </section>
 
-    <!-- Recitations Playlist -->
     <section id="playlist">
         <div class="section-title">
             <h3 id="playlistTitle">نماذج التلاوات الصوتية</h3>
@@ -844,7 +837,6 @@
         <div class="playlist-container" id="playlistColumnsGrid"></div>
     </section>
 
-    <!-- Testimonials & Comments -->
     <section id="testimonials">
         <div class="section-title">
             <h3 id="testimonialsTitle">آراء وتجارب الحفظ</h3>
@@ -853,16 +845,14 @@
 
         <div class="testimonials-grid" id="testimonialsGrid"></div>
 
-        <!-- Google Auth Container -->
         <div class="auth-section" id="authContainer">
-            <h4 style="color: var(--gold-light); margin-bottom: 15px; font-family: 'Amiri', serif;">أضف رأيك أو تجربتك معنا</h4>
+            <h4 style="color: var(--green-light); margin-bottom: 15px; font-family: 'Amiri', serif;">أضف رأيك أو تجربتك معنا</h4>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">قم بتسجيل الدخول باستخدام حساب جوجل لتتمكن من كتابة تعليقك ونشره مباشرة</p>
             <button class="btn-google" id="loginBtn">
                 <i class="fa-brands fa-google"></i> تسجيل الدخول بحساب جوجل
             </button>
         </div>
 
-        <!-- Comment Form -->
         <div class="comment-form-card" id="commentFormCard">
             <div class="user-info-bar">
                 <span id="userInfoDisplay">مرحباً بك</span>
@@ -870,12 +860,11 @@
             </div>
             <form id="userCommentForm">
                 <textarea id="userCommentInput" placeholder="اكتب رأيك أو تجربتك بكل صدق..." required></textarea>
-                <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 10px;">نشر التعليق</button>
+                <button type="submit" class="btn-green" style="width: 100%; justify-content: center; padding: 10px;">نشر التعليق</button>
             </form>
         </div>
     </section>
 
-    <!-- FAQ -->
     <section id="faq">
         <div class="section-title">
             <h3 id="faqTitle">الأسئلة الشائعة</h3>
@@ -884,13 +873,12 @@
         <div class="faq-accordion" id="faqAccordion"></div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="logo-box">
                 <div class="logo-icon"><i class="fa-solid fa-quran"></i></div>
                 <div class="logo-text">
-                    <h1 style="font-size: 1.1rem; color: var(--gold-light);">تحفيظ أونلاين</h1>
+                    <h1 style="font-size: 1.1rem; color: var(--green-light);">تحفيظ أونلاين</h1>
                 </div>
             </div>
             <div class="social-btns">
@@ -901,7 +889,7 @@
         </div>
     </footer>
 
-    <!-- ربط ملف المحتوى والمنطق والفايربيس -->
+    <!-- ربط ملف المنطق -->
     <script type="module" src="content.js"></script>
 </body>
 </html>
