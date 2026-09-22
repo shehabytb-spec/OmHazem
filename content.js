@@ -21,7 +21,6 @@ const siteData = {
             { id: "packages", text: { ar: "باقات الحصص", en: "Packages" } },
             { id: "steps", text: { ar: "خطوات البدء", en: "How to Start" } },
             { id: "playlist", text: { ar: "نماذج التلاوات", en: "Recitations" } },
-            { id: "testimonials", text: { ar: "آراء وتجارب الحفظ", en: "Reviews & Comments" } },
             { id: "faq", text: { ar: "الأسئلة الشائعة", en: "FAQ" } }
         ]
     },
@@ -201,29 +200,6 @@ const siteData = {
         ]
     },
 
-    // قسم التعليقات وتجارب الحفظ (Testimonials & Comments)
-    testimonials: {
-        title: { ar: "آراء وتجارب الحفظ", en: "Reviews & Memorization Experiences" },
-        subtitle: { ar: "شاركنا تجربتك في حفظ القرآن الكريم واطلع على تعليقات ومراجعات المشتركين", en: "Share your experience and read reviews from other members" },
-        defaultItems: [
-            {
-                text: { ar: "«ما شاء الله المعلمة صبورة جداً مع أطفالي وطريقتها في الشرح وتحفيز الأطفال جعلتهم يحبون حصة القرآن ينتظرونها بشغف.»", en: "«The tutor is very patient with my kids. Her teaching method makes children look forward to Quran class eagerly.»" },
-                author: { ar: "أم عبد الله", en: "Um Abdullah" },
-                location: { ar: "ولية أمر - السعودية", en: "Parent - Saudi Arabia" }
-            },
-            {
-                text: { ar: "«كنت أجد صعوبة في ضبط أحكام التجويد ومخارج الحروف، وبفضل الله ثم التوجيه المستمر في الحلقات الفردية تحسن نطقي كثيراً.»", en: "«I struggled with Tajweed rules, but thanks to the targeted individual correction, my pronunciation improved vastly.»" },
-                author: { ar: "أستاذة سارة", en: "Sara M." },
-                location: { ar: "طالبة بالمنصة - الإمارات", en: "Student - UAE" }
-            },
-            {
-                text: { ar: "«التزام بالوقت، ومرونة عالية، وبيئة هادئة ومريحة جداً أثناء الحصة. جزاكم الله خيراً على هذا المجهود الطيب.»", en: "«Punctual, flexible, and very comfortable learning atmosphere during sessions. May Allah reward you well.»" },
-                author: { ar: "مريم إبراهيم", en: "Mariam I." },
-                location: { ar: "طالبة مراجعة - مصر", en: "Student - Egypt" }
-            }
-        ]
-    },
-
     // قسم الأسئلة الشائعة (FAQ)
     faq: {
         title: { ar: "الأسئلة الشائعة", en: "Frequently Asked Questions" },
@@ -252,15 +228,6 @@ const siteData = {
    ========================================================================== */
 
 let currentLang = 'ar';
-
-// جلب التعليقات المخزنة محلياً إن وجدت لضمان بقائها للمستخدمين
-function getStoredComments() {
-    const saved = localStorage.getItem('site_user_comments');
-    if (saved) {
-        try { return JSON.parse(saved); } catch(e) { return []; }
-    }
-    return [];
-}
 
 function renderPage(lang) {
     currentLang = lang;
@@ -353,7 +320,6 @@ function renderPage(lang) {
     document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
         `<div class="playlist-column">
             <div class="column-header">${col.header[lang]}</div>
-            ${col.tracks.tracks ? '' : ''}
             ${col.tracks.map(track => 
                 `<div class="audio-track-card-compact">
                     <button class="play-btn-compact" onclick="playTrack(${track.id})">
@@ -368,34 +334,7 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 10. Testimonials & Comments Section
-    document.getElementById('testimonialsTitle').textContent = siteData.testimonials.title[lang];
-    document.getElementById('testimonialsSub').textContent = siteData.testimonials.subtitle[lang];
-    
-    // دمج التعليقات الافتراضية مع تعليقات المستخدمين الجدد
-    const stored = getStoredComments();
-    const allComments = [...stored, ...siteData.testimonials.defaultItems];
-
-    document.getElementById('testimonialsGrid').innerHTML = allComments.map(item => {
-        const textVal = typeof item.text === 'object' ? item.text[lang] || item.text.ar : item.text;
-        const authorVal = typeof item.author === 'object' ? item.author[lang] || item.author.ar : item.author;
-        const locVal = typeof item.location === 'object' ? item.location[lang] || item.location.ar : item.location;
-
-        return `<div class="testimonial-card">
-            <div class="testimonial-stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            </div>
-            <p class="testimonial-text">«${textVal}»</p>
-            <div class="testimonial-author">
-                <div class="author-info">
-                    <h5>${authorVal}</h5>
-                    <span>${locVal}</span>
-                </div>
-            </div>
-        </div>`;
-    }).join('');
-
-    // 11. FAQ Section
+    // 10. FAQ Section
     document.getElementById('faqTitle').textContent = siteData.faq.title[lang];
     document.getElementById('faqSub').textContent = siteData.faq.subtitle[lang];
     document.getElementById('faqAccordion').innerHTML = siteData.faq.items.map(item => 
@@ -410,38 +349,10 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // 12. Footer
+    // 11. Footer
     document.getElementById('footerCopyright').textContent = siteData.footer.copyright[lang];
     document.getElementById('footerWaText').textContent = `واتساب: ${siteData.contact.whatsappNumber}`;
     document.getElementById('footerTgText').textContent = siteData.footer.telegramBtn[lang];
-}
-
-// دالة التعامل مع إرسال التعليق الجديد من قبل المستخدم
-function handleCommentSubmit(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('commenterName').value.trim();
-    const role = document.getElementById('commenterRole').value.trim();
-    const text = document.getElementById('commenterText').value.trim();
-
-    if(!name || !role || !text) return;
-
-    const newComment = {
-        text: text,
-        author: name,
-        location: role
-    };
-
-    // حفظ التعليق في التخزين المحلي (LocalStorage) لكي يظهر للمستخدم في نفس المتصفح
-    const currentStored = getStoredComments();
-    currentStored.unshift(newComment);
-    localStorage.setItem('site_user_comments', JSON.stringify(currentStored));
-
-    // إعادة ضبط الحقول وإعادة عرض الصفحة لتحديث قائمة التعليقات فوراً
-    document.getElementById('userCommentForm').reset();
-    renderPage(currentLang);
-    
-    alert(currentLang === 'ar' ? 'تم إرسال ونشر تعليقك بنجاح!' : 'Your comment has been posted successfully!');
 }
 
 // تبديل اللغة
