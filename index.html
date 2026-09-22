@@ -11,16 +11,17 @@
     
     <style>
         :root {
-            --bg-primary: #f4f8f6;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --green-primary: #0d9488;
-            --green-light: #14b8a6;
-            --green-dark: #0f766e;
-            --accent-gold: #d97706;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-glass: rgba(13, 148, 136, 0.15);
-            --shadow-glow: 0 10px 30px rgba(13, 148, 136, 0.08);
+            --bg-primary: #060e0a;
+            --bg-card: rgba(11, 28, 18, 0.85);
+            --green-primary: #10b981;
+            --green-light: #34d399;
+            --green-dark: #047857;
+            --accent-gold: #fbbf24;
+            --accent-gold-glow: rgba(251, 191, 36, 0.4);
+            --text-main: #f0fdf4;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(16, 185, 129, 0.25);
+            --shadow-glow: 0 0 30px rgba(16, 185, 129, 0.2);
         }
 
         * {
@@ -38,20 +39,29 @@
             position: relative;
         }
 
+        /* 3D Interactive Canvas Background */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
         /* Watermark Background */
         .bg-watermark {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 14vw;
-            color: rgba(13, 148, 136, 0.03);
+            font-size: 15vw;
+            color: rgba(16, 185, 129, 0.02);
             z-index: -1;
             white-space: nowrap;
             pointer-events: none;
             font-family: 'Amiri', serif;
-            font-weight: 700;
-            user-select: none;
         }
 
         /* Header & Nav */
@@ -61,15 +71,16 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(244, 248, 246, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(6, 14, 10, 0.85);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-glass);
-            transition: 0.3s;
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         header.scrolled {
-            padding: 6px 0;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            padding: 5px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            background: rgba(6, 14, 10, 0.95);
         }
 
         .nav-container {
@@ -81,34 +92,65 @@
             padding: 15px 20px;
         }
 
+        /* Islamic Ornament Logo Container */
         .logo-box {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             text-decoration: none;
+            position: relative;
+            padding: 5px 12px;
+            border-radius: 12px;
+            background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.05);
+            transition: 0.3s;
+        }
+
+        .logo-box:hover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 20px var(--accent-gold-glow);
+        }
+
+        /* Islamic Motif Corners */
+        .logo-box::before, .logo-box::after {
+            content: '✦';
+            position: absolute;
+            font-size: 10px;
+            color: var(--accent-gold);
+            animation: pulseGold 2s infinite alternate;
+        }
+        .logo-box::before { top: -4px; right: -4px; }
+        .logo-box::after { bottom: -4px; left: -4px; }
+
+        @keyframes pulseGold {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
         }
 
         .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--green-primary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
-            font-size: 1.3rem;
-            box-shadow: var(--shadow-glow);
+            color: var(--bg-primary);
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px var(--accent-gold-glow);
         }
 
         .logo-text h1 {
-            font-size: 1.25rem;
-            color: var(--green-dark);
+            font-size: 1.2rem;
+            color: var(--accent-gold);
             font-family: 'Amiri', serif;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
         }
 
         .logo-text span {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
         }
 
@@ -125,31 +167,49 @@
             font-size: 0.95rem;
             font-weight: 500;
             transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--green-primary);
+            color: var(--accent-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .lang-btn {
             background: transparent;
-            border: 1px solid var(--green-primary);
-            color: var(--green-primary);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
             padding: 6px 14px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.1);
         }
 
         .lang-btn:hover {
-            background: var(--green-primary);
-            color: #ffffff;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
         /* Hero Section */
         .hero {
-            padding: 160px 20px 80px;
+            padding: 170px 20px 80px;
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
@@ -160,14 +220,14 @@
 
         .hero-content .badge {
             display: inline-block;
-            background: rgba(13, 148, 136, 0.08);
-            border: 1px solid var(--border-glass);
-            color: var(--green-primary);
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--accent-gold);
             padding: 6px 16px;
             border-radius: 30px;
             font-size: 0.9rem;
             margin-bottom: 20px;
-            font-weight: 500;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
         }
 
         .hero-content h2 {
@@ -175,11 +235,11 @@
             font-family: 'Amiri', serif;
             line-height: 1.3;
             margin-bottom: 20px;
-            color: var(--text-main);
         }
 
         .hero-content h2 span {
-            color: var(--green-primary);
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
 
         .hero-content p {
@@ -206,47 +266,50 @@
             gap: 10px;
             box-shadow: var(--shadow-glow);
             transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .btn-green:hover {
-            transform: translateY(-3px);
-            opacity: 0.95;
-            box-shadow: 0 15px 35px rgba(13, 148, 136, 0.2);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+            filter: brightness(1.1);
         }
 
-        /* Bio Card */
+        /* Bio Card 3D effect */
         .bio-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-glow);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), var(--shadow-glow);
             text-align: center;
-            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
         }
 
         .bio-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateX(2deg) rotateY(-2deg);
+            border-color: var(--accent-gold);
         }
 
         .bio-avatar {
             width: 100px;
             height: 100px;
             margin: 0 auto 15px;
-            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+            background: linear-gradient(135deg, var(--accent-gold), var(--green-dark));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
-            color: #ffffff;
-            box-shadow: var(--shadow-glow);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
         .bio-card h3 {
             font-size: 1.3rem;
-            color: var(--green-dark);
+            color: var(--accent-gold);
             margin-bottom: 5px;
         }
 
@@ -270,11 +333,10 @@
             align-items: center;
             gap: 10px;
             font-size: 0.9rem;
-            color: var(--text-main);
         }
 
         .bio-features i {
-            color: var(--green-primary);
+            color: var(--accent-gold);
         }
 
         /* General Sections */
@@ -292,8 +354,9 @@
         .section-title h3 {
             font-size: 2.2rem;
             font-family: 'Amiri', serif;
-            color: var(--green-dark);
+            color: var(--accent-gold);
             margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
         }
 
         .section-title p {
@@ -313,34 +376,51 @@
             border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 40px 30px;
-            transition: 0.3s;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            transition: 0.4s;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.05), transparent);
+            transition: 0.5s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
         }
 
         .glass-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--green-primary);
-            box-shadow: var(--shadow-glow);
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(251, 191, 36, 0.15);
         }
 
         .card-icon {
             width: 60px;
             height: 60px;
-            background: rgba(13, 148, 136, 0.08);
+            background: rgba(251, 191, 36, 0.1);
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--green-primary);
+            color: var(--accent-gold);
             font-size: 1.5rem;
             margin-bottom: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
         }
 
         .glass-card h4 {
             font-size: 1.25rem;
             margin-bottom: 12px;
-            color: var(--green-dark);
+            color: var(--accent-gold);
         }
 
         .glass-card p {
@@ -365,43 +445,39 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            backdrop-filter: blur(12px);
             transition: 0.3s;
         }
 
-        .package-card:hover {
-            transform: translateY(-5px);
-        }
-
         .package-card.featured {
-            border-color: var(--green-primary);
-            box-shadow: var(--shadow-glow);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
             transform: scale(1.03);
-            background: #ffffff;
         }
 
         .package-badge {
             position: absolute;
             top: -15px;
             right: 30px;
-            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--accent-gold), #d97706);
+            color: var(--bg-primary);
             padding: 4px 15px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
+            box-shadow: 0 0 15px var(--accent-gold-glow);
         }
 
         .package-card h4 {
             font-size: 1.4rem;
-            color: var(--green-dark);
+            color: var(--accent-gold);
             margin-bottom: 15px;
         }
 
         .package-price {
             font-size: 1.8rem;
             font-weight: 900;
-            color: var(--green-primary);
+            color: var(--accent-gold);
             margin-bottom: 25px;
         }
 
@@ -424,19 +500,18 @@
             align-items: center;
             gap: 10px;
             font-size: 0.9rem;
-            color: var(--text-main);
         }
 
         .package-features i {
-            color: var(--green-primary);
+            color: var(--accent-gold);
         }
 
         .btn-package {
             display: block;
             text-align: center;
             background: transparent;
-            border: 1px solid var(--green-primary);
-            color: var(--green-primary);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
             padding: 12px;
             border-radius: 12px;
             text-decoration: none;
@@ -445,8 +520,9 @@
         }
 
         .package-card.featured .btn-package, .btn-package:hover {
-            background: var(--green-primary);
-            color: #ffffff;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
         /* Steps */
@@ -462,20 +538,20 @@
             padding: 30px 20px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            backdrop-filter: blur(10px);
             transition: 0.3s;
         }
 
         .step-card:hover {
+            border-color: var(--accent-gold);
             transform: translateY(-5px);
-            border-color: var(--green-primary);
         }
 
         .step-number {
             width: 50px;
             height: 50px;
-            background: rgba(13, 148, 136, 0.08);
-            color: var(--green-primary);
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--accent-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -483,12 +559,13 @@
             font-size: 1.2rem;
             font-weight: 700;
             margin: 0 auto 20px;
-            border: 1px solid var(--border-glass);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
         }
 
         .step-card h4 {
             margin-bottom: 10px;
-            color: var(--green-dark);
+            color: var(--accent-gold);
         }
 
         .step-card p {
@@ -508,12 +585,12 @@
             border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            backdrop-filter: blur(10px);
         }
 
         .column-header {
             font-size: 1.1rem;
-            color: var(--green-dark);
+            color: var(--accent-gold);
             margin-bottom: 15px;
             text-align: center;
             font-family: 'Amiri', serif;
@@ -523,37 +600,43 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(13, 148, 136, 0.02);
+            background: rgba(255,255,255,0.02);
             padding: 10px 15px;
             border-radius: 12px;
             margin-bottom: 10px;
-            border: 1px solid var(--border-glass);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .audio-track-card-compact:hover {
+            border-color: var(--accent-gold);
         }
 
         .play-btn-compact {
             width: 35px;
             height: 35px;
-            background: var(--green-primary);
+            background: var(--accent-gold);
             border: none;
             border-radius: 50%;
-            color: #ffffff;
+            color: var(--bg-primary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
             flex-shrink: 0;
-            transition: 0.2s;
+            box-shadow: 0 0 10px var(--accent-gold-glow);
+            transition: 0.3s;
         }
 
         .play-btn-compact:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .track-progress-compact {
             flex-grow: 1;
             height: 6px;
-            background: rgba(13, 148, 136, 0.1);
+            background: rgba(255,255,255,0.1);
             border-radius: 3px;
             cursor: pointer;
             position: relative;
@@ -563,7 +646,7 @@
         .track-progress-fill-compact {
             height: 100%;
             width: 0%;
-            background: var(--green-primary);
+            background: var(--accent-gold);
             border-radius: 3px;
         }
 
@@ -580,18 +663,20 @@
             border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            backdrop-filter: blur(10px);
             transition: 0.3s;
         }
 
         .testimonial-card:hover {
+            border-color: var(--accent-gold);
             transform: translateY(-5px);
         }
 
         .testimonial-stars {
-            color: #f59e0b;
+            color: var(--accent-gold);
             margin-bottom: 15px;
             font-size: 0.9rem;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
         }
 
         .testimonial-text {
@@ -602,7 +687,7 @@
         }
 
         .testimonial-author h5 {
-            color: var(--green-dark);
+            color: var(--accent-gold);
             font-size: 1rem;
         }
 
@@ -620,13 +705,13 @@
             border-radius: 20px;
             max-width: 600px;
             margin: 0 auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            backdrop-filter: blur(10px);
         }
 
         .btn-google {
             background: #ffffff;
             color: #1f2937;
-            border: 1px solid #cbd5e1;
+            border: none;
             padding: 12px 25px;
             border-radius: 30px;
             font-weight: 700;
@@ -634,13 +719,14 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: 0.3s;
         }
 
         .btn-google:hover {
-            background: #f8fafc;
+            background: #f3f4f6;
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.2);
         }
 
         .comment-form-card {
@@ -651,12 +737,12 @@
             max-width: 600px;
             margin: 0 auto;
             display: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            backdrop-filter: blur(10px);
         }
 
         .comment-form-card textarea {
             width: 100%;
-            background: #ffffff;
+            background: rgba(6, 14, 10, 0.7);
             border: 1px solid var(--border-glass);
             border-radius: 12px;
             padding: 15px;
@@ -669,7 +755,8 @@
 
         .comment-form-card textarea:focus {
             outline: none;
-            border-color: var(--green-primary);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
         }
 
         .user-info-bar {
@@ -678,8 +765,7 @@
             align-items: center;
             margin-bottom: 15px;
             font-size: 0.9rem;
-            color: var(--green-dark);
-            font-weight: 600;
+            color: var(--accent-gold);
         }
 
         .btn-logout {
@@ -690,12 +776,12 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.8rem;
-            transition: 0.2s;
+            transition: 0.3s;
         }
 
         .btn-logout:hover {
             background: #ef4444;
-            color: #ffffff;
+            color: #fff;
         }
 
         /* FAQ */
@@ -712,7 +798,12 @@
             border: 1px solid var(--border-glass);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent-gold);
         }
 
         .faq-question {
@@ -722,12 +813,7 @@
             align-items: center;
             cursor: pointer;
             font-weight: 600;
-            color: var(--green-dark);
-            transition: 0.2s;
-        }
-
-        .faq-question:hover {
-            background: rgba(13, 148, 136, 0.02);
+            color: var(--accent-gold);
         }
 
         .faq-answer {
@@ -747,7 +833,7 @@
 
         /* Footer */
         footer {
-            background: #e2e8f0;
+            background: rgba(3, 8, 5, 0.98);
             border-top: 1px solid var(--border-glass);
             padding: 50px 20px 20px;
             text-align: center;
@@ -768,9 +854,9 @@
         }
 
         .social-btn {
-            background: #ffffff;
-            border: 1px solid var(--border-glass);
-            color: var(--green-primary);
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            color: var(--accent-gold);
             padding: 10px 20px;
             border-radius: 30px;
             text-decoration: none;
@@ -778,19 +864,19 @@
             align-items: center;
             gap: 8px;
             transition: 0.3s;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
         .social-btn:hover {
-            background: var(--green-primary);
-            color: #ffffff;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
         .copyright {
             color: var(--text-muted);
             font-size: 0.85rem;
             margin-top: 20px;
-            border-top: 1px solid rgba(0,0,0,0.05);
+            border-top: 1px solid rgba(255,255,255,0.05);
             width: 100%;
             padding-top: 20px;
         }
@@ -818,10 +904,13 @@
 </head>
 <body>
 
+    <!-- 3D Background Canvas -->
+    <canvas id="bgCanvas"></canvas>
     <div class="bg-watermark" id="bgWatermark">تحفيظ أونلاين</div>
 
     <header id="header">
         <div class="nav-container">
+            <!-- زخارف إسلامية متكاملة بجانب اسم الموقع -->
             <a href="#" class="logo-box">
                 <div class="logo-icon"><i class="fa-solid fa-quran"></i></div>
                 <div class="logo-text">
@@ -902,10 +991,10 @@
         <div class="testimonials-grid" id="testimonialsGrid"></div>
 
         <div class="auth-section" id="authContainer">
-            <h4 style="color: var(--green-dark); margin-bottom: 15px; font-family: 'Amiri', serif;">أضف رأيك أو تجربتك معنا</h4>
+            <h4 style="color: var(--accent-gold); margin-bottom: 15px; font-family: 'Amiri', serif;">أضف رأيك أو تجربتك معنا</h4>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">قم بتسجيل الدخول باستخدام حساب جوجل لتتمكن من كتابة تعليقك ونشره مباشرة</p>
             <button class="btn-google" id="loginBtn">
-                <i class="fa-brands fa-google" style="color: #ea4335;"></i> تسجيل الدخول بحساب جوجل
+                <i class="fa-brands fa-google"></i> تسجيل الدخول بحساب جوجل
             </button>
         </div>
 
@@ -934,18 +1023,104 @@
             <div class="logo-box">
                 <div class="logo-icon"><i class="fa-solid fa-quran"></i></div>
                 <div class="logo-text">
-                    <h1 style="font-size: 1.1rem; color: var(--green-dark);">تحفيظ أونلاين</h1>
+                    <h1 style="font-size: 1.1rem; color: var(--accent-gold);">تحفيظ أونلاين</h1>
                 </div>
             </div>
             <div class="social-btns">
-                <a href="#" class="social-btn js-wa-link" target="_blank"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> <span id="footerWaText">واتساب</span></a>
-                <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands fa-telegram" style="color: #229ed9;"></i> <span id="footerTgText">تليجرام</span></a>
+                <a href="#" class="social-btn js-wa-link" target="_blank"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText">واتساب</span></a>
+                <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands faس-telegram"></i> <span id="footerTgTest">تليجرام</span></a>
             </div>
             <div class="copyright" id="footerCopyright">منصة تحفيظ أونلاين. جميع الحقوق محفوظة.</div>
         </div>
     </footer>
 
-    <!-- ربط ملف المنطق -->
+    <!-- سكريبت الخلفية ثلاثية الأبعاد التفاعلية (3D Canvas Animation) -->
+    <script>
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const numParticles = 45;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
+            mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
+        });
+
+        class Particle3D {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = (Math.random() - 0.5) * canvas.width * 1.5;
+                this.y = (Math.random() - 0.5) * canvas.height * 1.5;
+                this.z = Math.random() * 500 + 50;
+                this.radius = Math.random() * 2 + 1;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.color = Math.random() > 0.3 ? '#10b981' : '#fbbf24';
+            }
+
+            update() {
+                this.z -= 0.5;
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.z <= 0) {
+                    this.reset();
+                    this.z = 500;
+                }
+            }
+
+            draw() {
+                const fov = 300;
+                const scale = fov / (fov + this.z);
+                const x2d = canvas.width / 2 + (this.x + mouseX * 200) * scale;
+                const y2d = canvas.height / 2 + (this.y + mouseY * 200) * scale;
+
+                if (x2d >= 0 && x2d <= canvas.width && y2d >= 0 && y2d <= canvas.height) {
+                    const currentRadius = this.radius * scale;
+                    ctx.beginPath();
+                    ctx.arc(x2d, y2d, currentRadius > 0 ? currentRadius : 0, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = scale * 0.6;
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = this.color;
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                    ctx.shadowBlur = 0;
+                }
+            }
+        }
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle3D());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+
+    <!-- ربط ملف المنطق الخاص بك (content.js) دون أي تعديل عليه -->
     <script type="module" src="content.js"></script>
 </body>
 </html>
