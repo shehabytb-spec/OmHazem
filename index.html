@@ -3,344 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحفيظ أونلاين | منصة تعليم القرآن والتجويد</title>
-    <meta name="description" content="منصة تحفيظ أونلاين لتعليم القرآن الكريم وتصحيح التلاوة وأحكام التجويد للنساء والأطفال أونلاين.">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
+    <title id="logoTitle">تحفيظ أونلاين - Tahfeez Online</title>
+    <!-- خطوط جوجل العربية والإنجليزية -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
-        /* ==========================================
-           1. CSS VARIABLES & RESET
-        ========================================== */
         :root {
-            --primary-emerald: #064E3B;
-            --primary-dark-emerald: #022C22;
-            --secondary-navy: #0F172A;
-            --gold-primary: #D4AF37;
-            --gold-light: #F3E5AB;
-            --gold-dark: #AA7C11;
-            --text-light: #F8FAFC;
-            --text-muted: #94A3B8;
-            --glass-bg: rgba(15, 23, 42, 0.78);
-            --glass-border: rgba(212, 175, 55, 0.3);
-            --glass-hover: rgba(6, 78, 59, 0.65);
-            --font-arabic-heading: 'Amiri', serif;
-            --font-arabic-body: 'Cairo', sans-serif;
-            --font-english: 'Poppins', sans-serif;
-            --transition: all 0.3s ease;
+            --bg-primary: #0a0f1d;
+            --bg-card: rgba(18, 25, 43, 0.7);
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa8c2c;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(212, 175, 55, 0.2);
+            --shadow-glow: 0 0 25px rgba(212, 175, 55, 0.15);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Tajawal', 'Poppins', sans-serif;
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: var(--font-arabic-body);
-            background-color: var(--secondary-navy);
-            color: var(--text-light);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
             overflow-x: hidden;
-            line-height: 1.7;
             position: relative;
         }
 
-        body[dir="ltr"] {
-            font-family: var(--font-english);
-        }
-
-        /* Ambient Islamic Pattern Overlay */
-        .pattern-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.07;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><g fill="none" stroke="%23D4AF37" stroke-width="1"><path d="M60 0 L120 60 L60 120 L0 60 Z"/><path d="M60 15 L105 60 L60 105 L15 60 Z"/><rect x="30" y="30" width="60" height="60"/><rect x="30" y="30" width="60" height="60" transform="rotate(45 60 60)"/><circle cx="60" cy="60" r="25"/><circle cx="60" cy="60" r="10"/><path d="M0 0 L120 120 M120 0 L0 120"/></g></svg>');
-            background-repeat: repeat;
-        }
-
-        /* Static Background Watermark - تحسين الوضوح والظهور */
-        .background-watermark {
+        /* Watermark Background */
+        .bg-watermark {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-family: var(--font-arabic-heading);
-            font-size: min(14vw, 130px);
-            font-weight: 700;
-            color: transparent;
-            -webkit-text-stroke: 2.5px rgba(212, 175, 55, 0.22);
-            text-align: center;
+            font-size: 15vw;
+            color: rgba(212, 175, 55, 0.02);
+            z-index: -1;
             white-space: nowrap;
             pointer-events: none;
-            z-index: 0;
-            user-select: none;
-            filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.08));
+            font-family: 'Amiri', serif;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ==========================================
-           2. HEADER & NAVIGATION
-        ========================================== */
+        /* Header & Nav */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            transition: var(--transition);
-            padding: 18px 0;
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(10, 15, 29, 0.85);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--border-glass);
+            transition: 0.3s;
         }
 
         header.scrolled {
-            padding: 12px 0;
-            background: rgba(2, 44, 34, 0.95);
+            padding: 10px 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 20px;
         }
 
-        .logo {
+        .logo-box {
             display: flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            color: var(--text-light);
         }
 
         .logo-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
+            width: 45px;
+            height: 45px;
             background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-dark-emerald);
-            font-size: 1.5rem;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            color: var(--bg-primary);
+            font-size: 1.3rem;
+            box-shadow: var(--shadow-glow);
         }
 
         .logo-text h1 {
-            font-family: var(--font-arabic-heading);
-            font-size: 1.6rem;
+            font-size: 1.25rem;
             color: var(--gold-light);
-            line-height: 1.1;
+            font-family: 'Amiri', serif;
         }
 
         .logo-text span {
             font-size: 0.75rem;
             color: var(--text-muted);
-            display: block;
         }
 
         .nav-links {
             display: flex;
-            gap: 22px;
             list-style: none;
+            gap: 20px;
             align-items: center;
         }
 
         .nav-links a {
-            color: var(--text-light);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.92rem;
-            transition: var(--transition);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s;
         }
 
         .nav-links a:hover {
             color: var(--gold-primary);
         }
 
-        .lang-switch {
-            background: rgba(212, 175, 55, 0.15);
+        .lang-btn {
+            background: transparent;
             border: 1px solid var(--gold-primary);
-            color: var(--gold-light);
-            padding: 6px 16px;
+            color: var(--gold-primary);
+            padding: 6px 14px;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: bold;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .lang-switch:hover {
+        .lang-btn:hover {
             background: var(--gold-primary);
-            color: var(--secondary-navy);
+            color: var(--bg-primary);
         }
 
-        /* ==========================================
-           3. HERO SECTION
-        ========================================== */
+        /* Hero Section */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 130px;
-            padding-bottom: 60px;
-            position: relative;
-        }
-
-        .hero-grid {
+            padding: 160px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
             gap: 40px;
             align-items: center;
         }
 
-        .hero-title-badge {
+        .hero-content .badge {
             display: inline-block;
-            padding: 8px 20px;
             background: rgba(212, 175, 55, 0.1);
-            border: 1px solid var(--gold-primary);
-            border-radius: 30px;
+            border: 1px solid var(--border-glass);
             color: var(--gold-light);
-            font-size: 0.9rem;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
             margin-bottom: 20px;
         }
 
         .hero-content h2 {
-            font-family: var(--font-arabic-heading);
-            font-size: 3.2rem;
+            font-size: 2.8rem;
+            font-family: 'Amiri', serif;
             line-height: 1.3;
-            color: #FFF;
             margin-bottom: 20px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
 
         .hero-content h2 span {
             color: var(--gold-primary);
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         .hero-content p {
-            font-size: 1.1rem;
             color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
             margin-bottom: 30px;
-            max-width: 600px;
         }
 
-        .cta-group {
+        .hero-btns {
             display: flex;
             gap: 15px;
-            flex-wrap: wrap;
         }
 
-        .btn {
-            padding: 14px 32px;
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: var(--bg-primary);
+            padding: 14px 30px;
             border-radius: 30px;
-            font-weight: 700;
             text-decoration: none;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
+            box-shadow: var(--shadow-glow);
+            transition: 0.3s;
         }
 
-        .btn-whatsapp {
-            background: #25D366;
-            color: #FFF;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-whatsapp:hover {
+        .btn-gold:hover {
             transform: translateY(-3px);
-            background: #20ba5a;
+            opacity: 0.95;
         }
 
-        .btn-telegram {
-            background: #0088cc;
-            color: #FFF;
-            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.3);
-        }
-
-        .btn-telegram:hover {
-            transform: translateY(-3px);
-            background: #0077b5;
-        }
-
-        .hero-card-glass {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
+        /* Bio Card */
+        .bio-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
             padding: 30px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .bio-badge {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-glow);
+            text-align: center;
         }
 
         .bio-avatar {
-            width: 70px;
-            height: 70px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
             border-radius: 50%;
-            border: 2px solid var(--gold-primary);
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23D4AF37"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>') center/cover;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--bg-primary);
         }
 
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 10px;
-            text-align: start;
+        .bio-card h3 {
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            margin-bottom: 5px;
         }
 
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .bio-card span {
+            font-size: 0.85rem;
             color: var(--text-muted);
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .bio-features {
+            list-style: none;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bio-features li {
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 0.9rem;
         }
 
-        .pricing-features li i {
+        .bio-features i {
             color: var(--gold-primary);
         }
 
-        /* ==========================================
-           4. SECTIONS COMMON STYLES
-        ========================================== */
-        .section-padding {
-            padding: 90px 0;
+        /* General Sections */
+        section {
+            padding: 90px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .section-title {
@@ -349,8 +277,8 @@
         }
 
         .section-title h3 {
-            font-family: var(--font-arabic-heading);
-            font-size: 2.5rem;
+            font-size: 2.2rem;
+            font-family: 'Amiri', serif;
             color: var(--gold-light);
             margin-bottom: 10px;
         }
@@ -358,63 +286,68 @@
         .section-title p {
             color: var(--text-muted);
             font-size: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
-        .cards-grid {
+        /* Grid Cards */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold-primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .glass-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--gold-light);
+        }
+
+        .glass-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Packages */
+        .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 35px 25px;
-            transition: var(--transition);
-            backdrop-filter: blur(12px);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px);
-            background: var(--glass-hover);
-            border-color: var(--gold-primary);
-        }
-
-        .card-icon {
-            width: 65px;
-            height: 65px;
-            background: rgba(212, 175, 55, 0.15);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--gold-primary);
-            margin-bottom: 20px;
-            border: 1px solid var(--glass-border);
-        }
-
-        /* ==========================================
-           5. PRICING PACKAGES SECTION (باقات الحصص)
-        ========================================== */
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
         .package-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
             border-radius: 20px;
-            padding: 35px 25px;
-            text-align: center;
+            padding: 40px 30px;
             position: relative;
-            backdrop-filter: blur(12px);
-            transition: var(--transition);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -422,212 +355,300 @@
 
         .package-card.featured {
             border-color: var(--gold-primary);
-            background: rgba(6, 78, 59, 0.5);
+            box-shadow: var(--shadow-glow);
             transform: scale(1.03);
         }
 
         .package-badge {
             position: absolute;
             top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gold-primary);
-            color: var(--secondary-navy);
-            padding: 5px 15px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: var(--bg-primary);
+            padding: 4px 15px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
         }
 
         .package-card h4 {
-            font-family: var(--font-arabic-heading);
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: var(--gold-light);
             margin-bottom: 15px;
         }
 
         .package-price {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #FFF;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--gold-primary);
+            margin-bottom: 25px;
         }
 
         .package-price span {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            font-weight: normal;
+            font-weight: 400;
         }
 
         .package-features {
             list-style: none;
-            margin-bottom: 25px;
-            text-align: start;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
         .package-features li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-muted);
-            font-size: 0.92rem;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 0.9rem;
         }
 
-        .package-features li i {
+        .package-features i {
             color: var(--gold-primary);
         }
 
         .btn-package {
-            width: 100%;
+            display: block;
+            text-align: center;
+            background: transparent;
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
             padding: 12px;
-            border-radius: 25px;
-            background: var(--gold-primary);
-            color: var(--secondary-navy);
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
+            border-radius: 12px;
             text-decoration: none;
-            display: inline-block;
+            font-weight: 600;
+            transition: 0.3s;
         }
 
-        .btn-package:hover {
-            background: var(--gold-light);
-            transform: translateY(-2px);
+        .package-card.featured .btn-package, .btn-package:hover {
+            background: var(--gold-primary);
+            color: var(--bg-primary);
         }
 
-        /* ==========================================
-           6. STEPS SECTION
-        ========================================== */
+        /* Steps */
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
         .step-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
             padding: 30px 20px;
+            border-radius: 20px;
             text-align: center;
-            position: relative;
-            backdrop-filter: blur(12px);
         }
 
         .step-number {
-            width: 40px;
-            height: 40px;
-            background: var(--gold-primary);
-            color: var(--secondary-navy);
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
             font-size: 1.2rem;
-            margin: 0 auto 20px auto;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            font-weight: 700;
+            margin: 0 auto 20px;
+            border: 1px solid var(--border-glass);
         }
 
         .step-card h4 {
-            color: var(--gold-light);
-            font-size: 1.2rem;
             margin-bottom: 10px;
+            color: var(--gold-light);
         }
 
         .step-card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
-        /* ==========================================
-           7. STUDENT / RECITATION SAMPLES SECTION
-        ========================================== */
-        .playlist-columns-grid {
+        /* Playlist Section */
+        .playlist-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+            gap: 20px;
         }
 
         .playlist-column {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 20px;
-            backdrop-filter: blur(12px);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
         }
 
         .column-header {
-            text-align: center;
-            font-family: var(--font-arabic-heading);
+            font-size: 1.1rem;
             color: var(--gold-light);
-            font-size: 1.25rem;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            text-align: center;
+            font-family: 'Amiri', serif;
         }
 
         .audio-track-card-compact {
-            background: rgba(2, 44, 34, 0.4);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
-            padding: 12px 15px;
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: var(--transition);
-        }
-
-        .audio-track-card-compact:hover {
-            border-color: var(--gold-primary);
-            background: rgba(6, 78, 59, 0.5);
+            background: rgba(255,255,255,0.03);
+            padding: 10px 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .play-btn-compact {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+            width: 35px;
+            height: 35px;
             background: var(--gold-primary);
-            color: var(--secondary-navy);
             border: none;
-            font-size: 0.95rem;
+            border-radius: 50%;
+            color: var(--bg-primary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition);
+            font-size: 0.9rem;
             flex-shrink: 0;
-        }
-
-        .play-btn-compact:hover {
-            transform: scale(1.1);
-            background: var(--gold-light);
         }
 
         .track-progress-compact {
             flex-grow: 1;
             height: 6px;
             background: rgba(255,255,255,0.1);
-            border-radius: 10px;
+            border-radius: 3px;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
         }
 
         .track-progress-fill-compact {
             height: 100%;
-            background: var(--gold-primary);
             width: 0%;
-            border-radius: 10px;
+            background: var(--gold-primary);
+            border-radius: 3px;
         }
 
-        /* ==========================================
-           8. FAQ SECTION
-        ========================================== */
+        /* Testimonials & Firebase Comments */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .testimonial-stars {
+            color: #facc15;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author h5 {
+            color: var(--gold-light);
+            font-size: 1rem;
+        }
+
+        .testimonial-author span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Firebase Auth & Comment Form */
+        .auth-section {
+            text-align: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn-google {
+            background: #ffffff;
+            color: #1f2937;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .btn-google:hover {
+            background: #f3f4f6;
+            transform: translateY(-2px);
+        }
+
+        .comment-form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .comment-form-card textarea {
+            width: 100%;
+            background: rgba(10, 15, 29, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 15px;
+            color: var(--text-main);
+            resize: none;
+            height: 100px;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        .comment-form-card textarea:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+        }
+
+        .user-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gold-light);
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 4px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* FAQ */
         .faq-accordion {
             max-width: 800px;
             margin: 0 auto;
@@ -637,9 +658,9 @@
         }
 
         .faq-item {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 15px;
             overflow: hidden;
         }
 
@@ -649,246 +670,238 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            font-weight: 700;
+            font-weight: 600;
+            color: var(--gold-light);
         }
 
         .faq-answer {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 20px 20px;
             color: var(--text-muted);
+            line-height: 1.6;
+            display: none;
         }
 
         .faq-item.active .faq-answer {
-            padding: 0 20px 20px 20px;
-            max-height: 200px;
+            display: block;
         }
 
-        /* ==========================================
-           9. FLOATING BUTTON & FOOTER
-        ========================================== */
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #25D366;
-            color: #FFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
-            z-index: 999;
-            text-decoration: none;
-            animation: pulse 2s infinite;
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
         }
 
-        body[dir="ltr"] .floating-whatsapp {
-            right: auto;
-            left: 30px;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
-        }
-
+        /* Footer */
         footer {
-            background: rgba(2, 44, 34, 0.95);
-            border-top: 1px solid var(--glass-border);
-            padding: 40px 0 20px 0;
+            background: rgba(5, 8, 15, 0.95);
+            border-top: 1px solid var(--border-glass);
+            padding: 50px 20px 20px;
             text-align: center;
-            position: relative;
-            z-index: 2;
         }
 
-        .footer-links {
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
 
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: var(--transition);
+        .social-btns {
+            display: flex;
+            gap: 15px;
         }
 
-        .footer-links a:hover {
+        .social-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-glass);
             color: var(--gold-primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
         }
 
-        @media (max-width: 992px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-content p { margin: 0 auto 30px auto; }
-            .cta-group { justify-content: center; }
-            .bio-badge { justify-content: center; }
-            .playlist-columns-grid { grid-template-columns: 1fr; }
+        .social-btn:hover {
+            background: var(--gold-primary);
+            color: var(--bg-primary);
         }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero-content h2 { font-size: 2.2rem; }
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 130px;
+            }
+            .hero-btns {
+                justify-content: center;
+            }
+            .bio-features {
+                text-align: center;
+            }
+            .nav-links {
+                display: none;
+            }
+            .playlist-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Islamic Decorative Ambient Background -->
-    <div class="pattern-overlay"></div>
+    <div class="bg-watermark" id="bgWatermark">تحفيظ أونلاين</div>
 
-    <!-- Static Background Watermark Text -->
-    <div class="background-watermark" id="bgWatermark"></div>
-
-    <!-- HEADER / NAVIGATION -->
+    <!-- Header -->
     <header id="header">
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <div class="logo-icon"><i class="fa-solid fa-book-quran"></i></div>
+        <div class="nav-container">
+            <a href="#" class="logo-box">
+                <div class="logo-icon"><i class="fa-solid fa-quran"></i></div>
                 <div class="logo-text">
-                    <h1 id="logoTitle"></h1>
-                    <span id="logoSub"></span>
+                    <h1 id="logoTitle">تحفيظ أونلاين</h1>
+                    <span id="logoSub">منصة تعليم القرآن الكريم والتجويد</span>
                 </div>
             </a>
-
             <ul class="nav-links" id="navLinks"></ul>
-
-            <button class="lang-switch" onclick="toggleLanguage()">
-                <i class="fa-solid fa-globe"></i>
-                <span id="langLabel">English</span>
-            </button>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langLabel">English</button>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="home">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <span class="hero-title-badge" id="heroBadge"></span>
-                <h2 id="heroTitle"></h2>
-                <p id="heroDesc"></p>
-                <div class="cta-group">
-                    <a href="#" target="_blank" class="btn btn-whatsapp js-wa-link">
-                        <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text"></span>
-                    </a>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge" id="heroBadge">✨ جلسات فردية خاصة عبر جوجل ميت والتليجرام</div>
+            <h2 id="heroTitle">تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span></h2>
+            <p id="heroDesc">أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.</p>
+            <div class="hero-btns">
+                <a href="#" class="btn-gold js-wa-link" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text">احجز حصة تجريبية مجانية</span>
+                </a>
             </div>
-
-            <!-- Hero Glass Bio Card -->
-            <div class="hero-card-glass" id="about">
-                <div class="bio-badge">
-                    <div class="bio-avatar"></div>
-                    <div>
-                        <h4 style="color: var(--gold-light);" id="bioName"></h4>
-                        <span style="color: var(--text-muted); font-size: 0.85rem;" id="bioSub"></span>
-                    </div>
-                </div>
-                <hr style="border-color: var(--glass-border); margin-bottom: 15px;">
-                <ul class="pricing-features" id="bioFeatures"></ul>
-            </div>
+        </div>
+        <div class="bio-card">
+            <div class="bio-avatar"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h3 id="bioName">الشيخة / معلّمة التلاوة</h3>
+            <span id="bioSub">معلمة القرآن والتجويد بالمنصة</span>
+            <ul class="bio-features" id="bioFeatures"></ul>
         </div>
     </section>
 
-    <!-- WHY CHOOSE US SECTION -->
-    <section class="section-padding" id="why-us" style="background: rgba(6, 78, 59, 0.1);">
-        <div class="container">
-            <div class="section-title">
-                <h3 id="whyUsTitle"></h3>
-                <p id="whyUsSub"></p>
+    <!-- Why Us -->
+    <section id="why-us">
+        <div class="section-title">
+            <h3 id="whyUsTitle">لماذا تختار منصة تحفيظ أونلاين؟</h3>
+            <p id="whyUsSub">نوفر لك بيئة تعليمية إسلامية متكاملة تجمع بين الإتقان والسهولة</p>
+        </div>
+        <div class="grid-3" id="whyUsGrid"></div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="section-title">
+            <h3 id="servicesTitle">برامجنا التعليمية</h3>
+            <p id="servicesSub">خطط دراسية مخصصة تناسب كافة المستويات والأعمار</p>
+        </div>
+        <div class="grid-3" id="servicesGrid"></div>
+    </section>
+
+    <!-- Packages -->
+    <section id="packages">
+        <div class="section-title">
+            <h3 id="packagesTitle">باقات الحصص الشهرية</h3>
+            <p id="packagesSub">اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام</p>
+        </div>
+        <div class="packages-grid" id="packagesGrid"></div>
+    </section>
+
+    <!-- Steps -->
+    <section id="steps">
+        <div class="section-title">
+            <h3 id="stepsTitle">كيف تبدأ رحلتك معنا؟</h3>
+            <p id="stepsSub">خطوات بسيطة وسريعة للانضمام لحلقاتنا القرآنية</p>
+        </div>
+        <div class="steps-grid" id="stepsGrid"></div>
+    </section>
+
+    <!-- Recitations Playlist -->
+    <section id="playlist">
+        <div class="section-title">
+            <h3 id="playlistTitle">نماذج التلاوات الصوتية</h3>
+            <p id="playlistSub">نماذج تلاوة صوتية من طلابنا</p>
+        </div>
+        <div class="playlist-container" id="playlistColumnsGrid"></div>
+    </section>
+
+    <!-- Testimonials & Comments -->
+    <section id="testimonials">
+        <div class="section-title">
+            <h3 id="testimonialsTitle">آراء وتجارب الحفظ</h3>
+            <p id="testimonialsSub">شاركنا تجربتك في حفظ القرآن الكريم واطلع على تعليقات ومراجعات المشتركين</p>
+        </div>
+
+        <div class="testimonials-grid" id="testimonialsGrid"></div>
+
+        <!-- Google Auth Container -->
+        <div class="auth-section" id="authContainer">
+            <h4 style="color: var(--gold-light); margin-bottom: 15px; font-family: 'Amiri', serif;">أضف رأيك أو تجربتك معنا</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">قم بتسجيل الدخول باستخدام حساب جوجل لتتمكن من كتابة تعليقك ونشره مباشرة</p>
+            <button class="btn-google" id="loginBtn">
+                <i class="fa-brands fa-google"></i> تسجيل الدخول بحساب جوجل
+            </button>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="comment-form-card" id="commentFormCard">
+            <div class="user-info-bar">
+                <span id="userInfoDisplay">مرحباً بك</span>
+                <button class="btn-logout" id="logoutBtn">تسجيل الخروج</button>
             </div>
-            <div class="cards-grid" id="whyUsGrid"></div>
+            <form id="userCommentForm">
+                <textarea id="userCommentInput" placeholder="اكتب رأيك أو تجربتك بكل صدق..." required></textarea>
+                <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 10px;">نشر التعليق</button>
+            </form>
         </div>
     </section>
 
-    <!-- SERVICES & PROGRAMS SECTION -->
-    <section class="section-padding" id="services">
-        <div class="container">
-            <div class="section-title">
-                <h3 id="servicesTitle"></h3>
-                <p id="servicesSub"></p>
-            </div>
-            <div class="cards-grid" id="servicesGrid"></div>
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="section-title">
+            <h3 id="faqTitle">الأسئلة الشائعة</h3>
+            <p id="faqSub">إجابات على أبرز التساؤلات قبل البدء معنا</p>
         </div>
+        <div class="faq-accordion" id="faqAccordion"></div>
     </section>
 
-    <!-- PACKAGES SECTION (باقات الحصص) -->
-    <section class="section-padding" id="packages" style="background: rgba(6, 78, 59, 0.15);">
-        <div class="container">
-            <div class="section-title">
-                <h3 id="packagesTitle"></h3>
-                <p id="packagesSub"></p>
-            </div>
-            <div class="packages-grid" id="packagesGrid"></div>
-        </div>
-    </section>
-
-    <!-- STEPS TO START SECTION -->
-    <section class="section-padding" id="steps">
-        <div class="container">
-            <div class="section-title">
-                <h3 id="stepsTitle"></h3>
-                <p id="stepsSub"></p>
-            </div>
-            <div class="steps-grid" id="stepsGrid"></div>
-        </div>
-    </section>
-
-    <!-- RECITATION / STUDENT SAMPLES SECTION -->
-    <section class="section-padding" id="playlist" style="background: rgba(6, 78, 59, 0.1);">
-        <div class="container">
-            <div class="section-title">
-                <h3 id="playlistTitle"></h3>
-                <p id="playlistSub"></p>
-            </div>
-            <div class="playlist-columns-grid" id="playlistColumnsGrid"></div>
-        </div>
-    </section>
-
-    <!-- FAQ SECTION -->
-    <section class="section-padding" id="faq" style="background: rgba(6, 78, 59, 0.15);">
-        <div class="container">
-            <div class="section-title">
-                <h3 id="faqTitle"></h3>
-                <p id="faqSub"></p>
-            </div>
-            <div class="faq-accordion" id="faqAccordion"></div>
-        </div>
-    </section>
-
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="#" target="_blank" class="floating-whatsapp js-wa-link" title="تواصل مباشرة عبر واتساب">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="cta-group" style="justify-content: center; margin-bottom: 30px;">
-                <a href="#" target="_blank" class="btn btn-whatsapp js-wa-link">
-                    <i class="fa-brands fa-whatsapp"></i> <span class="js-cta-btn-text"></span>
-                </a>
-                <a href="#" target="_blank" class="btn btn-telegram js-tg-link">
-                    <i class="fa-brands fa-telegram"></i> <span id="footerTgText"></span>
-                </a>
+        <div class="footer-content">
+            <div class="logo-box">
+                <div class="logo-icon"><i class="fa-solid fa-quran"></i></div>
+                <div class="logo-text">
+                    <h1 style="font-size: 1.1rem; color: var(--gold-light);">تحفيظ أونلاين</h1>
+                </div>
             </div>
-            <div class="footer-links">
-                <a href="#" target="_blank" class="js-wa-link"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText"></span></a>
-                <a href="#" target="_blank" class="js-tg-link"><i class="fa-brands fa-telegram"></i> Telegram</a>
+            <div class="social-btns">
+                <a href="#" class="social-btn js-wa-link" target="_blank"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText">واتساب</span></a>
+                <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands fa-telegram"></i> <span id="footerTgText">تليجرام</span></a>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">
-                &copy; 2026 <span id="footerCopyright"></span>
-            </p>
+            <div class="copyright" id="footerCopyright">منصة تحفيظ أونلاين. جميع الحقوق محفوظة.</div>
         </div>
     </footer>
 
-    <!-- JS Database & Logic Link -->
-    <script src="content.js"></script>
+    <!-- ربط ملف المحتوى والمنطق والفايربيس -->
+    <script type="module" src="content.js"></script>
 </body>
 </html>
