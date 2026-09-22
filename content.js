@@ -46,8 +46,8 @@ const siteData = {
             name: { ar: "الشيخة / معلّمة التلاوة", en: "Certified Quran Tutor" },
             subtitle: { ar: "معلمة القرآن والتجويد بالمنصة", en: "Quran & Tajweed Instructor" },
             features: [
-                { icon: "fa-certificate", text: { ar: "حاصلة على ليسانس الدراسات الإسلامية والعربية شعبة أصول الدين", en: "Certified Al-Azhar Graduate" } },
-                { icon: "fa-clock", text: { ar: "خبرة أكثر من 7 سنوات في التدريس المباشر والتحفيظ أونلاين", en: "7+ Years of Online Teaching Experience" } },
+                { icon: "fa-certificate", text: { ar: "حاصلة على ليسانس الدراسات الإسلامية والعربية شعبة أصول الدين قسم الحديث وعلومه", en: "Certified Al-Azhar Graduate" } },
+                { icon: "fa-clock", text: { ar: "خبرة أكثر من 20 سنوات في التدريس المباشر والتحفيظ أونلاين", en: "7+ Years of Online Teaching Experience" } },
                 { icon: "fa-child-reaching", text: { ar: "متخصصة في التعامل مع الأطفال والنساء فقط", en: "Specialized for Women & Children" } }
             ]
         }
