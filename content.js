@@ -1,12 +1,7 @@
-/* ==========================================================================
-   قاعدة بيانات محتوى الموقع (Site Content Database) + Firebase Integration
-   ========================================================================== */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// إعدادات مشروعك الحقيقية التي استخرجتها من فايربيس
 const firebaseConfig = {
     apiKey: "AIzaSyBUx0fDtd32M_9J3BCFihWsFH13xPsXcT4",
     authDomain: "tahfeez-nline.firebaseapp.com",
@@ -38,14 +33,14 @@ const siteData = {
             { id: "packages", text: { ar: "باقات الحصص", en: "Packages" } },
             { id: "steps", text: { ar: "خطوات البدء", en: "How to Start" } },
             { id: "playlist", text: { ar: "نماذج التلاوات", en: "Recitations" } },
-            { id: "testimonials", text: { ar: "آراء وتجارب الحفظ", en: "Reviews & Comments" } },
+            { id: "testimonials", text: { ar: "آراء وتجارب الحفظ", en: "Reviews" } },
             { id: "faq", text: { ar: "الأسئلة الشائعة", en: "FAQ" } }
         ]
     },
     hero: {
         badge: { ar: "✨ جلسات فردية خاصة عبر جوجل ميت والتليجرام", en: "✨ 1-on-1 Private Live Classes" },
         title: { ar: "تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span>", en: "Learn Quran Online with <span>Tahfeez Online</span>" },
-        description: { ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.", en: "A specialized academy for women and children to teach correct recitation, Tajweed rules, and memorization." },
+        description: { ar: "أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.", en: "A specialized academy for women and children to teach correct recitation and Tajweed." },
         ctaButton: { ar: "احجز حصة تجريبية مجانية", en: "Book Free Trial Class" },
         bioCard: {
             name: { ar: "الشيخة / معلّمة التلاوة", en: "Certified Quran Tutor" },
@@ -79,7 +74,7 @@ const siteData = {
         title: { ar: "باقات الحصص الشهرية", en: "Monthly Class Packages" },
         subtitle: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for consistent memorization" },
         items: [
-            { title: { ar: "الباقة الأساسية", en: "Basic Package" }, price: { ar: "8 حصص", en: "8 Classes" }, priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 class/week)" }, features: [{ ar: "مدة الحصة: 60 دقيقة", en: "Duration: 60 mins" }, { ar: "متابعة فردية خاصة", en: "Private Session" }], featured: false },
+            { title: { ar: "الباقة الأساسية", en: "Basic Package" }, price: { ar: "8 حصص", en: "8 Classes" }, priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 classes/week)" }, features: [{ ar: "مدة الحصة: 60 دقيقة", en: "Duration: 60 mins" }, { ar: "متابعة فردية خاصة", en: "Private Session" }], featured: false },
             { title: { ar: "الباقة الأكثر طلباً", en: "Popular Package" }, price: { ar: "20 حصة", en: "20 Classes" }, priceSub: { ar: "5 حصص أسبوعيا", en: "5 sessions per week" }, features: [{ ar: "مدة الحصة: 45 دقيقة", en: "Duration: 45 mins" }, { ar: "متابعة فردية خاصة ومكثفة", en: "Intensive Session" }], badge: { ar: "الأكثر طلباً", en: "Most Popular" }, featured: true },
             { title: { ar: "الباقة المكثفة", en: "Intensive Package" }, price: { ar: "١٢ حصة", en: "12 Classes" }, priceSub: { ar: "شهرياً (3 حصص أسبوعياً)", en: "Per Month (3 classes/week)" }, features: [{ ar: "مدة الحصة: 45 دقيقة", en: "Duration: 45 mins" }, { ar: "تثبيت الحفظ وإتقان التجويد", en: "Advanced Tajweed" }], featured: false }
         ]
@@ -205,10 +200,10 @@ function renderPage(lang) {
             <div class="column-header">${col.header[lang]}</div>
             ${col.tracks.map(track => 
                 `<div class="audio-track-card-compact">
-                    <button class="play-btn-compact" onclick="playTrack(${track.id})">
+                    <button class="play-btn-compact" type="button" onclick="window.playTrack(${track.id})">
                         <i class="fa-solid fa-play" id="playIcon${track.id}"></i>
                     </button>
-                    <div class="track-progress-compact" onclick="seekTrack(event, ${track.id})">
+                    <div class="track-progress-compact" onclick="window.seekTrack(event, ${track.id})">
                         <div class="track-progress-fill-compact" id="progressFill${track.id}"></div>
                     </div>
                     <audio id="audioTrack${track.id}" src="${track.audioUrl}"></audio>
@@ -251,45 +246,52 @@ const userInfoDisplay = document.getElementById('userInfoDisplay');
 const userCommentForm = document.getElementById('userCommentForm');
 const testimonialsGrid = document.getElementById('testimonialsGrid');
 
-loginBtn.addEventListener('click', () => {
-    signInWithPopup(auth, googleProvider).catch((error) => {
-        console.error("خطأ في تسجيل الدخول:", error);
+if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider).catch((error) => {
+            console.error("خطأ في تسجيل الدخول:", error);
+            alert("حدث خطأ أثناء تسجيل الدخول. تأكد من تفعيل Google Provider في لوحة Firebase Authentication.");
+        });
     });
-});
+}
 
-logoutBtn.addEventListener('click', () => {
-    signOut(auth);
-});
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        signOut(auth);
+    });
+}
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        authContainer.style.display = 'none';
-        commentFormCard.style.display = 'block';
-        userInfoDisplay.textContent = `مرحباً بك، ${user.displayName} (${user.email})`;
+        if (authContainer) authContainer.style.display = 'none';
+        if (commentFormCard) commentFormCard.style.display = 'block';
+        if (userInfoDisplay) userInfoDisplay.textContent = `مرحباً بك، ${user.displayName}`;
 
-        userCommentForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const textVal = document.getElementById('userCommentInput').value.trim();
-            if(!textVal) return;
+        if (userCommentForm) {
+            userCommentForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const textVal = document.getElementById('userCommentInput').value.trim();
+                if(!textVal) return;
 
-            try {
-                await addDoc(collection(db, "comments"), {
-                    name: user.displayName,
-                    avatar: user.photoURL,
-                    text: textVal,
-                    uid: user.uid,
-                    createdAt: serverTimestamp()
-                });
-                document.getElementById('userCommentInput').value = '';
-                alert(currentLang === 'ar' ? 'تم إرسال ونشر تعليقك بنجاح للجميع!' : 'Your comment has been posted successfully!');
-            } catch (err) {
-                console.error("خطأ أثناء حفظ التعليق:", err);
-                alert(currentLang === 'ar' ? 'حدث خطأ، تأكد من إعدادات قاعدة البيانات (Rules).' : 'Error saving comment.');
-            }
-        };
+                try {
+                    await addDoc(collection(db, "comments"), {
+                        name: user.displayName,
+                        avatar: user.photoURL,
+                        text: textVal,
+                        uid: user.uid,
+                        createdAt: serverTimestamp()
+                    });
+                    document.getElementById('userCommentInput').value = '';
+                    alert(currentLang === 'ar' ? 'تم نشر تعليقك بنجاح!' : 'Your comment has been posted successfully!');
+                } catch (err) {
+                    console.error("خطأ أثناء حفظ التعليق:", err);
+                    alert(currentLang === 'ar' ? 'حدث خطأ أثناء نشر التعليق.' : 'Error saving comment.');
+                }
+            };
+        }
     } else {
-        authContainer.style.display = 'block';
-        commentFormCard.style.display = 'none';
+        if (authContainer) authContainer.style.display = 'block';
+        if (commentFormCard) commentFormCard.style.display = 'none';
     }
 });
 
@@ -306,7 +308,7 @@ onSnapshot(q, (snapshot) => {
                 <p class="testimonial-text">«${data.text}»</p>
                 <div class="testimonial-author">
                     <div class="author-info" style="display: flex; align-items: center; gap: 10px;">
-                        ${data.avatar ? `<img src="${data.avatar}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold-primary);">` : ''}
+                        ${data.avatar ? `<img src="${data.avatar}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--green-light);">` : ''}
                         <div>
                             <h5>${data.name}</h5>
                             <span>${currentLang === 'ar' ? 'مستخدم مسجل بالموقع' : 'Verified User'}</span>
@@ -321,32 +323,37 @@ onSnapshot(q, (snapshot) => {
         commentsHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">${currentLang === 'ar' ? 'كن أول من يشاركنا رأيه وتجربته!' : 'Be the first to share your experience!'}</div>`;
     }
 
-    testimonialsGrid.innerHTML = commentsHTML;
+    if (testimonialsGrid) {
+        testimonialsGrid.innerHTML = commentsHTML;
+    }
 });
 
-function toggleLanguage() {
+window.toggleLanguage = function() {
     renderPage(currentLang === 'ar' ? 'en' : 'ar');
-}
+};
 
 let activeAudio = null;
 let activeTrackNum = null;
 
-function playTrack(trackNum) {
+window.playTrack = function(trackNum) {
     const currentAudio = document.getElementById(`audioTrack${trackNum}`);
     const currentIcon = document.getElementById(`playIcon${trackNum}`);
+    if (!currentAudio) return;
 
     if (activeAudio && activeAudio !== currentAudio) {
         activeAudio.pause();
         if (activeTrackNum) {
-            document.getElementById(`playIcon${activeTrackNum}`).className = 'fa-solid fa-play';
+            const prevIcon = document.getElementById(`playIcon${activeTrackNum}`);
+            if(prevIcon) prevIcon.className = 'fa-solid fa-play';
         }
     }
 
     if (currentAudio.paused) {
-        currentAudio.play();
-        currentIcon.className = 'fa-solid fa-pause';
-        activeAudio = currentAudio;
-        activeTrackNum = trackNum;
+        currentAudio.play().then(() => {
+            currentIcon.className = 'fa-solid fa-pause';
+            activeAudio = currentAudio;
+            activeTrackNum = trackNum;
+        }).catch(err => console.log("Audio play blocked/error:", err));
     } else {
         currentAudio.pause();
         currentIcon.className = 'fa-solid fa-play';
@@ -364,25 +371,25 @@ function playTrack(trackNum) {
 
     currentAudio.onended = () => {
         currentIcon.className = 'fa-solid fa-play';
-        document.getElementById(`progressFill${trackNum}`).style.width = '0%';
+        const fill = document.getElementById(`progressFill${trackNum}`);
+        if(fill) fill.style.width = '0%';
         activeAudio = null;
         activeTrackNum = null;
     };
-}
+};
 
-function seekTrack(e, trackNum) {
+window.seekTrack = function(e, trackNum) {
     const trackAudio = document.getElementById(`audioTrack${trackNum}`);
+    if(!trackAudio || !trackAudio.duration) return;
     const container = e.currentTarget;
     const clickPos = e.clientX - container.getBoundingClientRect().left;
     const containerWidth = container.offsetWidth;
-    if (trackAudio.duration) {
-        trackAudio.currentTime = (clickPos / containerWidth) * trackAudio.duration;
-    }
-}
+    trackAudio.currentTime = (clickPos / containerWidth) * trackAudio.duration;
+};
 
-function toggleFaq(element) {
+window.toggleFaq = function(element) {
     element.parentElement.classList.toggle('active');
-}
+};
 
 window.addEventListener('scroll', () => {
     const header = document.getElementById('header');
