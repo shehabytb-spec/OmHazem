@@ -75,8 +75,8 @@ const siteData = {
         subtitle: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for consistent memorization" },
         items: [
             { title: { ar: "الباقة الأساسية", en: "Basic Package" }, price: { ar: "8 حصص", en: "8 Classes" }, priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Per Month (2 classes/week)" }, features: [{ ar: "مدة الحصة: 60 دقيقة", en: "Duration: 60 mins" }, { ar: "متابعة فردية خاصة", en: "Private Session" }], featured: false },
-            { title: { ar: "الباقة الأكثر طلباً", en: "Popular Package" }, price: { ar: "20 حصة", en: "20 Classes" }, priceSub: { ar: "5 حصص أسبوعيا", en: "5 sessions per week" }, features: [{ ar: "مدة الحصة: 45 دقيقة", en: "Duration: 45 mins" }, { ar: "متابعة فردية خاصة ومكثفة", en: "Intensive Session" }], badge: { ar: "الأكثر طلباً", en: "Most Popular" }, featured: true },
-            { title: { ar: "الباقة المكثفة", en: "Intensive Package" }, price: { ar: "١٢ حصة", en: "12 Classes" }, priceSub: { ar: "شهرياً (3 حصص أسبوعياً)", en: "Per Month (3 classes/week)" }, features: [{ ar: "مدة الحصة: 45 دقيقة", en: "Duration: 45 mins" }, { ar: "تثبيت الحفظ وإتقان التجويد", en: "Advanced Tajweed" }], featured: false }
+            { title: { ar: "الباقة الأكثر طلباً", en: "Popular Package" }, price: { ar: "16 حصة", en: "16 Classes" }, priceSub: { ar: "4 حصص أسبوعيا", en: "4 sessions per week" }, features: [{ ar: "مدة الحصة: 45 دقيقة", en: "Duration: 45 mins" }, { ar: "متابعة فردية خاصة ومكثفة", en: "Intensive Session" }], badge: { ar: "الأكثر طلباً", en: "Most Popular" }, featured: true },
+            { title: { ar: "الباقة المكثفة", en: "Intensive Package" }, price: { ar: "20 حصة", en: "20 Classes" }, priceSub: { ar: "شهرياً (5 حصص أسبوعياً)", en: "Per Month (5 classes/week)" }, features: [{ ar: "مدة الحصة: 60 دقيقة", en: "Duration: 60 mins" }, { ar: "تثبيت الحفظ وإتقان التجويد", en: "Advanced Tajweed" }], featured: false }
         ]
     },
     steps: {
