@@ -11,7 +11,7 @@ export const siteData = {
     whatsappNumber: "201004675704",
     telegramLink: "https://t.me/+201004675704",
 
-    // روابط وقوائم التنقل العليا
+    // روابط وقوائم التنقل العليا (مطابقة للترجمة)
     navLinks: [
         { id: "about", text: { ar: "الرئيسية", en: "Home" } },
         { id: "why-us", text: { ar: "لماذا نحن", en: "Why Us" } },
@@ -101,9 +101,9 @@ export const siteData = {
         sub: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for you or your child to maintain regular Quran memorization." },
         items: [
             {
-                title: { ar: " الأساسية", en: "Basic " },
-                price: { ar: "8 حصص شهرياً ", en: "8 Sessions Monthly" },
-                priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "(2 sessions/week)" },
+                title: { ar: "الأساسية", en: "Basic Package" },
+                price: { ar: "8 حصص شهرياً", en: "8 Sessions Monthly" },
+                priceSub: { ar: "(حصتان أسبوعياً)", en: "(2 sessions/week)" },
                 badge: null,
                 isFeatured: false,
                 features: [
@@ -114,8 +114,8 @@ export const siteData = {
                 btnText: { ar: "اختر الباقة", en: "Select Package" }
             },
             {
-                title: { ar: "المتقدمة", en: "Advanced" },
-                price: { ar: "16 حصة شهرياً ", en: "16 Sessions Monthly" },
+                title: { ar: "المتقدمة (الأكثر طلباً)", en: "Advanced (Most Popular)" },
+                price: { ar: "16 حصة شهرياً", en: "16 Sessions Monthly" },
                 priceSub: { ar: "(4 حصص أسبوعياً)", en: "(4 sessions/week)" },
                 badge: { ar: "الأكثر طلباً ⭐", en: "Most Popular ⭐" },
                 isFeatured: true,
@@ -129,8 +129,8 @@ export const siteData = {
             },
             {
                 title: { ar: "المكثفة", en: "Intensive Package" },
-                price: { ar: "20 حصة شهريا", en: "20 Sessions Monthly" },
-                priceSub: { ar: " (5 حصص أسبوعياً)", en: " (5 sessions/week)" },
+                price: { ar: "20 حصة شهرياً", en: "20 Sessions Monthly" },
+                priceSub: { ar: "(5 حصص أسبوعياً)", en: "(5 sessions/week)" },
                 badge: { ar: "للحفظ السريع 🚀", en: "Fast Memorization 🚀" },
                 isFeatured: false,
                 features: [
@@ -143,14 +143,26 @@ export const siteData = {
         ]
     },
 
-    // خطوات البدء
+    // خطوات البدء (مطابقة للترجمة والتعديل)
     steps: {
         title: { ar: "كيف تبدأ رحلتك معنا؟", en: "How to Start Your Journey?" },
         sub: { ar: "خطوات بسيطة وسريعة للانضمام لحلقاتنا القرآنية", en: "Simple and quick steps to join our Quran circles." },
         items: [
-            { num: "01", title: { ar: "تواصل معنا", en: "Contact Us" }, desc: { ar: "اضغط على زر الحجز وواملأ الفراغات وأرسل لنا.", en: "Click the booking button and reach out via WhatsApp or Telegram." } },
-            { num: "02", title: { ar: "الحصة التجريبية", en: "Trial Session" }, desc: { ar: "تحديد مستوى الطالب وتجربة طريقة الشرح بمرونة.", en: "Assess the student's level and experience the teaching method." } },
-            { num: "03", title: { ar: "اختيار الوقت", en: "Choose Package" }, desc: { ar: "اختيار الوقت المناسب لبمواعد حصصك.", en: "Select the appropriate number of weekly sessions." } },
+            { 
+                num: "01", 
+                title: { ar: "تواصل معنا", en: "Contact Us" }, 
+                desc: { ar: "اضغط على زر الحجز واملأ الفراغات وأرسل لنا.", en: "Click the booking button, fill in the blanks, and send it to us." } 
+            },
+            { 
+                num: "02", 
+                title: { ar: "الحصة التجريبية", en: "Trial Session" }, 
+                desc: { ar: "تحديد مستوى الطالب وتجربة طريقة الشرح بمرونة.", en: "Assess the student's level and experience the teaching method." } 
+            },
+            { 
+                num: "03", 
+                title: { ar: "اختيار الوقت", en: "Choose Time" }, 
+                desc: { ar: "اختيار الوقت المناسب لمواعيد حصصك.", en: "Select the appropriate time for your lesson schedule." } 
+            }
         ]
     },
 
