@@ -188,7 +188,7 @@
             width: 100%;
         }
 
-        /* حاوية الأزرار في الهيدر بدون تداخل */
+        /* حاوية الأزرار في الهيدر بدون أي تداخل */
         .nav-actions {
             display: flex;
             align-items: center;
@@ -215,7 +215,7 @@
             box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
-        /* أزرار تسجيل الدخول الحقيقية (جوجل / بروفايل) منقولة للزاوية بدقة */
+        /* زر تسجيل الدخول الحقيقي بحساب جوجل في الزاوية */
         .btn-google-header {
             background: #ffffff;
             color: #1f2937;
@@ -236,46 +236,6 @@
         .btn-google-header:hover {
             background: #f3f4f6;
             transform: translateY(-1px);
-        }
-
-        .user-header-profile {
-            display: none; /* يتم التحكم بإظهارها برمجياً عبر الـ JS عند تسجيل الدخول */
-            align-items: center;
-            gap: 8px;
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid var(--accent-gold);
-            padding: 3px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-        }
-
-        .user-header-profile img {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-header-profile span {
-            color: var(--accent-gold);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .btn-logout-header {
-            background: transparent;
-            border: 1px solid #ef4444;
-            color: #ef4444;
-            padding: 2px 8px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            transition: 0.3s;
-        }
-
-        .btn-logout-header:hover {
-            background: #ef4444;
-            color: #fff;
         }
 
         /* Hero Section */
@@ -768,7 +728,7 @@
             color: var(--text-muted);
         }
 
-        /* Firebase Auth & Comment Form */
+        /* Firebase Auth & Comment Form (مع الحفاظ على المعرفات ليعمل الـ JS الأصلي) */
         .auth-section {
             text-align: center;
             background: var(--bg-card);
@@ -992,21 +952,11 @@
             </a>
             <ul class="nav-links" id="navLinks"></ul>
             
-            <!-- أزرار الهيدر: زر اللغة + زر/معرف تسجيل الدخول الحقيقي الخاص بجوجل -->
+            <!-- أزرار الهيدر: زر اللغة + زر تسجيل الدخول الحقيقي المنقول من الأسفل -->
             <div class="nav-actions">
-                <!-- زر تسجيل الدخول الحقيقي الذي كان أسفل الصفحة -->
                 <button class="btn-google-header" id="headerLoginBtn">
                     <i class="fa-brands fa-google"></i> دخول بجوجل
                 </button>
-
-                <!-- بروفايل المستخدم بالهيدر (يظهر تلقائياً بعد تسجيل الدخول) -->
-                <div class="user-header-profile" id="headerUserProfile">
-                    <img id="headerUserAvatarImg" src="" alt="صورة المستخدم">
-                    <span id="headerUserNameSpan">مستخدم</span>
-                    <button class="btn-logout-header" id="headerLogoutBtn">خروج</button>
-                </div>
-
-                <!-- زر تغيير اللغة -->
                 <button class="lang-btn" onclick="toggleLanguage()" id="langLabel">English</button>
             </div>
         </div>
@@ -1079,15 +1029,14 @@
 
         <div class="testimonials-grid" id="testimonialsGrid"></div>
 
-        <!-- منطقة المصادقة القديمة بالأسفل (تم إبقاؤها لتتوافق تماماً مع كود الـ JS الأصلي دون كسره، أو يمكنك ربطها بـ ID نفس أزرار الهيدر) -->
+        <!-- قسم المصادقة الأصلي (مخفي برمجياً بالأسفل، ويحوي الـ ID الأصلي loginBtn لكي يقرأه ملف JS دون أخطاء) -->
         <div class="auth-section" id="authContainer" style="display: none;">
-            <h4 style="color: var(--accent-gold); margin-bottom: 15px; font-family: 'Amiri', serif;">أضف رأيك أو تجربتك معنا</h4>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">قم بتسجيل الدخول باستخدام حساب جوجل لتتمكن من كتابة تعليقك ونشره مباشرة</p>
             <button class="btn-google" id="loginBtn">
                 <i class="fa-brands fa-google"></i> تسجيل الدخول بحساب جوجل
             </button>
         </div>
 
+        <!-- نموذج التعليقات الذي يظهر عند نجاح تسجيل الدخول -->
         <div class="comment-form-card" id="commentFormCard">
             <div class="user-info-bar">
                 <span id="userInfoDisplay">مرحباً بك</span>
@@ -1210,54 +1159,21 @@
         animate();
     </script>
 
-    <!-- ربط كود الـ JS والتعامل المتزامن بين أزرار الهيدر وأزرار النظام السفلي -->
+    <!-- ملف المنطق الخاص بك (content.js) -->
     <script type="module" src="content.js"></script>
+
+    <!-- ربط زر الهيدر الفعلي بزر جوجل الحقيقي الموجود في الـ JS برمجيًا بدون تعليق -->
     <script>
-        // ربط أحداث الأزرار في الهيدر مع معرفات الـ DOM التي يعتمد عليها الـ JavaScript الأصلي (content.js)
         window.addEventListener('DOMContentLoaded', () => {
             const headerLoginBtn = document.getElementById('headerLoginBtn');
             const originalLoginBtn = document.getElementById('loginBtn');
+
             if (headerLoginBtn && originalLoginBtn) {
-                headerLoginBtn.addEventListener('click', () => {
-                    originalLoginBtn.click();
+                headerLoginBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    originalLoginBtn.click(); // تفعيل كود تسجيل الدخول الأصلي بسلاسة
                 });
             }
-
-            const headerLogoutBtn = document.getElementById('headerLogoutBtn');
-            const originalLogoutBtn = document.getElementById('logoutBtn');
-            if (headerLogoutBtn && originalLogoutBtn) {
-                headerLogoutBtn.addEventListener('click', () => {
-                    originalLogoutBtn.click();
-                });
-            }
-
-            // مراقبة حالة ظهور نموذج التعليقات أو حاوية تسجيل الدخول بالأسفل لتحديث الهيدر تلقائياً
-            const observer = new MutationObserver(() => {
-                const authContainer = document.getElementById('authContainer');
-                const commentFormCard = document.getElementById('commentFormCard');
-                const userInfoDisplay = document.getElementById('userInfoDisplay');
-                
-                const headerLogin = document.getElementById('headerLoginBtn');
-                const headerProfile = document.getElementById('headerUserProfile');
-                const headerUserName = document.getElementById('headerUserNameSpan');
-                const headerUserAvatar = document.getElementById('headerUserAvatarImg');
-
-                // إذا كان المستخدم مسجل الدخول (يظهر نموذج التعليقات وتختفي بطاقة الدخول السفلية)
-                if (commentFormCard && commentFormCard.style.display !== 'none' && commentFormCard.style.display !== '') {
-                    headerLogin.style.display = 'none';
-                    headerProfile.style.display = 'flex';
-                    if (userInfoDisplay) {
-                        headerUserName.textContent = userInfoDisplay.textContent.replace('مرحباً بك', '').trim() || 'مستخدم جوجل';
-                    }
-                    // محاولة جلب صورة الحساب إن وجدت أو وضع صورة افتراضية
-                    headerUserAvatar.src = "https://www.gstatic.com/images/branding/product/1x/avatar_square_blue_54dp.png";
-                } else {
-                    headerLogin.style.display = 'inline-flex';
-                    headerProfile.style.display = 'none';
-                }
-            });
-
-            observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
         });
     </script>
 </body>
