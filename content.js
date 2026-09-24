@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBUx0fDtd32M_9J3BCFihWsFH13xPsXcT4",
@@ -117,6 +117,7 @@ const siteData = {
 };
 
 let currentLang = 'ar';
+let loggedInUser = null;
 
 function renderPage(lang) {
     currentLang = lang;
@@ -262,6 +263,7 @@ if (logoutBtn) {
 }
 
 onAuthStateChanged(auth, (user) => {
+    loggedInUser = user;
     if (user) {
         if (authContainer) authContainer.style.display = 'none';
         if (commentFormCard) commentFormCard.style.display = 'block';
@@ -271,35 +273,89 @@ onAuthStateChanged(auth, (user) => {
             userCommentForm.onsubmit = async (e) => {
                 e.preventDefault();
                 const textVal = document.getElementById('userCommentInput').value.trim();
+                const editingId = document.getElementById('editingMessageId').value;
                 if(!textVal) return;
 
                 try {
-                    await addDoc(collection(db, "comments"), {
-                        name: user.displayName,
-                        avatar: user.photoURL,
-                        text: textVal,
-                        uid: user.uid,
-                        createdAt: serverTimestamp()
-                    });
+                    if (editingId) {
+                        // تعديل التعليق الحالي
+                        await updateDoc(doc(db, "comments", editingId), {
+                            text: textVal
+                        });
+                        document.getElementById('editingMessageId').value = '';
+                        document.getElementById('submitCommentBtn').textContent = currentLang === 'ar' ? 'نشر التعليق' : 'Post Comment';
+                        alert(currentLang === 'ar' ? 'تم تعديل التعليق بنجاح!' : 'Comment updated successfully!');
+                    } else {
+                        // إضافة تعليق جديد
+                        await addDoc(collection(db, "comments"), {
+                            name: user.displayName,
+                            avatar: user.photoURL,
+                            text: textVal,
+                            uid: user.uid,
+                            createdAt: serverTimestamp()
+                        });
+                        alert(currentLang === 'ar' ? 'تم نشر تعليقك بنجاح!' : 'Your comment has been posted successfully!');
+                    }
                     document.getElementById('userCommentInput').value = '';
-                    alert(currentLang === 'ar' ? 'تم نشر تعليقك بنجاح!' : 'Your comment has been posted successfully!');
                 } catch (err) {
                     console.error("خطأ أثناء حفظ التعليق:", err);
-                    alert(currentLang === 'ar' ? 'حدث خطأ أثناء نشر التعليق.' : 'Error saving comment.');
+                    alert(currentLang === 'ar' ? 'حدث خطأ أثناء تنفيذ الطلب.' : 'Error processing request.');
                 }
             };
         }
     } else {
         if (authContainer) authContainer.style.display = 'block';
         if (commentFormCard) commentFormCard.style.display = 'none';
+        // إعادة تعيين حقل التعديل في حال تسجيل الخروج
+        document.getElementById('editingMessageId').value = '';
+        if(document.getElementById('submitCommentBtn')) {
+            document.getElementById('submitCommentBtn').textContent = currentLang === 'ar' ? 'نشر التعليق' : 'Post Comment';
+        }
     }
 });
+
+// دوال التعديل والحذف التي تعمل عند الضغط على الأزرار داخل الموقع
+window.editComment = function(id, text) {
+    document.getElementById('editingMessageId').value = id;
+    document.getElementById('userCommentInput').value = text;
+    document.getElementById('submitCommentBtn').textContent = currentLang === 'ar' ? 'تعديل التعليق' : 'Update Comment';
+    document.getElementById('commentFormCard').scrollIntoView({ behavior: 'smooth' });
+};
+
+window.deleteComment = async function(id) {
+    if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من حذف هذا التعليق؟' : 'Are you sure you want to delete this comment?')) {
+        try {
+            await deleteDoc(doc(db, "comments", id));
+            alert(currentLang === 'ar' ? 'تم الحذف بنجاح' : 'Deleted successfully');
+        } catch (error) {
+            console.error("خطأ أثناء الحذف: ", error);
+            alert(currentLang === 'ar' ? 'حدث خطأ أثناء الحذف.' : 'Error deleting comment.');
+        }
+    }
+};
 
 const q = query(collection(db, "comments"));
 onSnapshot(q, (snapshot) => {
     let commentsHTML = '';
-    snapshot.forEach((doc) => {
-        const data = doc.data();
+    snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const docId = docSnap.id;
+
+        // تحقق إذا كان التعليق يخص المستخدم الحالي لإظهار أزرار التعديل والحذف
+        let actionButtonsHTML = '';
+        if (loggedInUser && data.uid === loggedInUser.uid) {
+            actionButtonsHTML = `
+                <div class="msg-actions">
+                    <button class="btn-edit-msg" onclick="window.editComment('${docId}', \`${data.text.replace(/`/g, '\\`')}\`)">
+                        <i class="fa-solid fa-pen"></i> ${currentLang === 'ar' ? 'تعديل' : 'Edit'}
+                    </button>
+                    <button class="btn-delete-msg" onclick="window.deleteComment('${docId}')">
+                        <i class="fa-solid fa-trash"></i> ${currentLang === 'ar' ? 'حذف' : 'Delete'}
+                    </button>
+                </div>
+            `;
+        }
+
         commentsHTML += `
             <div class="testimonial-card">
                 <div class="testimonial-stars">
@@ -315,6 +371,7 @@ onSnapshot(q, (snapshot) => {
                         </div>
                     </div>
                 </div>
+                ${actionButtonsHTML}
             </div>
         `;
     });
