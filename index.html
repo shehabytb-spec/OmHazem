@@ -112,7 +112,6 @@
             box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
-        /* Islamic Motif Corners */
         .logo-box::before, .logo-box::after {
             content: '✦';
             position: absolute;
@@ -189,11 +188,12 @@
             width: 100%;
         }
 
-        /* تحسينات حاوية الأزرار في الهيدر (اللغة + الحساب) */
+        /* حاوية الأزرار في الهيدر بدون تداخل */
         .nav-actions {
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-wrap: nowrap;
         }
 
         .lang-btn {
@@ -206,6 +206,7 @@
             font-weight: 600;
             transition: 0.3s;
             box-shadow: 0 0 10px rgba(251, 191, 36, 0.1);
+            white-space: nowrap;
         }
 
         .lang-btn:hover {
@@ -214,126 +215,65 @@
             box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
-        /* أزرار حساب المستخدم العلوي والملف الشخصي */
-        .user-auth-btn {
-            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
-            border: 1px solid var(--border-glass);
-            color: #fff;
-            padding: 6px 16px;
+        /* أزرار تسجيل الدخول الحقيقية (جوجل / بروفايل) منقولة للزاوية بدقة */
+        .btn-google-header {
+            background: #ffffff;
+            color: #1f2937;
+            border: none;
+            padding: 7px 15px;
             border-radius: 20px;
-            cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             transition: 0.3s;
+            white-space: nowrap;
         }
 
-        .user-auth-btn:hover {
-            filter: brightness(1.1);
-            box-shadow: var(--shadow-glow);
+        .btn-google-header:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
         }
 
-        .user-profile-badge {
-            display: none;
+        .user-header-profile {
+            display: none; /* يتم التحكم بإظهارها برمجياً عبر الـ JS عند تسجيل الدخول */
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(251, 191, 36, 0.1);
             border: 1px solid var(--accent-gold);
-            padding: 4px 12px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: 0.3s;
+            padding: 3px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
         }
 
-        .user-profile-badge:hover {
-            box-shadow: 0 0 15px var(--accent-gold-glow);
-        }
-
-        .user-profile-badge img {
-            width: 32px;
-            height: 32px;
+        .user-header-profile img {
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid var(--accent-gold);
         }
 
-        .user-profile-badge span {
+        .user-header-profile span {
             color: var(--accent-gold);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
         }
 
-        /* نافذة إعدادات الملف الشخصي (Modal) */
-        .profile-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .profile-modal-content {
-            background: var(--bg-card);
-            border: 1px solid var(--accent-gold);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
-            text-align: center;
-            position: relative;
-        }
-
-        .profile-modal-content h3 {
-            color: var(--accent-gold);
-            margin-bottom: 20px;
-            font-family: 'Amiri', serif;
-        }
-
-        .profile-modal-content input[type="text"], 
-        .profile-modal-content input[type="file"] {
-            width: 100%;
-            background: rgba(6, 14, 10, 0.8);
-            border: 1px solid var(--border-glass);
-            border-radius: 10px;
-            padding: 12px;
-            color: var(--text-main);
-            margin-bottom: 15px;
-            font-family: inherit;
-        }
-
-        .profile-modal-content input:focus {
-            outline: none;
-            border-color: var(--accent-gold);
-        }
-
-        .modal-btns {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .modal-close-btn {
+        .btn-logout-header {
             background: transparent;
             border: 1px solid #ef4444;
             color: #ef4444;
-            padding: 10px;
+            padding: 2px 8px;
             border-radius: 10px;
             cursor: pointer;
-            flex: 1;
-            font-weight: 600;
+            font-size: 0.75rem;
             transition: 0.3s;
         }
 
-        .modal-close-btn:hover {
+        .btn-logout-header:hover {
             background: #ef4444;
             color: #fff;
         }
@@ -1052,36 +992,25 @@
             </a>
             <ul class="nav-links" id="navLinks"></ul>
             
-            <!-- أزرار الهيدر (اللغة + نظام تسجيل الدخول والملف الشخصي) -->
+            <!-- أزرار الهيدر: زر اللغة + زر/معرف تسجيل الدخول الحقيقي الخاص بجوجل -->
             <div class="nav-actions">
-                <button class="user-auth-btn" id="siteLoginBtn" onclick="openLoginModal()">
-                    <i class="fa-solid fa-user"></i> دخول
+                <!-- زر تسجيل الدخول الحقيقي الذي كان أسفل الصفحة -->
+                <button class="btn-google-header" id="headerLoginBtn">
+                    <i class="fa-brands fa-google"></i> دخول بجوجل
                 </button>
-                
-                <div class="user-profile-badge" id="siteProfileBadge" onclick="openProfileSettings()">
-                    <img id="headerUserAvatar" src="" alt="صورة الحساب">
-                    <span id="headerUserName">زائر</span>
+
+                <!-- بروفايل المستخدم بالهيدر (يظهر تلقائياً بعد تسجيل الدخول) -->
+                <div class="user-header-profile" id="headerUserProfile">
+                    <img id="headerUserAvatarImg" src="" alt="صورة المستخدم">
+                    <span id="headerUserNameSpan">مستخدم</span>
+                    <button class="btn-logout-header" id="headerLogoutBtn">خروج</button>
                 </div>
 
+                <!-- زر تغيير اللغة -->
                 <button class="lang-btn" onclick="toggleLanguage()" id="langLabel">English</button>
             </div>
         </div>
     </header>
-
-    <!-- نافذة إعدادات الملف الشخصي وتغيير الاسم والصورة -->
-    <div class="profile-modal" id="profileModal">
-        <div class="profile-modal-content">
-            <h3 id="modalTitle">إعدادات الملف الشخصي</h3>
-            <input type="text" id="editUserNameInput" placeholder="أدخل اسمك هنا...">
-            <div style="text-align: right; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">اختر صورة الحساب الشخصية:</div>
-            <input type="file" id="editUserAvatarInput" accept="image/*">
-            <div class="modal-btns">
-                <button class="btn-green" style="flex: 1; justify-content: center; padding: 10px;" onclick="saveProfileSettings()">حفظ التغييرات</button>
-                <button class="modal-close-btn" onclick="logoutUser()">تسجيل الخروج</button>
-            </div>
-            <button style="background: transparent; border: none; color: var(--text-muted); margin-top: 15px; cursor: pointer;" onclick="closeProfileModal()">إغلاق</button>
-        </div>
-    </div>
 
     <section class="hero" id="about">
         <div class="hero-content">
@@ -1150,7 +1079,8 @@
 
         <div class="testimonials-grid" id="testimonialsGrid"></div>
 
-        <div class="auth-section" id="authContainer">
+        <!-- منطقة المصادقة القديمة بالأسفل (تم إبقاؤها لتتوافق تماماً مع كود الـ JS الأصلي دون كسره، أو يمكنك ربطها بـ ID نفس أزرار الهيدر) -->
+        <div class="auth-section" id="authContainer" style="display: none;">
             <h4 style="color: var(--accent-gold); margin-bottom: 15px; font-family: 'Amiri', serif;">أضف رأيك أو تجربتك معنا</h4>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">قم بتسجيل الدخول باستخدام حساب جوجل لتتمكن من كتابة تعليقك ونشره مباشرة</p>
             <button class="btn-google" id="loginBtn">
@@ -1193,80 +1123,6 @@
             <div class="copyright" id="footerCopyright">منصة تحفيظ أونلاين. جميع الحقوق محفوظة.</div>
         </div>
     </footer>
-
-    <!-- سكريبت إدارة الملف الشخصي وتسجيل الدخول المحلي وإضافات الواجهة -->
-    <script>
-        // دوال التحكم في تسجيل الدخول والملف الشخصي بالزاوية
-        function checkLocalAuth() {
-            const savedName = localStorage.getItem('site_user_name');
-            const savedAvatar = localStorage.getItem('site_user_avatar');
-            
-            const loginBtn = document.getElementById('siteLoginBtn');
-            const profileBadge = document.getElementById('siteProfileBadge');
-            const headerUserName = document.getElementById('headerUserName');
-            const headerUserAvatar = document.getElementById('headerUserAvatar');
-
-            if (savedName) {
-                loginBtn.style.display = 'none';
-                profileBadge.style.display = 'flex';
-                headerUserName.textContent = savedName;
-                headerUserAvatar.src = savedAvatar || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
-            } else {
-                loginBtn.style.display = 'inline-flex';
-                profileBadge.style.display = 'none';
-            }
-        }
-
-        function openLoginModal() {
-            const defaultName = prompt("أدخل اسمك الكريم لتسجيل الدخول:", "طالب القرآن");
-            if (defaultName) {
-                localStorage.setItem('site_user_name', defaultName);
-                localStorage.setItem('site_user_avatar', 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
-                checkLocalAuth();
-            }
-        }
-
-        function openProfileSettings() {
-            document.getElementById('editUserNameInput').value = localStorage.getItem('site_user_name') || '';
-            document.getElementById('profileModal').style.display = 'flex';
-        }
-
-        function closeProfileModal() {
-            document.getElementById('profileModal').style.display = 'none';
-        }
-
-        function saveProfileSettings() {
-            const newName = document.getElementById('editUserNameInput').value.trim();
-            if (newName) {
-                localStorage.setItem('site_user_name', newName);
-            }
-
-            const fileInput = document.getElementById('editUserAvatarInput');
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    localStorage.setItem('site_user_avatar', e.target.result);
-                    checkLocalAuth();
-                    closeProfileModal();
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                checkLocalAuth();
-                closeProfileModal();
-            }
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('site_user_name');
-            localStorage.removeItem('site_user_avatar');
-            closeProfileModal();
-            checkLocalAuth();
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            checkLocalAuth();
-        });
-    </script>
 
     <!-- سكريبت الخلفية ثلاثية الأبعاد التفاعلية (3D Canvas Animation) -->
     <script>
@@ -1354,7 +1210,55 @@
         animate();
     </script>
 
-    <!-- ربط ملف المنطق الخاص بك (content.js) دون أي تعديل عليه -->
+    <!-- ربط كود الـ JS والتعامل المتزامن بين أزرار الهيدر وأزرار النظام السفلي -->
     <script type="module" src="content.js"></script>
+    <script>
+        // ربط أحداث الأزرار في الهيدر مع معرفات الـ DOM التي يعتمد عليها الـ JavaScript الأصلي (content.js)
+        window.addEventListener('DOMContentLoaded', () => {
+            const headerLoginBtn = document.getElementById('headerLoginBtn');
+            const originalLoginBtn = document.getElementById('loginBtn');
+            if (headerLoginBtn && originalLoginBtn) {
+                headerLoginBtn.addEventListener('click', () => {
+                    originalLoginBtn.click();
+                });
+            }
+
+            const headerLogoutBtn = document.getElementById('headerLogoutBtn');
+            const originalLogoutBtn = document.getElementById('logoutBtn');
+            if (headerLogoutBtn && originalLogoutBtn) {
+                headerLogoutBtn.addEventListener('click', () => {
+                    originalLogoutBtn.click();
+                });
+            }
+
+            // مراقبة حالة ظهور نموذج التعليقات أو حاوية تسجيل الدخول بالأسفل لتحديث الهيدر تلقائياً
+            const observer = new MutationObserver(() => {
+                const authContainer = document.getElementById('authContainer');
+                const commentFormCard = document.getElementById('commentFormCard');
+                const userInfoDisplay = document.getElementById('userInfoDisplay');
+                
+                const headerLogin = document.getElementById('headerLoginBtn');
+                const headerProfile = document.getElementById('headerUserProfile');
+                const headerUserName = document.getElementById('headerUserNameSpan');
+                const headerUserAvatar = document.getElementById('headerUserAvatarImg');
+
+                // إذا كان المستخدم مسجل الدخول (يظهر نموذج التعليقات وتختفي بطاقة الدخول السفلية)
+                if (commentFormCard && commentFormCard.style.display !== 'none' && commentFormCard.style.display !== '') {
+                    headerLogin.style.display = 'none';
+                    headerProfile.style.display = 'flex';
+                    if (userInfoDisplay) {
+                        headerUserName.textContent = userInfoDisplay.textContent.replace('مرحباً بك', '').trim() || 'مستخدم جوجل';
+                    }
+                    // محاولة جلب صورة الحساب إن وجدت أو وضع صورة افتراضية
+                    headerUserAvatar.src = "https://www.gstatic.com/images/branding/product/1x/avatar_square_blue_54dp.png";
+                } else {
+                    headerLogin.style.display = 'inline-flex';
+                    headerProfile.style.display = 'none';
+                }
+            });
+
+            observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+        });
+    </script>
 </body>
 </html>
