@@ -188,7 +188,6 @@
             width: 100%;
         }
 
-        /* حاوية الأزرار في الهيدر بدون أي تداخل */
         .nav-actions {
             display: flex;
             align-items: center;
@@ -215,7 +214,6 @@
             box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
-        /* زر تسجيل الدخول الحقيقي بحساب جوجل في الزاوية */
         .btn-google-header {
             background: #ffffff;
             color: #1f2937;
@@ -307,7 +305,6 @@
             filter: brightness(1.1);
         }
 
-        /* Bio Card 3D effect */
         .bio-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
@@ -371,7 +368,6 @@
             color: var(--accent-gold);
         }
 
-        /* General Sections */
         section {
             padding: 90px 20px;
             max-width: 1200px;
@@ -396,7 +392,6 @@
             font-size: 1rem;
         }
 
-        /* Grid Cards */
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -412,21 +407,6 @@
             backdrop-filter: blur(12px);
             position: relative;
             overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.05), transparent);
-            transition: 0.5s;
-        }
-
-        .glass-card:hover::before {
-            left: 100%;
         }
 
         .glass-card:hover {
@@ -461,7 +441,6 @@
             font-size: 0.95rem;
         }
 
-        /* Packages */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -557,7 +536,6 @@
             box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
-        /* Steps */
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -605,7 +583,6 @@
             font-size: 0.9rem;
         }
 
-        /* Playlist Section */
         .playlist-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -618,14 +595,6 @@
             border-radius: 20px;
             padding: 20px;
             backdrop-filter: blur(10px);
-        }
-
-        .column-header {
-            font-size: 1.1rem;
-            color: var(--accent-gold);
-            margin-bottom: 15px;
-            text-align: center;
-            font-family: 'Amiri', serif;
         }
 
         .audio-track-card-compact {
@@ -682,7 +651,6 @@
             border-radius: 3px;
         }
 
-        /* Testimonials */
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -697,6 +665,7 @@
             padding: 30px;
             backdrop-filter: blur(10px);
             transition: 0.3s;
+            position: relative;
         }
 
         .testimonial-card:hover {
@@ -718,6 +687,12 @@
             line-height: 1.6;
         }
 
+        .testimonial-author {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
         .testimonial-author h5 {
             color: var(--accent-gold);
             font-size: 1rem;
@@ -728,7 +703,44 @@
             color: var(--text-muted);
         }
 
-        /* Firebase Auth & Comment Form (مع الحفاظ على المعرفات ليعمل الـ JS الأصلي) */
+        /* أزرار التعديل والحذف الخاصة بالرسالة/التعليق المرسل */
+        .msg-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-edit-msg, .btn-delete-msg {
+            background: transparent;
+            border: 1px solid;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-edit-msg {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .btn-edit-msg:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+        }
+
+        .btn-delete-msg {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .btn-delete-msg:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        /* Firebase Auth & Comment Form */
         .auth-section {
             text-align: center;
             background: var(--bg-card);
@@ -816,7 +828,6 @@
             color: #fff;
         }
 
-        /* FAQ */
         .faq-accordion {
             max-width: 800px;
             margin: 0 auto;
@@ -863,7 +874,6 @@
             transform: rotate(180deg);
         }
 
-        /* Footer */
         footer {
             background: rgba(3, 8, 5, 0.98);
             border-top: 1px solid var(--border-glass);
@@ -936,13 +946,11 @@
 </head>
 <body>
 
-    <!-- 3D Background Canvas -->
     <canvas id="bgCanvas"></canvas>
     <div class="bg-watermark" id="bgWatermark">تحفيظ أونلاين</div>
 
     <header id="header">
         <div class="nav-container">
-            <!-- زخارف إسلامية متكاملة بجانب اسم الموقع -->
             <a href="#" class="logo-box">
                 <div class="logo-icon"><i class="fa-solid fa-quran"></i></div>
                 <div class="logo-text">
@@ -952,7 +960,6 @@
             </a>
             <ul class="nav-links" id="navLinks"></ul>
             
-            <!-- أزرار الهيدر: زر اللغة + زر تسجيل الدخول الحقيقي المنقول من الأسفل -->
             <div class="nav-actions">
                 <button class="btn-google-header" id="headerLoginBtn">
                     <i class="fa-brands fa-google"></i> دخول بجوجل
@@ -1029,22 +1036,22 @@
 
         <div class="testimonials-grid" id="testimonialsGrid"></div>
 
-        <!-- قسم المصادقة الأصلي (مخفي برمجياً بالأسفل، ويحوي الـ ID الأصلي loginBtn لكي يقرأه ملف JS دون أخطاء) -->
         <div class="auth-section" id="authContainer" style="display: none;">
             <button class="btn-google" id="loginBtn">
                 <i class="fa-brands fa-google"></i> تسجيل الدخول بحساب جوجل
             </button>
         </div>
 
-        <!-- نموذج التعليقات الذي يظهر عند نجاح تسجيل الدخول -->
         <div class="comment-form-card" id="commentFormCard">
             <div class="user-info-bar">
                 <span id="userInfoDisplay">مرحباً بك</span>
                 <button class="btn-logout" id="logoutBtn">تسجيل الخروج</button>
             </div>
+            <!-- حقل مخفي لتخزين معرف الرسالة الحالية في حال تم الضغط على زر تعديل -->
+            <input type="hidden" id="editingMessageId" value="">
             <form id="userCommentForm">
                 <textarea id="userCommentInput" placeholder="اكتب رأيك أو تجربتك بكل صدق..." required></textarea>
-                <button type="submit" class="btn-green" style="width: 100%; justify-content: center; padding: 10px;">نشر التعليق</button>
+                <button type="submit" class="btn-green" id="submitCommentBtn" style="width: 100%; justify-content: center; padding: 10px;">نشر التعليق</button>
             </form>
         </div>
     </section>
@@ -1073,7 +1080,6 @@
         </div>
     </footer>
 
-    <!-- سكريبت الخلفية ثلاثية الأبعاد التفاعلية (3D Canvas Animation) -->
     <script>
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
@@ -1162,7 +1168,7 @@
     <!-- ملف المنطق الخاص بك (content.js) -->
     <script type="module" src="content.js"></script>
 
-    <!-- ربط زر الهيدر الفعلي بزر جوجل الحقيقي الموجود في الـ JS برمجيًا بدون تعليق -->
+    <!-- ربط الأزرار وإضافة إمكانية التعديل والحذف برمجياً -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const headerLoginBtn = document.getElementById('headerLoginBtn');
@@ -1171,7 +1177,7 @@
             if (headerLoginBtn && originalLoginBtn) {
                 headerLoginBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    originalLoginBtn.click(); // تفعيل كود تسجيل الدخول الأصلي بسلاسة
+                    originalLoginBtn.click();
                 });
             }
         });
