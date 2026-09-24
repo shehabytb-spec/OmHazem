@@ -1127,7 +1127,7 @@
         <div class="steps-grid" id="stepsGrid"></div>
     </section>
 
-    <!-- قسم حجز الحصة التجريبية (تم إضافته هنا تحت قسم كيف تبدأ رحلتك معنا مباشرة) -->
+    <!-- قسم حجز الحصة التجريبية -->
     <section id="trial-booking">
         <div class="section-title">
             <h3>حجز الحصة التجريبية</h3>
@@ -1186,6 +1186,7 @@
         <div class="playlist-container" id="playlistColumnsGrid"></div>
     </section>
 
+    <!-- قسم آراء وتجارب الحفظ والتعليقات -->
     <section id="testimonials">
         <div class="section-title">
             <h3 id="testimonialsTitle">آراء وتجارب الحفظ</h3>
@@ -1205,7 +1206,6 @@
                 <span id="userInfoDisplay">مرحباً بك</span>
                 <button class="btn-logout" id="logoutBtn">تسجيل الخروج</button>
             </div>
-            <!-- حقل مخفي لتخزين معرف الرسالة الحالية في حال تم الضغط على زر تعديل -->
             <input type="hidden" id="editingMessageId" value="">
             <form id="userCommentForm">
                 <textarea id="userCommentInput" placeholder="اكتب رأيك أو تجربتك بكل صدق..." required></textarea>
@@ -1326,7 +1326,7 @@
     <!-- ملف المنطق الخاص بك (content.js) -->
     <script type="module" src="content.js"></script>
 
-    <!-- ربط الأزرار وإضافة كود تفاعل نموذج حجز الحصة التجريبية -->
+    <!-- ربط الأزرار وتفاعل نموذج حجز الحصة التجريبية -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const headerLoginBtn = document.getElementById('headerLoginBtn');
@@ -1339,7 +1339,6 @@
                 });
             }
 
-            // تحديث وتوليد روابط الحجز التجريبي ديناميكياً بناءً على الحقول والضمائر
             const childNameInput = document.getElementById('childName');
             const childAgeInput = document.getElementById('childAge');
             const childGenderSelect = document.getElementById('childGender');
@@ -1352,19 +1351,15 @@
             function updateTrialLinks() {
                 const name = childNameInput.value.trim() || 'اسم الطفل';
                 const age = childAgeInput.value.trim() || '7';
-                const gender = childGenderSelect.value; // 'ولد' أو 'بنت'
+                const gender = childGenderSelect.value;
                 const program = programNameSelect.value;
                 const pkg = packageNameSelect.value;
 
-                // تكييف الضمائر بناءً على الجنس
-                // إذا كان ولد: "لدي طفل عمره..." ، إذا كانت بنت: "لدي طفلة عمرها..."
                 let childWord = gender === 'ولد' ? 'طفل' : 'طفلة';
                 let agePronoun = gender === 'ولد' ? 'عمره' : 'عمرها';
 
-                // محتوى الرسالة المطلوب تماماً مع استبدال البيانات
                 const messageText = `السلام عليكم ورحمة الله وبركاته, أريد أن أشترك في منصة تحفيظ أونلاين, لدي ${childWord} ${agePronoun} (${age} سنوات) واسمه (${name}) وأريد أن اشترك في برنامج (${program}) مع باقة (${pkg}) وأريد حجز الحصة التجريبية.`;
 
-                // أرقام وروابط الاتصال من إعدادات المنصة
                 const waNumber = "201004675704";
                 const tgBaseLink = "https://t.me/+201004675704";
 
