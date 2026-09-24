@@ -101,9 +101,9 @@ export const siteData = {
         sub: { ar: "اختر الباقة المناسبة لك أو لطفلك لاستمرارية حفظ كتاب الله بانتظام", en: "Choose the right package for you or your child to maintain regular Quran memorization." },
         items: [
             {
-                title: { ar: "الباقة الأساسية", en: "Basic Package" },
-                price: { ar: "8 حصص", en: "8 Sessions" },
-                priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "Monthly (2 sessions/week)" },
+                title: { ar: " الأساسية", en: "Basic " },
+                price: { ar: "8 حصص شهرياً ", en: "8 Sessions Monthly" },
+                priceSub: { ar: "شهرياً (حصتان أسبوعياً)", en: "(2 sessions/week)" },
                 badge: null,
                 isFeatured: false,
                 features: [
@@ -114,9 +114,9 @@ export const siteData = {
                 btnText: { ar: "اختر الباقة", en: "Select Package" }
             },
             {
-                title: { ar: "الباقة الأكثر طلباً", en: "Most Popular" },
-                price: { ar: "16 حصة", en: "16 Sessions" },
-                priceSub: { ar: "شهرياً (4 حصص أسبوعياً)", en: "Monthly (4 sessions/week)" },
+                title: { ar: "المتقدمة", en: "Advanced" },
+                price: { ar: "16 حصة شهرياً ", en: "16 Sessions Monthly" },
+                priceSub: { ar: "(4 حصص أسبوعياً)", en: "(4 sessions/week)" },
                 badge: { ar: "الأكثر طلباً ⭐", en: "Most Popular ⭐" },
                 isFeatured: true,
                 features: [
@@ -128,9 +128,9 @@ export const siteData = {
                 btnText: { ar: "اختر الباقة", en: "Select Package" }
             },
             {
-                title: { ar: "الباقة المكثفة", en: "Intensive Package" },
-                price: { ar: "20 حصة", en: "20 Sessions" },
-                priceSub: { ar: "شهرياً (5 حصص أسبوعياً)", en: "Monthly (5 sessions/week)" },
+                title: { ar: "المكثفة", en: "Intensive Package" },
+                price: { ar: "20 حصة شهريا", en: "20 Sessions Monthly" },
+                priceSub: { ar: " (5 حصص أسبوعياً)", en: " (5 sessions/week)" },
                 badge: { ar: "للحفظ السريع 🚀", en: "Fast Memorization 🚀" },
                 isFeatured: false,
                 features: [
@@ -148,10 +148,9 @@ export const siteData = {
         title: { ar: "كيف تبدأ رحلتك معنا؟", en: "How to Start Your Journey?" },
         sub: { ar: "خطوات بسيطة وسريعة للانضمام لحلقاتنا القرآنية", en: "Simple and quick steps to join our Quran circles." },
         items: [
-            { num: "01", title: { ar: "تواصل معنا", en: "Contact Us" }, desc: { ar: "اضغط على زر الحجز وتواصل عبر الواتساب أو تليجرام.", en: "Click the booking button and reach out via WhatsApp or Telegram." } },
+            { num: "01", title: { ar: "تواصل معنا", en: "Contact Us" }, desc: { ar: "اضغط على زر الحجز وواملأ الفراغات وأرسل لنا.", en: "Click the booking button and reach out via WhatsApp or Telegram." } },
             { num: "02", title: { ar: "الحصة التجريبية", en: "Trial Session" }, desc: { ar: "تحديد مستوى الطالب وتجربة طريقة الشرح بمرونة.", en: "Assess the student's level and experience the teaching method." } },
-            { num: "03", title: { ar: "اختيار الباقة", en: "Choose Package" }, desc: { ar: "اختيار عدد الحصص الأسبوعية المناسبة لجدولك.", en: "Select the appropriate number of weekly sessions." } },
-            { num: "04", title: { ar: "بدء الحفظ", en: "Start Memorizing" }, desc: { ar: "الانطلاق في رحلة حفظ وتلاوة كتاب الله تعالى.", en: "Embarking on the journey of memorizing the Quran." } }
+            { num: "03", title: { ar: "اختيار الوقت", en: "Choose Package" }, desc: { ar: "اختيار الوقت المناسب لبمواعد حصصك.", en: "Select the appropriate number of weekly sessions." } },
         ]
     },
 
