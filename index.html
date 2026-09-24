@@ -583,6 +583,113 @@
             font-size: 0.9rem;
         }
 
+        /* تنسيقات قسم حجز الحصة التجريبية الجديد */
+        .trial-booking-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), var(--shadow-glow);
+        }
+
+        .trial-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group select {
+            background: rgba(6, 14, 10, 0.8);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 12px 15px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+        }
+
+        .form-group select option {
+            background: #060e0a;
+            color: var(--text-main);
+        }
+
+        .trial-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn-whatsapp-send {
+            background: #25d366;
+            color: #ffffff;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            text-decoration: none;
+        }
+
+        .btn-whatsapp-send:hover {
+            background: #22bf5b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-telegram-send {
+            background: #229ed9;
+            color: #ffffff;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
+            text-decoration: none;
+        }
+
+        .btn-telegram-send:hover {
+            background: #1b8ac1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 158, 217, 0.5);
+        }
+
         .playlist-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1020,6 +1127,57 @@
         <div class="steps-grid" id="stepsGrid"></div>
     </section>
 
+    <!-- قسم حجز الحصة التجريبية (تم إضافته هنا تحت قسم كيف تبدأ رحلتك معنا مباشرة) -->
+    <section id="trial-booking">
+        <div class="section-title">
+            <h3>حجز الحصة التجريبية</h3>
+            <p>املأ البيانات أدناه لتجهيز رسالة الحجز وإرسالها مباشرة عبر واتساب أو تليجرام</p>
+        </div>
+        <div class="trial-booking-section">
+            <div class="trial-form-grid">
+                <div class="form-group">
+                    <label for="childName">اسم الطفل / الطفلة</label>
+                    <input type="text" id="childName" placeholder="مثال: محمد" required>
+                </div>
+                <div class="form-group">
+                    <label for="childAge">سن الطفل / الطفلة</label>
+                    <input type="number" id="childAge" min="1" max="25" placeholder="مثال: 7" required>
+                </div>
+                <div class="form-group">
+                    <label for="childGender">الجنس</label>
+                    <select id="childGender">
+                        <option value="ولد">ذكر (ولد)</option>
+                        <option value="بنت">أنثى (بنت)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="programName">نوع البرنامج</label>
+                    <select id="programName">
+                        <option value="برنامج تحفيظ الأطفال">تحفيظ الأطفال والناشئة</option>
+                        <option value="برنامج النساء والفتيات">برنامج النساء والفتيات</option>
+                        <option value="دورة تصحيح التلاوة وتجويد الحروف">دورة تصحيح التلاوة وتجويد الحروف</option>
+                    </select>
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="packageName">الباقة المطلوبة</label>
+                    <select id="packageName">
+                        <option value="باستخدام باقة 8 حصص شهرياً">الباقة الأساسية (8 حصص شهرياً)</option>
+                        <option value="باقة 16 حصة شهرياً" selected>الباقة الأكثر طلباً (16 حصة شهرياً)</option>
+                        <option value="باقة 20 حصة شهرياً">الباقة المكثفة (20 حصة شهرياً)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="trial-actions">
+                <a href="#" id="sendTrialWa" class="btn-whatsapp-send" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> إرسال عبر الواتس
+                </a>
+                <a href="#" id="sendTrialTg" class="btn-telegram-send" target="_blank">
+                    <i class="fa-brands fa-telegram"></i> إرسال عبر تيليجرام
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section id="playlist">
         <div class="section-title">
             <h3 id="playlistTitle">نماذج التلاوات الصوتية</h3>
@@ -1168,7 +1326,7 @@
     <!-- ملف المنطق الخاص بك (content.js) -->
     <script type="module" src="content.js"></script>
 
-    <!-- ربط الأزرار وإضافة إمكانية التعديل والحذف برمجياً -->
+    <!-- ربط الأزرار وإضافة كود تفاعل نموذج حجز الحصة التجريبية -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const headerLoginBtn = document.getElementById('headerLoginBtn');
@@ -1180,6 +1338,46 @@
                     originalLoginBtn.click();
                 });
             }
+
+            // تحديث وتوليد روابط الحجز التجريبي ديناميكياً بناءً على الحقول والضمائر
+            const childNameInput = document.getElementById('childName');
+            const childAgeInput = document.getElementById('childAge');
+            const childGenderSelect = document.getElementById('childGender');
+            const programNameSelect = document.getElementById('programName');
+            const packageNameSelect = document.getElementById('packageName');
+            
+            const sendTrialWa = document.getElementById('sendTrialWa');
+            const sendTrialTg = document.getElementById('sendTrialTg');
+
+            function updateTrialLinks() {
+                const name = childNameInput.value.trim() || 'اسم الطفل';
+                const age = childAgeInput.value.trim() || '7';
+                const gender = childGenderSelect.value; // 'ولد' أو 'بنت'
+                const program = programNameSelect.value;
+                const pkg = packageNameSelect.value;
+
+                // تكييف الضمائر بناءً على الجنس
+                // إذا كان ولد: "لدي طفل عمره..." ، إذا كانت بنت: "لدي طفلة عمرها..."
+                let childWord = gender === 'ولد' ? 'طفل' : 'طفلة';
+                let agePronoun = gender === 'ولد' ? 'عمره' : 'عمرها';
+
+                // محتوى الرسالة المطلوب تماماً مع استبدال البيانات
+                const messageText = `السلام عليكم ورحمة الله وبركاته, أريد أن أشترك في منصة تحفيظ أونلاين, لدي ${childWord} ${agePronoun} (${age} سنوات) واسمه (${name}) وأريد أن اشترك في برنامج (${program}) مع باقة (${pkg}) وأريد حجز الحصة التجريبية.`;
+
+                // أرقام وروابط الاتصال من إعدادات المنصة
+                const waNumber = "201004675704";
+                const tgBaseLink = "https://t.me/+201004675704";
+
+                sendTrialWa.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(messageText)}`;
+                sendTrialTg.href = `${tgBaseLink}?text=${encodeURIComponent(messageText)}`;
+            }
+
+            [childNameInput, childAgeInput, childGenderSelect, programNameSelect, packageNameSelect].forEach(element => {
+                element.addEventListener('input', updateTrialLinks);
+                element.addEventListener('change', updateTrialLinks);
+            });
+
+            updateTrialLinks();
         });
     </script>
 </body>
