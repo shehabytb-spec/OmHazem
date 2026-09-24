@@ -90,6 +90,21 @@ const siteData = {
             { number: 4, title: { ar: "بدء الدراسة والانتظام", en: "Start Learning" }, desc: { ar: "الانطلاق في رحلة الحفظ عبر زوم أو تليجرام.", en: "Begin your journey live via Zoom or Telegram." } }
         ]
     },
+    trialBooking: {
+        title: { ar: "حجز الحصة التجريبية", en: "Book Trial Class" },
+        subtitle: { ar: "املأ البيانات أدناه لاختيار البرنامج والباقة وإرسال طلب الحجز مباشرة", en: "Fill out the details below to book your trial class" },
+        labels: {
+            name: { ar: "اسم الطفل / الطالب(ة)", en: "Child/Student Name" },
+            age: { ar: "سن الطفل / العمر", en: "Child Age" },
+            gender: { ar: "الجنس", en: "Gender" },
+            genderMale: { ar: "ذكر (ولد)", en: "Male (Boy)" },
+            genderFemale: { ar: "أنثى (بنت)", en: "Female (Girl)" },
+            program: { ar: "نوع البرنامج", en: "Program Type" },
+            package: { ar: "الباقة المطلوبة", en: "Required Package" },
+            whatsappBtn: { ar: "إرسال عبر الواتس", en: "Send via WhatsApp" },
+            telegramBtn: { ar: "إرسال عبر تيليجرام", en: "Send via Telegram" }
+        }
+    },
     playlist: {
         title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
         subtitle: { ar: "نماذج تلاوة صوتية من طلابنا", en: "Audio recitation samples from students" },
@@ -195,6 +210,22 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
+    // تحديث النصوص الخاصة بقسم حجز الحصة التجريبية
+    document.getElementById('trialBookingTitle').textContent = siteData.trialBooking.title[lang];
+    document.getElementById('trialBookingSub').textContent = siteData.trialBooking.subtitle[lang];
+    document.getElementById('labelChildName').textContent = siteData.trialBooking.labels.name[lang];
+    document.getElementById('labelChildAge').textContent = siteData.trialBooking.labels.age[lang];
+    document.getElementById('labelChildGender').textContent = siteData.trialBooking.labels.gender[lang];
+    document.getElementById('labelProgramName').textContent = siteData.trialBooking.labels.program[lang];
+    document.getElementById('labelPackageName').textContent = siteData.trialBooking.labels.package[lang];
+    
+    const genderSelect = document.getElementById('childGender');
+    genderSelect.options[0].text = siteData.trialBooking.labels.genderMale[lang];
+    genderSelect.options[1].text = siteData.trialBooking.labels.genderFemale[lang];
+
+    document.getElementById('trialWaBtn').innerHTML = `<i class="fa-brands fa-whatsapp"></i> ${siteData.trialBooking.labels.whatsappBtn[lang]}`;
+    document.getElementById('trialTgBtn').innerHTML = `<i class="fa-brands fa-telegram"></i> ${siteData.trialBooking.labels.telegramBtn[lang]}`;
+
     document.getElementById('playlistTitle').textContent = siteData.playlist.title[lang];
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
     document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
@@ -236,35 +267,50 @@ function renderPage(lang) {
     document.getElementById('footerTgText').textContent = siteData.footer.telegramBtn[lang];
 }
 
-// دالة لمعالجة وإرسال رسالة حجز الحصة التجريبية بالصيغة المطلوبة
-window.sendTrialMessage = function(platform) {
-    const name = document.getElementById('childName').value.trim();
-    const age = document.getElementById('childAge').value.trim();
-    const gender = document.getElementById('childGender').value;
-    const program = document.getElementById('programName').value;
-    const pkg = document.getElementById('packageName').value;
+// ==========================================================================
+// منطق تفاعلي لتحديث روابط واتساب وتيليجرام ديناميكياً بناءً على مدخلات حجز الحصة التجريبية
+// ==========================================================================
+function updateTrialLinks() {
+    const nameInput = document.getElementById('childName').value.trim() || 'اسم الطفل';
+    const ageInput = document.getElementById('childAge').value.trim() || 'سن الطفل';
+    const genderSelect = document.getElementById('childGender').value;
+    const programSelect = document.getElementById('programName').value;
+    const packageSelect = document.getElementById('packageName').value;
 
-    if (!name || !age) {
-        alert(currentLang === 'ar' ? 'الرجاء إدخال اسم وسن الطفل/الطالب' : 'Please fill in the child name and age.');
-        document.getElementById('childName').focus();
-        return;
+    // استبدال الضمائر المذكرة والمؤنثة حسب نوع الطفل المختار
+    // إذا كان ولد: لدي طفل عمره... واسمه... وأريد أن أشترك...
+    // إذا كانت بنت: لدي طفلة عمرها... اسمها... وأريد أن أشتري...
+    let childTextPhrase = '';
+    if (genderSelect === 'female') {
+        childTextPhrase = `لدي طفلة عمرها ${ageInput} سنوات اسمها ${nameInput}`;
+    } else {
+        childTextPhrase = `لدي طفل عمره ${ageInput} سنوات واسمه ${nameInput}`;
     }
 
-    // صياغة النص المطلوب وتعديل الضمائر (ذكر/أنثى)
-    const genderText = gender === 'ولد' ? 'طفل ولد' : 'طفلة بنت';
-    const message = `السلام عليكم ورحمة الله وبركاته, أريد أن أشترك في منصة تحفيظ أونلاين, لدي ${genderText} عمره ${age} سنوات واسمه ${name} وأريد أن اشترك في برنامج ${program} مع باقة ${pkg} وأريد حجز الحصة التجريبية.`;
+    const messageText = `السلام عليكم ورحمة الله وبركاته, أريد أن أشترك في منصة تحفيظ أونلاين, ${childTextPhrase} وأريد أن اشترك في برنامج ${programSelect} مع باقة ${packageSelect} وأريد حجز الحصة التجريبية.`;
 
-    if (platform === 'whatsapp') {
-        const url = `https://wa.me/${siteData.contact.whatsappNumber}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
-    } else if (platform === 'telegram') {
-        // إرسال عبر تليجرام (باستخدام رابط المعرف أو تليجرام مباشرة مع النص)
-        const tgBaseUrl = siteData.contact.telegramLink;
-        // ملاحظة: تليجرام يدعم ?text= في الروابط المباشرة لبعض التطبيقات أو القنوات المخصصة
-        const url = `${tgBaseUrl}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
+    // روابط الإرسال للواتساب وتيليجرام
+    const encodedMsg = encodeURIComponent(messageText);
+    const waBookingUrl = `https://wa.me/${siteData.contact.whatsappNumber}?text=${encodedMsg}`;
+    const tgBookingUrl = `https://t.me/share/url?url=${encodeURIComponent(siteData.contact.telegramLink)}&text=${encodedMsg}`;
+
+    document.getElementById('trialWaBtn').href = waBookingUrl;
+    document.getElementById('trialTgBtn').href = tgBookingUrl;
+}
+
+// الاستماع للتغييرات في حقول النموذج لتحديث الروابط فورياً
+['childName', 'childAge', 'childGender', 'programName', 'packageName'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+        el.addEventListener('input', updateTrialLinks);
+        el.addEventListener('change', updateTrialLinks);
     }
-};
+});
+
+// تنفيذ التحديث الأولي عند تحميل الصفحة
+window.addEventListener('DOMContentLoaded', () => {
+    updateTrialLinks();
+});
 
 // ==========================================================================
 // Firebase Authentication & Firestore Comments Integration Logic
@@ -459,7 +505,7 @@ window.playTrack = function(trackNum) {
 
     currentAudio.onended = () => {
         currentIcon.className = 'fa-solid fa-play';
-        const fill = document.getElementById(`progressFill${trackNum}`);
+        const fill = document.getElementById(`progressFormFill${trackNum}`);
         if(fill) fill.style.width = '0%';
         activeAudio = null;
         activeTrackNum = null;
@@ -492,4 +538,5 @@ window.addEventListener('scroll', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderPage('ar');
+    updateTrialLinks();
 });
