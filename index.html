@@ -587,117 +587,112 @@
         .trial-booking-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 40px;
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
             backdrop-filter: blur(15px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.5), var(--shadow-glow);
         }
 
-        .trial-form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
         .trial-form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .trial-form-group.full-width {
-            grid-column: span 2;
+            margin-bottom: 20px;
         }
 
         .trial-form-group label {
+            display: block;
+            margin-bottom: 8px;
             color: var(--accent-gold);
-            font-size: 0.95rem;
             font-weight: 600;
+            font-size: 0.95rem;
         }
 
         .trial-form-group input,
         .trial-form-group select {
+            width: 100%;
             background: rgba(6, 14, 10, 0.8);
             border: 1px solid var(--border-glass);
             border-radius: 12px;
             padding: 12px 15px;
             color: var(--text-main);
-            font-size: 1rem;
             font-family: inherit;
-            outline: none;
+            font-size: 1rem;
             transition: 0.3s;
         }
 
         .trial-form-group input:focus,
         .trial-form-group select:focus {
+            outline: none;
             border-color: var(--accent-gold);
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
         }
 
-        .trial-form-group select option {
-            background: #060e0a;
-            color: var(--text-main);
+        .trial-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        .trial-action-btns {
+        .trial-buttons {
             display: flex;
             gap: 15px;
-            justify-content: center;
+            margin-top: 30px;
         }
 
-        .btn-whatsapp-send {
+        .btn-trial-whatsapp {
+            flex: 1;
             background: #25d366;
             color: #ffffff;
             border: none;
-            padding: 14px 25px;
+            padding: 14px 20px;
             border-radius: 30px;
             font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
-            cursor: pointer;
-            transition: 0.3s;
             text-decoration: none;
+            transition: 0.3s;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
-        .btn-whatsapp-send:hover {
+        .btn-trial-whatsapp:hover {
             filter: brightness(1.1);
             transform: translateY(-2px);
         }
 
-        .btn-telegram-send {
+        .btn-trial-telegram {
+            flex: 1;
             background: #229ed9;
             color: #ffffff;
             border: none;
-            padding: 14px 25px;
+            padding: 14px 20px;
             border-radius: 30px;
             font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
-            cursor: pointer;
-            transition: 0.3s;
             text-decoration: none;
+            transition: 0.3s;
             box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
         }
 
-        .btn-telegram-send:hover {
+        .btn-trial-telegram:hover {
             filter: brightness(1.1);
             transform: translateY(-2px);
         }
 
-        @media (max-width: 768px) {
-            .trial-form-grid {
+        @media (max-width: 600px) {
+            .trial-form-row {
                 grid-template-columns: 1fr;
+                gap: 0;
             }
-            .trial-form-group.full-width {
-                grid-column: span 1;
-            }
-            .trial-action-btns {
+            .trial-buttons {
                 flex-direction: column;
             }
         }
@@ -1139,54 +1134,59 @@
         <div class="steps-grid" id="stepsGrid"></div>
     </section>
 
-    <!-- قسم حجز الحصة التجريبية الجديد -->
+    <!-- القسم الجديد: حجز الحصة التجريبية (تم وضعه تحت قسم كيف تبدأ رحلتك معنا مباشرة) -->
     <section id="trial-booking">
         <div class="section-title">
-            <h3 id="trialTitle">حجز الحصة التجريبية</h3>
-            <p id="trialSub">املأ البيانات التالية لحجز حصتك التجريبية مجاناً</p>
+            <h3 id="trialBookingTitle">حجز الحصة التجريبية</h3>
+            <p id="trialBookingSub">املأ البيانات أدناه لاختيار البرنامج والباقة وإرسال طلب الحجز مباشرة</p>
         </div>
         <div class="trial-booking-card">
             <form id="trialBookingForm">
-                <div class="trial-form-grid">
+                <div class="trial-form-row">
                     <div class="trial-form-group">
-                        <label for="childName">اسم الطفل / الطالب(ة)</label>
+                        <label for="childName" id="labelChildName">اسم الطفل / الطالب(ة)</label>
                         <input type="text" id="childName" placeholder="مثال: محمد" required>
                     </div>
                     <div class="trial-form-group">
-                        <label for="childAge">سن الطفل / العمر</label>
-                        <input type="number" id="childAge" min="1" max="99" placeholder="مثال: 7" required>
+                        <label for="childAge" id="labelChildAge">سن الطفل / العمر</label>
+                        <input type="number" id="childAge" placeholder="مثال: 7" min="1" max="80" required>
                     </div>
+                </div>
+
+                <div class="trial-form-row">
                     <div class="trial-form-group">
-                        <label for="childGender">نوع الطفل (الجنس)</label>
+                        <label for="childGender" id="labelChildGender">الجنس</label>
                         <select id="childGender" required>
-                            <option value="ولد">ذكر (ولد)</option>
-                            <option value="بنت">أنثى (بنت)</option>
+                            <option value="male">ذكر (ولد)</option>
+                            <option value="female">أنثى (بنت)</option>
                         </select>
                     </div>
                     <div class="trial-form-group">
-                        <label for="programName">نوع البرنامج</label>
+                        <label for="programName" id="labelProgramName">نوع البرنامج</label>
                         <select id="programName" required>
                             <option value="برنامج تحفيظ الأطفال">تحفيظ الأطفال والناشئة</option>
                             <option value="برنامج النساء والفتيات">برنامج النساء والفتيات</option>
                             <option value="دورة تصحيح التلاوة وتجويد الحروف">دورة تصحيح التلاوة وتجويد الحروف</option>
                         </select>
                     </div>
-                    <div class="trial-form-group full-width">
-                        <label for="packageName">الباقة المستخدمة</label>
-                        <select id="packageName" required>
-                            <option value="باقة 8 حصص شهريا">الباقة الأساسية (8 حصص شهرياً)</option>
-                            <option value="باقة 16 حصة شهريا">الباقة الأكثر طلباً (16 حصة شهرياً)</option>
-                            <option value="باقة 20 حصة شهريا">الباقة المكثفة (20 حصة شهرياً)</option>
-                        </select>
-                    </div>
                 </div>
-                <div class="trial-action-btns">
-                    <button type="button" class="btn-whatsapp-send" onclick="sendTrialMessage('whatsapp')">
+
+                <div class="trial-form-group">
+                    <label for="packageName" id="labelPackageName">الباقة المطلوبة</label>
+                    <select id="packageName" required>
+                        <option value="باقة 8 حصص شهريا">الباقة الأساسية (8 حصص شهرياً)</option>
+                        <option value="باقة 16 حصة شهريا">الباقة الأكثر طلباً (16 حصة شهرياً)</option>
+                        <option value="باقة 20 حصة شهريا">الباقة المكثفة (20 حصة شهرياً)</option>
+                    </select>
+                </div>
+
+                <div class="trial-buttons">
+                    <a href="#" id="trialWaBtn" class="btn-trial-whatsapp" target="_blank">
                         <i class="fa-brands fa-whatsapp"></i> إرسال عبر الواتس
-                    </button>
-                    <button type="button" class="btn-telegram-send" onclick="sendTrialMessage('telegram')">
+                    </a>
+                    <a href="#" id="trialTgBtn" class="btn-trial-telegram" target="_blank">
                         <i class="fa-brands fa-telegram"></i> إرسال عبر تيليجرام
-                    </button>
+                    </a>
                 </div>
             </form>
         </div>
@@ -1246,7 +1246,7 @@
             </div>
             <div class="social-btns">
                 <a href="#" class="social-btn js-wa-link" target="_blank"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText">واتساب</span></a>
-                <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands fa-telegram"></i> <span id="footerTgTest">تليجرام</span></a>
+                <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands fa-telegram"></i> <span id="footerTgText">تليجرام</span></a>
             </div>
             <div class="copyright" id="footerCopyright">منصة تحفيظ أونلاين. جميع الحقوق محفوظة.</div>
         </div>
