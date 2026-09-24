@@ -189,6 +189,13 @@
             width: 100%;
         }
 
+        /* تحسينات حاوية الأزرار في الهيدر (اللغة + الحساب) */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .lang-btn {
             background: transparent;
             border: 1px solid var(--accent-gold);
@@ -205,6 +212,130 @@
             background: var(--accent-gold);
             color: var(--bg-primary);
             box-shadow: 0 0 20px var(--accent-gold-glow);
+        }
+
+        /* أزرار حساب المستخدم العلوي والملف الشخصي */
+        .user-auth-btn {
+            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+            border: 1px solid var(--border-glass);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .user-auth-btn:hover {
+            filter: brightness(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .user-profile-badge {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--accent-gold);
+            padding: 4px 12px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .user-profile-badge:hover {
+            box-shadow: 0 0 15px var(--accent-gold-glow);
+        }
+
+        .user-profile-badge img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--accent-gold);
+        }
+
+        .user-profile-badge span {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* نافذة إعدادات الملف الشخصي (Modal) */
+        .profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .profile-modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-modal-content h3 {
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            font-family: 'Amiri', serif;
+        }
+
+        .profile-modal-content input[type="text"], 
+        .profile-modal-content input[type="file"] {
+            width: 100%;
+            background: rgba(6, 14, 10, 0.8);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            padding: 12px;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+
+        .profile-modal-content input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .modal-close-btn {
+            background: transparent;
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .modal-close-btn:hover {
+            background: #ef4444;
+            color: #fff;
         }
 
         /* Hero Section */
@@ -267,6 +398,7 @@
             box-shadow: var(--shadow-glow);
             transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
         }
 
         .btn-green:hover {
@@ -919,9 +1051,37 @@
                 </div>
             </a>
             <ul class="nav-links" id="navLinks"></ul>
-            <button class="lang-btn" onclick="toggleLanguage()" id="langLabel">English</button>
+            
+            <!-- أزرار الهيدر (اللغة + نظام تسجيل الدخول والملف الشخصي) -->
+            <div class="nav-actions">
+                <button class="user-auth-btn" id="siteLoginBtn" onclick="openLoginModal()">
+                    <i class="fa-solid fa-user"></i> دخول
+                </button>
+                
+                <div class="user-profile-badge" id="siteProfileBadge" onclick="openProfileSettings()">
+                    <img id="headerUserAvatar" src="" alt="صورة الحساب">
+                    <span id="headerUserName">زائر</span>
+                </div>
+
+                <button class="lang-btn" onclick="toggleLanguage()" id="langLabel">English</button>
+            </div>
         </div>
     </header>
+
+    <!-- نافذة إعدادات الملف الشخصي وتغيير الاسم والصورة -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <h3 id="modalTitle">إعدادات الملف الشخصي</h3>
+            <input type="text" id="editUserNameInput" placeholder="أدخل اسمك هنا...">
+            <div style="text-align: right; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">اختر صورة الحساب الشخصية:</div>
+            <input type="file" id="editUserAvatarInput" accept="image/*">
+            <div class="modal-btns">
+                <button class="btn-green" style="flex: 1; justify-content: center; padding: 10px;" onclick="saveProfileSettings()">حفظ التغييرات</button>
+                <button class="modal-close-btn" onclick="logoutUser()">تسجيل الخروج</button>
+            </div>
+            <button style="background: transparent; border: none; color: var(--text-muted); margin-top: 15px; cursor: pointer;" onclick="closeProfileModal()">إغلاق</button>
+        </div>
+    </div>
 
     <section class="hero" id="about">
         <div class="hero-content">
@@ -1028,11 +1188,85 @@
             </div>
             <div class="social-btns">
                 <a href="#" class="social-btn js-wa-link" target="_blank"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText">واتساب</span></a>
-                <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands faس-telegram"></i> <span id="footerTgTest">تليجرام</span></a>
+                <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands fa-telegram"></i> <span id="footerTgTest">تليجرام</span></a>
             </div>
             <div class="copyright" id="footerCopyright">منصة تحفيظ أونلاين. جميع الحقوق محفوظة.</div>
         </div>
     </footer>
+
+    <!-- سكريبت إدارة الملف الشخصي وتسجيل الدخول المحلي وإضافات الواجهة -->
+    <script>
+        // دوال التحكم في تسجيل الدخول والملف الشخصي بالزاوية
+        function checkLocalAuth() {
+            const savedName = localStorage.getItem('site_user_name');
+            const savedAvatar = localStorage.getItem('site_user_avatar');
+            
+            const loginBtn = document.getElementById('siteLoginBtn');
+            const profileBadge = document.getElementById('siteProfileBadge');
+            const headerUserName = document.getElementById('headerUserName');
+            const headerUserAvatar = document.getElementById('headerUserAvatar');
+
+            if (savedName) {
+                loginBtn.style.display = 'none';
+                profileBadge.style.display = 'flex';
+                headerUserName.textContent = savedName;
+                headerUserAvatar.src = savedAvatar || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+            } else {
+                loginBtn.style.display = 'inline-flex';
+                profileBadge.style.display = 'none';
+            }
+        }
+
+        function openLoginModal() {
+            const defaultName = prompt("أدخل اسمك الكريم لتسجيل الدخول:", "طالب القرآن");
+            if (defaultName) {
+                localStorage.setItem('site_user_name', defaultName);
+                localStorage.setItem('site_user_avatar', 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+                checkLocalAuth();
+            }
+        }
+
+        function openProfileSettings() {
+            document.getElementById('editUserNameInput').value = localStorage.getItem('site_user_name') || '';
+            document.getElementById('profileModal').style.display = 'flex';
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        function saveProfileSettings() {
+            const newName = document.getElementById('editUserNameInput').value.trim();
+            if (newName) {
+                localStorage.setItem('site_user_name', newName);
+            }
+
+            const fileInput = document.getElementById('editUserAvatarInput');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem('site_user_avatar', e.target.result);
+                    checkLocalAuth();
+                    closeProfileModal();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                checkLocalAuth();
+                closeProfileModal();
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('site_user_name');
+            localStorage.removeItem('site_user_avatar');
+            closeProfileModal();
+            checkLocalAuth();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            checkLocalAuth();
+        });
+    </script>
 
     <!-- سكريبت الخلفية ثلاثية الأبعاد التفاعلية (3D Canvas Animation) -->
     <script>
