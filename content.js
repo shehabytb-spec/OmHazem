@@ -147,7 +147,6 @@ function renderPage(lang) {
     document.getElementById('langLabel').textContent = lang === 'ar' ? 'English' : 'عربي';
     document.getElementById('logoTitle').textContent = siteData.header.logoTitle[lang];
     document.getElementById('logoSub').textContent = siteData.header.logoSub[lang];
-    document.getElementById('bgWatermark').textContent = siteData.header.logoTitle[lang];
 
     document.getElementById('navLinks').innerHTML = siteData.header.navLinks.map(link => 
         `<li><a href="#${link.id}">${link.text[lang]}</a></li>`
@@ -484,7 +483,6 @@ window.playTrack = function(trackNum) {
         }
     };
 
-    // [تم الإصلاح هنا]: تم تصحيح المعرف إلى progressFill بدلاً من progressFormFill الخاطئ
     currentAudio.onended = () => {
         currentIcon.className = 'fa-solid fa-play';
         const fill = document.getElementById(`progressFill${trackNum}`);
