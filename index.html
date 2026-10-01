@@ -188,6 +188,24 @@
             width: 100%;
         }
 
+        /* Mobile Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .menu-toggle:hover {
+            border-color: var(--accent-gold);
+            background: rgba(251, 191, 36, 0.1);
+        }
+
         .nav-actions {
             display: flex;
             align-items: center;
@@ -583,7 +601,7 @@
             font-size: 0.9rem;
         }
 
-        /* تنسيقات قسم حجز الحصة التجريبية الجديد */
+        /* تنسيقات قسم حجز الحصة التجريبية */
         .trial-booking-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
@@ -817,7 +835,7 @@
             color: var(--text-muted);
         }
 
-        /* أزرار التعديل والحذف الخاصة بالرسالة/التعليق المرسل */
+        /* أزرار التعديل والحذف */
         .msg-actions {
             display: flex;
             gap: 8px;
@@ -1049,8 +1067,25 @@
             .bio-features {
                 text-align: center;
             }
+            /* تحويل القائمة العلوية للقائمة المنسدلة للجوال */
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(6, 14, 10, 0.98);
+                flex-direction: column;
+                padding: 20px 0;
+                border-bottom: 1px solid var(--border-glass);
+                backdrop-filter: blur(15px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
             }
             .playlist-container {
                 grid-template-columns: 1fr;
@@ -1079,6 +1114,9 @@
                     <i class="fa-brands fa-google"></i> دخول بجوجل
                 </button>
                 <button class="lang-btn" onclick="toggleLanguage()" id="langLabel">English</button>
+                <button class="menu-toggle" id="menuToggle" aria-label="القائمة">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -1134,7 +1172,7 @@
         <div class="steps-grid" id="stepsGrid"></div>
     </section>
 
-    <!-- القسم الجديد: حجز الحصة التجريبية (تم وضعه تحت قسم كيف تبدأ رحلتك معنا مباشرة) -->
+    <!-- قسم حجز الحصة التجريبية -->
     <section id="trial-booking">
         <div class="section-title">
             <h3 id="trialBookingTitle">حجز الحصة التجريبية</h3>
@@ -1219,7 +1257,6 @@
                 <span id="userInfoDisplay">مرحباً بك</span>
                 <button class="btn-logout" id="logoutBtn">تسجيل الخروج</button>
             </div>
-            <!-- حقل مخفي لتخزين معرف الرسالة الحالية في حال تم الضغط على زر تعديل -->
             <input type="hidden" id="editingMessageId" value="">
             <form id="userCommentForm">
                 <textarea id="userCommentInput" placeholder="اكتب رأيك أو تجربتك بكل صدق..." required></textarea>
@@ -1238,12 +1275,12 @@
 
     <footer>
         <div class="footer-content">
-            <div class="logo-box">
+            <a href="#" class="logo-box" style="text-decoration: none;">
                 <div class="logo-icon"><i class="fa-solid fa-quran"></i></div>
                 <div class="logo-text">
                     <h1 style="font-size: 1.1rem; color: var(--accent-gold);">تحفيظ أونلاين</h1>
                 </div>
-            </div>
+            </a>
             <div class="social-btns">
                 <a href="#" class="social-btn js-wa-link" target="_blank"><i class="fa-brands fa-whatsapp"></i> <span id="footerWaText">واتساب</span></a>
                 <a href="#" class="social-btn js-tg-link" target="_blank"><i class="fa-brands fa-telegram"></i> <span id="footerTgText">تليجرام</span></a>
@@ -1257,7 +1294,8 @@
         const ctx = canvas.getContext('2d');
 
         let particles = [];
-        const numParticles = 45;
+        // تقليل عدد الجسيمات قليلاً لتحسين الأداء على الأجهزة الضعيفة والمحمولة
+        const numParticles = window.innerWidth < 768 ? 25 : 40;
         let mouseX = 0;
         let mouseY = 0;
 
@@ -1335,12 +1373,29 @@
         }
 
         animate();
+
+        // برمجة زر القائمة المنسدلة للجوال وتسكير القائمة عند الضغط على أي رابط
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+        });
     </script>
 
-    <!-- ملف المنطق الخاص بك (content.js) -->
+    <!-- ملف المنطق الخاص بالموقع -->
     <script type="module" src="content.js"></script>
 
-    <!-- ربط الأزرار وإضافة إمكانية التعديل والحذف برمجياً -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const headerLoginBtn = document.getElementById('headerLoginBtn');
