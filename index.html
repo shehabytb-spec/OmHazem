@@ -39,10 +39,31 @@
             position: relative;
         }
 
+        /* Top Announcement Bar (فكرة 2) */
+        .top-announcement-bar {
+            background: linear-gradient(90deg, var(--green-dark), var(--accent-gold), var(--green-dark));
+            background-size: 200% auto;
+            color: var(--bg-primary);
+            text-align: center;
+            padding: 8px 15px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1001;
+            animation: shineBanner 6s linear infinite;
+        }
+
+        @keyframes shineBanner {
+            to { background-position: 200% center; }
+        }
+
         /* Header & Nav */
         header {
             position: fixed;
-            top: 0;
+            top: 35px; /* مسافة للبار العلوي */
             left: 0;
             width: 100%;
             z-index: 1000;
@@ -53,6 +74,7 @@
         }
 
         header.scrolled {
+            top: 0;
             padding: 5px 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             background: rgba(6, 14, 10, 0.98);
@@ -64,10 +86,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 12px 20px;
         }
 
-        /* Islamic Ornament Logo Container - تم تحسين الإشعاع ليكون ظاهراً وواضحاً بدون إزعاج */
         .logo-box {
             display: flex;
             align-items: center;
@@ -117,7 +138,7 @@
 
         .logo-text h1 {
             font-size: 1.25rem;
-            color: #fde047; /* لون ذهبي مضيء وأكثر بروزاً */
+            color: #fde047;
             font-family: 'Amiri', serif;
             letter-spacing: 0.5px;
             text-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
@@ -132,14 +153,14 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 18px;
             align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-main);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: 0.3s;
             position: relative;
@@ -164,7 +185,6 @@
             width: 100%;
         }
 
-        /* Mobile Menu Toggle Button */
         .menu-toggle {
             display: none;
             background: transparent;
@@ -177,15 +197,10 @@
             transition: 0.3s;
         }
 
-        .menu-toggle:hover {
-            border-color: var(--accent-gold);
-            background: rgba(251, 191, 36, 0.1);
-        }
-
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: nowrap;
         }
 
@@ -193,34 +208,32 @@
             background: transparent;
             border: 1px solid var(--accent-gold);
             color: var(--accent-gold);
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.85rem;
             transition: 0.3s;
-            box-shadow: 0 0 10px rgba(251, 191, 36, 0.1);
             white-space: nowrap;
         }
 
         .lang-btn:hover {
             background: var(--accent-gold);
             color: var(--bg-primary);
-            box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
-        /* زر تسجيل الدخول مع تأثير الإضاءة والتلألؤ ليكون لافت للانتباه */
         .btn-google-header {
             background: #ffffff;
             color: #1f2937;
             border: 2px solid var(--accent-gold);
-            padding: 7px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
             animation: pulseLogin 2s infinite;
             transition: 0.3s;
@@ -228,28 +241,14 @@
         }
 
         @keyframes pulseLogin {
-            0% {
-                box-shadow: 0 0 5px rgba(251, 191, 36, 0.4);
-                transform: scale(1);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 0 0 10px rgba(16, 185, 129, 0.5);
-                transform: scale(1.03);
-            }
-            100% {
-                box-shadow: 0 0 5px rgba(251, 191, 36, 0.4);
-                transform: scale(1);
-            }
-        }
-
-        .btn-google-header:hover {
-            background: #f3f4f6;
-            transform: translateY(-2px);
+            0% { box-shadow: 0 0 5px rgba(251, 191, 36, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.8); transform: scale(1.03); }
+            100% { box-shadow: 0 0 5px rgba(251, 191, 36, 0.4); transform: scale(1); }
         }
 
         /* Hero Section */
         .hero {
-            padding: 170px 20px 80px;
+            padding: 190px 20px 80px;
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
@@ -267,7 +266,6 @@
             border-radius: 30px;
             font-size: 0.9rem;
             margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
         }
 
         .hero-content h2 {
@@ -292,6 +290,8 @@
         .hero-btns {
             display: flex;
             gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .btn-green {
@@ -313,7 +313,36 @@
         .btn-green:hover {
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-            filter: brightness(1.1);
+        }
+
+        /* مؤشر حالة المعلمة (فكرة 5) */
+        .tutor-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid var(--green-primary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--green-light);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulseDot 1.5s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
         .bio-card {
@@ -324,12 +353,11 @@
             backdrop-filter: blur(15px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.5), var(--shadow-glow);
             text-align: center;
-            transform-style: preserve-3d;
             transition: transform 0.5s ease;
         }
 
         .bio-card:hover {
-            transform: translateY(-5px) rotateX(2deg) rotateY(-2deg);
+            transform: translateY(-5px);
             border-color: var(--accent-gold);
         }
 
@@ -403,6 +431,111 @@
             font-size: 1rem;
         }
 
+        /* آية اليوم (فكرة 1) */
+        .daily-verse-card {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.15);
+        }
+
+        .daily-verse-card .verse-icon {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .daily-verse-card blockquote {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+        }
+
+        .daily-verse-card .verse-ref {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .daily-verse-card p.verse-tafsir {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* حاسبة الختمة القرآنية (فكرة 3) */
+        .khatmah-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto 80px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .khatmah-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .khatmah-input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .khatmah-input-group select {
+            width: 100%;
+            background: rgba(6, 14, 10, 0.8);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 12px 15px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .khatmah-result-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid var(--border-glass);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .khatmah-result-box h4 {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .khatmah-result-box p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--green-light);
+        }
+
+        @media (max-width: 768px) {
+            .khatmah-grid { grid-template-columns: 1fr; }
+        }
+
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -416,8 +549,6 @@
             padding: 40px 30px;
             transition: 0.4s;
             backdrop-filter: blur(12px);
-            position: relative;
-            overflow: hidden;
         }
 
         .glass-card:hover {
@@ -487,7 +618,6 @@
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
-            box-shadow: 0 0 15px var(--accent-gold-glow);
         }
 
         .package-card h4 {
@@ -544,7 +674,6 @@
         .package-card.featured .btn-package, .btn-package:hover {
             background: var(--accent-gold);
             color: var(--bg-primary);
-            box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
         .steps-grid {
@@ -581,7 +710,6 @@
             font-weight: 700;
             margin: 0 auto 20px;
             border: 1px solid rgba(251, 191, 36, 0.3);
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
         }
 
         .step-card h4 {
@@ -594,7 +722,6 @@
             font-size: 0.9rem;
         }
 
-        /* تنسيقات قسم حجز الحصة التجريبية */
         .trial-booking-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
@@ -669,10 +796,7 @@
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
-        .btn-trial-whatsapp:hover {
-            filter: brightness(1.1);
-            transform: translateY(-2px);
-        }
+        .btn-trial-whatsapp:hover { filter: brightness(1.1); transform: translateY(-2px); }
 
         .btn-trial-telegram {
             flex: 1;
@@ -693,19 +817,11 @@
             box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
         }
 
-        .btn-trial-telegram:hover {
-            filter: brightness(1.1);
-            transform: translateY(-2px);
-        }
+        .btn-trial-telegram:hover { filter: brightness(1.1); transform: translateY(-2px); }
 
         @media (max-width: 600px) {
-            .trial-form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-            .trial-buttons {
-                flex-direction: column;
-            }
+            .trial-form-row { grid-template-columns: 1fr; gap: 0; }
+            .trial-buttons { flex-direction: column; }
         }
 
         .playlist-container {
@@ -734,9 +850,7 @@
             transition: 0.3s;
         }
 
-        .audio-track-card-compact:hover {
-            border-color: var(--accent-gold);
-        }
+        .audio-track-card-compact:hover { border-color: var(--accent-gold); }
 
         .play-btn-compact {
             width: 35px;
@@ -755,9 +869,7 @@
             transition: 0.3s;
         }
 
-        .play-btn-compact:hover {
-            transform: scale(1.1);
-        }
+        .play-btn-compact:hover { transform: scale(1.1); }
 
         .track-progress-compact {
             flex-grow: 1;
@@ -793,211 +905,87 @@
             position: relative;
         }
 
-        .testimonial-card:hover {
-            border-color: var(--accent-gold);
-            transform: translateY(-5px);
-        }
+        .testimonial-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
 
-        .testimonial-stars {
-            color: var(--accent-gold);
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
-        }
+        .testimonial-stars { color: var(--accent-gold); margin-bottom: 15px; font-size: 0.9rem; }
+        .testimonial-text { font-style: italic; color: var(--text-main); margin-bottom: 20px; line-height: 1.6; }
+        .testimonial-author { display: flex; justify-content: space-between; align-items: flex-end; }
+        .testimonial-author h5 { color: var(--accent-gold); font-size: 1rem; }
+        .testimonial-author span { font-size: 0.8rem; color: var(--text-muted); }
 
-        .testimonial-text {
-            font-style: italic;
-            color: var(--text-main);
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .testimonial-author {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .testimonial-author h5 {
-            color: var(--accent-gold);
-            font-size: 1rem;
-        }
-
-        .testimonial-author span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* أزرار التعديل والحذف */
-        .msg-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
+        .msg-actions { display: flex; gap: 8px; margin-top: 10px; }
         .btn-edit-msg, .btn-delete-msg {
-            background: transparent;
-            border: 1px solid;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: 0.3s;
+            background: transparent; border: 1px solid; padding: 3px 10px;
+            border-radius: 6px; font-size: 0.75rem; cursor: pointer; transition: 0.3s;
         }
+        .btn-edit-msg { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .btn-edit-msg:hover { background: var(--accent-gold); color: var(--bg-primary); }
+        .btn-delete-msg { border-color: #ef4444; color: #ef4444; }
+        .btn-delete-msg:hover { background: #ef4444; color: #fff; }
 
-        .btn-edit-msg {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-        }
-
-        .btn-edit-msg:hover {
-            background: var(--accent-gold);
-            color: var(--bg-primary);
-        }
-
-        .btn-delete-msg {
-            border-color: #ef4444;
-            color: #ef4444;
-        }
-
-        .btn-delete-msg:hover {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        /* Firebase Auth & Comment Form */
         .auth-section {
-            text-align: center;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            backdrop-filter: blur(10px);
+            text-align: center; background: var(--bg-card); border: 1px solid var(--border-glass);
+            padding: 40px; border-radius: 20px; max-width: 600px; margin: 0 auto;
         }
 
         .btn-google {
-            background: #ffffff;
-            color: #1f2937;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            background: #ffffff; color: #1f2937; border: none; padding: 12px 25px;
+            border-radius: 30px; font-weight: 700; cursor: pointer; display: inline-flex;
+            align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.3s;
         }
-
-        .btn-google:hover {
-            background: #f3f4f6;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255,255,255,0.2);
-        }
+        .btn-google:hover { background: #f3f4f6; transform: translateY(-2px); }
 
         .comment-form-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            display: none;
-            backdrop-filter: blur(10px);
+            background: var(--bg-card); border: 1px solid var(--border-glass); padding: 30px;
+            border-radius: 20px; max-width: 600px; margin: 0 auto; display: none;
         }
 
         .comment-form-card textarea {
-            width: 100%;
-            background: rgba(6, 14, 10, 0.7);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            padding: 15px;
-            color: var(--text-main);
-            resize: none;
-            height: 100px;
-            margin-bottom: 15px;
-            font-family: inherit;
+            width: 100%; background: rgba(6, 14, 10, 0.7); border: 1px solid var(--border-glass);
+            border-radius: 12px; padding: 15px; color: var(--text-main); resize: none; height: 100px; margin-bottom: 15px;
         }
+        .comment-form-card textarea:focus { outline: none; border-color: var(--accent-gold); }
 
-        .comment-form-card textarea:focus {
-            outline: none;
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
-        }
+        .user-info-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 0.9rem; color: var(--accent-gold); }
+        .btn-logout { background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; }
+        .btn-logout:hover { background: #ef4444; color: #fff; }
 
-        .user-info-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            color: var(--accent-gold);
-        }
+        .faq-accordion { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 15px; overflow: hidden; }
+        .faq-question { padding: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; color: var(--accent-gold); }
+        .faq-answer { padding: 0 20px 20px; color: var(--text-muted); line-height: 1.6; display: none; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
 
-        .btn-logout {
-            background: transparent;
-            border: 1px solid #ef4444;
-            color: #ef4444;
-            padding: 4px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.3s;
-        }
-
-        .btn-logout:hover {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .faq-accordion {
-            max-width: 800px;
-            margin: 0 auto;
+        /* الأزرار العائمة السريعة (فكرة 4) */
+        .floating-widgets {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
+            z-index: 999;
         }
 
-        .faq-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: 15px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
+        .float-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            text-decoration: none;
             transition: 0.3s;
         }
 
-        .faq-item:hover {
-            border-color: var(--accent-gold);
-        }
-
-        .faq-question {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--accent-gold);
-        }
-
-        .faq-answer {
-            padding: 0 20px 20px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            display: none;
-        }
-
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
+        .float-wa { background: #25d366; }
+        .float-wa:hover { transform: scale(1.1); filter: brightness(1.1); }
+        .float-tg { background: #229ed9; }
+        .float-tg:hover { transform: scale(1.1); filter: brightness(1.1); }
 
         footer {
             background: rgba(3, 8, 5, 0.98);
@@ -1006,86 +994,36 @@
             text-align: center;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .social-btns {
-            display: flex;
-            gap: 15px;
-        }
-
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .social-btns { display: flex; gap: 15px; }
         .social-btn {
-            background: rgba(251, 191, 36, 0.08);
-            border: 1px solid rgba(251, 191, 36, 0.2);
-            color: var(--accent-gold);
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
+            background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251, 191, 36, 0.2);
+            color: var(--accent-gold); padding: 10px 20px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
         }
-
-        .social-btn:hover {
-            background: var(--accent-gold);
-            color: var(--bg-primary);
-            box-shadow: 0 0 20px var(--accent-gold-glow);
-        }
-
-        .copyright {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            width: 100%;
-            padding-top: 20px;
-        }
+        .social-btn:hover { background: var(--accent-gold); color: var(--bg-primary); }
+        .copyright { color: var(--text-muted); font-size: 0.85rem; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; padding-top: 20px; }
 
         @media (max-width: 900px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding-top: 130px;
-            }
-            .hero-btns {
-                justify-content: center;
-            }
-            .bio-features {
-                text-align: center;
-            }
+            .hero { grid-template-columns: 1fr; text-align: center; padding-top: 150px; }
+            .hero-btns { justify-content: center; }
+            .bio-features { text-align: center; }
             .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(6, 14, 10, 0.98);
-                flex-direction: column;
-                padding: 20px 0;
-                border-bottom: 1px solid var(--border-glass);
-                backdrop-filter: blur(15px);
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+                display: none; position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(6, 14, 10, 0.98); flex-direction: column; padding: 20px 0;
+                border-bottom: 1px solid var(--border-glass); backdrop-filter: blur(15px);
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .playlist-container {
-                grid-template-columns: 1fr;
-            }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+            .playlist-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+
+    <!-- البار العلوي (فكرة 2) -->
+    <div class="top-announcement-bar" id="topAnnouncementBar">
+        ✨ احجزي الآن حصتك التجريبية المجانية الأولى عبر المنصة واحصلي على خصم خاص بباقات الشهر!
+    </div>
 
     <header id="header">
         <div class="nav-container">
@@ -1112,6 +1050,11 @@
 
     <section class="hero" id="about">
         <div class="hero-content">
+            <div style="margin-bottom: 15px;">
+                <div class="tutor-status-badge">
+                    <span class="status-dot"></span> <span id="tutorStatusText">المعلمة متاحة الآن للحجز الفوري</span>
+                </div>
+            </div>
             <div class="badge" id="heroBadge">✨ جلسات فردية خاصة عبر جوجل ميت والتليجرام</div>
             <h2 id="heroTitle">تعلم القرآن الكريم في منصة <span>تحفيظ أونلاين</span></h2>
             <p id="heroDesc">أكاديمية متخصصة للنساء والأطفال لتعليم التلاوة الصحيحة، وتدريس أحكام التجويد، وتحفيظ كتاب الله تعالى على يد محفظة أزهرية.</p>
@@ -1126,6 +1069,42 @@
             <h3 id="bioName">الشيخة / معلّمة التلاوة</h3>
             <span id="bioSub">معلمة القرآن والتجويد بالمنصة</span>
             <ul class="bio-features" id="bioFeatures"></ul>
+        </div>
+    </section>
+
+    <!-- قسم آية اليوم (فكرة 1) -->
+    <section id="daily-verse" style="padding-top: 0; padding-bottom: 30px;">
+        <div class="daily-verse-card">
+            <div class="verse-icon"><i class="fa-solid fa-book-quran"></i></div>
+            <div style="font-size: 0.85rem; color: var(--accent-gold); margin-bottom: 8px;" id="verseSubtitle">آية تملأ قلبك طمأنينة</div>
+            <blockquote id="dailyVerseText">«رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ»</blockquote>
+            <div class="verse-ref" id="dailyVerseRef">[سورة الأعراف: 126]</div>
+            <p class="verse-tafsir" id="dailyVerseTafsir">دعاء مبارك يطلب فيه المؤمن الثبات على الدين واليقين والاعتصام بحبل الله حتى النهاية.</p>
+        </div>
+    </section>
+
+    <!-- حاسبة الختمة (فكرة 3) -->
+    <section id="khatmah-calculator">
+        <div class="section-title">
+            <h3 id="khatmahTitle">حاسبة ختمة القرآن الذكية</h3>
+            <p id="khatmahSub">اختر معدل قراءتك اليومي لمعرفة الوقت المتوقع لختم القرآن الكريم</p>
+        </div>
+        <div class="khatmah-card">
+            <div class="khatmah-grid">
+                <div class="khatmah-input-group">
+                    <label for="pagesPerDay" id="labelPagesPerDay">عدد الصفحات اليومية المقروءة</label>
+                    <select id="pagesPerDay">
+                        <option value="2">صفحتان يومياً (حزب كل أسبوع تقريباً)</option>
+                        <option value="5" selected>5 صفحات يومياً</option>
+                        <option value="10">10 صفحات يومياً (نصف حزب تقريباً)</option>
+                        <option value="20">20 صفحة يومياً (حزب كامل / ختمة في شهر)</option>
+                    </select>
+                </div>
+                <div class="khatmah-result-box">
+                    <h4 id="khatmahResultTitle">المدة الزمنية المتوقعة للختم:</h4>
+                    <p id="khatmahResultOutput">حوالي 3 أشهر تقريباً</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1161,7 +1140,6 @@
         <div class="steps-grid" id="stepsGrid"></div>
     </section>
 
-    <!-- قسم حجز الحصة التجريبية -->
     <section id="trial-booking">
         <div class="section-title">
             <h3 id="trialBookingTitle">حجز الحصة التجريبية</h3>
@@ -1262,6 +1240,12 @@
         <div class="faq-accordion" id="faqAccordion"></div>
     </section>
 
+    <!-- الأزرار العائمة السريعة (فكرة 4) -->
+    <div class="floating-widgets">
+        <a href="#" class="float-btn float-wa js-wa-link" target="_blank" title="تواصل واتساب"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" class="float-btn float-tg js-tg-link" target="_blank" title="تواصل تليجرام"><i class="fa-brands fa-telegram"></i></a>
+    </div>
+
     <footer>
         <div class="footer-content">
             <a href="#" class="logo-box" style="text-decoration: none;">
@@ -1279,7 +1263,6 @@
     </footer>
 
     <script>
-        // برمجة زر القائمة المنسدلة للجوال وإغلاقها عند الضغط على الروابط
         document.addEventListener('DOMContentLoaded', () => {
             const menuToggle = document.getElementById('menuToggle');
             const navLinks = document.getElementById('navLinks');
@@ -1298,7 +1281,6 @@
         });
     </script>
 
-    <!-- ملف المنطق الخاص بالموقع -->
     <script type="module" src="content.js"></script>
 
     <script>
