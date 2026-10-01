@@ -210,7 +210,6 @@ function renderPage(lang) {
         </div>`
     ).join('');
 
-    // تحديث النصوص الخاصة بقسم حجز الحصة التجريبية
     document.getElementById('trialBookingTitle').textContent = siteData.trialBooking.title[lang];
     document.getElementById('trialBookingSub').textContent = siteData.trialBooking.subtitle[lang];
     document.getElementById('labelChildName').textContent = siteData.trialBooking.labels.name[lang];
@@ -230,7 +229,7 @@ function renderPage(lang) {
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
     document.getElementById('playlistColumnsGrid').innerHTML = siteData.playlist.columns.map(col => 
         `<div class="playlist-column">
-            <div class="column-header">${col.header[lang]}</div>
+            <div class="column-header" style="color:var(--accent-gold); margin-bottom:15px; font-weight:600;">${col.header[lang]}</div>
             ${col.tracks.map(track => 
                 `<div class="audio-track-card-compact">
                     <button class="play-btn-compact" type="button" onclick="window.playTrack(${track.id})">
@@ -267,9 +266,6 @@ function renderPage(lang) {
     document.getElementById('footerTgText').textContent = siteData.footer.telegramBtn[lang];
 }
 
-// ==========================================================================
-// منطق تفاعلي لتحديث روابط واتساب وتيليجرام ديناميكياً بناءً على مدخلات حجز الحصة التجريبية
-// ==========================================================================
 function updateTrialLinks() {
     const nameInput = document.getElementById('childName').value.trim() || 'اسم الطفل';
     const ageInput = document.getElementById('childAge').value.trim() || 'سن الطفل';
@@ -277,9 +273,6 @@ function updateTrialLinks() {
     const programSelect = document.getElementById('programName').value;
     const packageSelect = document.getElementById('packageName').value;
 
-    // استبدال الضمائر المذكرة والمؤنثة حسب نوع الطفل المختار
-    // إذا كان ولد: لدي طفل عمره... واسمه... وأريد أن أشترك...
-    // إذا كانت بنت: لدي طفلة عمرها... اسمها... وأريد أن أشتري...
     let childTextPhrase = '';
     if (genderSelect === 'female') {
         childTextPhrase = `لدي طفلة عمرها ${ageInput} سنوات اسمها ${nameInput}`;
@@ -289,7 +282,6 @@ function updateTrialLinks() {
 
     const messageText = `السلام عليكم ورحمة الله وبركاته, أريد أن أشترك في منصة تحفيظ أونلاين, ${childTextPhrase} وأريد أن اشترك في برنامج ${programSelect} مع باقة ${packageSelect} وأريد حجز الحصة التجريبية.`;
 
-    // روابط الإرسال للواتساب وتيليجرام
     const encodedMsg = encodeURIComponent(messageText);
     const waBookingUrl = `https://wa.me/${siteData.contact.whatsappNumber}?text=${encodedMsg}`;
     const tgBookingUrl = `https://t.me/share/url?url=${encodeURIComponent(siteData.contact.telegramLink)}&text=${encodedMsg}`;
@@ -298,7 +290,6 @@ function updateTrialLinks() {
     document.getElementById('trialTgBtn').href = tgBookingUrl;
 }
 
-// الاستماع للتغييرات في حقول النموذج لتحديث الروابط فورياً
 ['childName', 'childAge', 'childGender', 'programName', 'packageName'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -307,14 +298,9 @@ function updateTrialLinks() {
     }
 });
 
-// تنفيذ التحديث الأولي عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
     updateTrialLinks();
 });
-
-// ==========================================================================
-// Firebase Authentication & Firestore Comments Integration Logic
-// ==========================================================================
 
 const loginBtn = document.getElementById('loginBtn');
 const logoutBtn = document.getElementById('logoutBtn');
@@ -355,7 +341,6 @@ onAuthStateChanged(auth, (user) => {
 
                 try {
                     if (editingId) {
-                        // تعديل التعليق الحالي
                         await updateDoc(doc(db, "comments", editingId), {
                             text: textVal
                         });
@@ -363,7 +348,6 @@ onAuthStateChanged(auth, (user) => {
                         document.getElementById('submitCommentBtn').textContent = currentLang === 'ar' ? 'نشر التعليق' : 'Post Comment';
                         alert(currentLang === 'ar' ? 'تم تعديل التعليق بنجاح!' : 'Comment updated successfully!');
                     } else {
-                        // إضافة تعليق جديد
                         await addDoc(collection(db, "comments"), {
                             name: user.displayName,
                             avatar: user.photoURL,
@@ -383,7 +367,6 @@ onAuthStateChanged(auth, (user) => {
     } else {
         if (authContainer) authContainer.style.display = 'block';
         if (commentFormCard) commentFormCard.style.display = 'none';
-        // إعادة تعيين حقل التعديل في حال تسجيل الخروج
         document.getElementById('editingMessageId').value = '';
         if(document.getElementById('submitCommentBtn')) {
             document.getElementById('submitCommentBtn').textContent = currentLang === 'ar' ? 'نشر التعليق' : 'Post Comment';
@@ -391,7 +374,6 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// دوال التعديل والحذف التي تعمل عند الضغط على الأزرار داخل الموقع
 window.editComment = function(id, text) {
     document.getElementById('editingMessageId').value = id;
     document.getElementById('userCommentInput').value = text;
@@ -418,7 +400,6 @@ onSnapshot(q, (snapshot) => {
         const data = docSnap.data();
         const docId = docSnap.id;
 
-        // تحقق إذا كان التعليق يخص المستخدم الحالي لإظهار أزرار التعديل والحذف
         let actionButtonsHTML = '';
         if (loggedInUser && data.uid === loggedInUser.uid) {
             actionButtonsHTML = `
@@ -503,9 +484,10 @@ window.playTrack = function(trackNum) {
         }
     };
 
+    // [تم الإصلاح هنا]: تم تصحيح المعرف إلى progressFill بدلاً من progressFormFill الخاطئ
     currentAudio.onended = () => {
         currentIcon.className = 'fa-solid fa-play';
-        const fill = document.getElementById(`progressFormFill${trackNum}`);
+        const fill = document.getElementById(`progressFill${trackNum}`);
         if(fill) fill.style.width = '0%';
         activeAudio = null;
         activeTrackNum = null;
