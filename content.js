@@ -26,8 +26,12 @@ const siteData = {
     header: {
         logoTitle: { ar: "تحفيظ أونلاين", en: "Tahfeez Online" },
         logoSub: { ar: "منصة تعليم القرآن الكريم والتجويد", en: "Online Quran & Tajweed Academy" },
+        announcement: { ar: "✨ احجزي الآن حصتك التجريبية المجانية الأولى عبر المنصة واحصلي على خصم خاص بباقات الشهر!", en: "✨ Book your first free trial class now and get a special discount!" },
+        tutorStatus: { ar: "المعلمة متاحة الآن للحجز الفوري", en: "Tutor is Available Now for Booking" },
         navLinks: [
             { id: "about", text: { ar: "عن المعلمة", en: "About" } },
+            { id: "daily-verse", text: { ar: "آية اليوم", en: "Daily Verse" } },
+            { id: "khatmah-calculator", text: { ar: "حاسبة الختمة", en: "Khatmah Calc" } },
             { id: "why-us", text: { ar: "مميزات المنصة", en: "Why Us" } },
             { id: "services", text: { ar: "البرامج", en: "Programs" } },
             { id: "packages", text: { ar: "باقات الحصص", en: "Packages" } },
@@ -52,6 +56,24 @@ const siteData = {
                 { icon: "fa-child-reaching", text: { ar: "متخصصة في التعامل مع الأطفال والنساء فقط", en: "Specialized for Women & Children" } }
             ]
         }
+    },
+    dailyVerse: {
+        subtitle: { ar: "آية تملأ قلبك طمأنينة", en: "A verse to fill your heart with peace" },
+        text: { ar: "«رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ»", en: "\"Our Lord, pour upon us patience and let us die as Muslims [in submission to You].\"" },
+        ref: { ar: "[سورة الأعراف: 126]", en: "[Surah Al-A'raf: 126]" },
+        tafsir: { ar: "دعاء مبارك يطلب فيه المؤمن الثبات على الدين واليقين والاعتصام بحبل الله حتى النهاية.", en: "A blessed supplication asking for steadfastness in faith and certainty." }
+    },
+    khatmah: {
+        title: { ar: "حاسبة ختمة القرآن الذكية", en: "Smart Quran Khatmah Calculator" },
+        subtitle: { ar: "اختر معدل قراءتك اليومي لمعرفة الوقت المتوقع لختم القرآن الكريم", en: "Choose your daily reading rate to estimate khatmah duration" },
+        labelPages: { ar: "عدد الصفحات اليومية المقروءة", en: "Daily pages read" },
+        resultTitle: { ar: "المدة الزمنية المتوقعة للختم:", en: "Estimated duration to complete:" },
+        options: [
+            { pages: 2, ar: "حوالي 10 أشهر تقريباً", en: "About 10 months" },
+            { pages: 5, ar: "حوالي 4 أشهر تقريباً", en: "About 4 months" },
+            { pages: 10, ar: "حوالي شهران تقريباً", en: "About 2 months" },
+            { pages: 20, ar: "حوالي شهر واحد (ختمة كاملة)", en: "About 1 month (Full Khatmah)" }
+        ]
     },
     whyUs: {
         title: { ar: "لماذا تختار منصة تحفيظ أونلاين؟", en: "Why Choose Tahfeez Online?" },
@@ -147,6 +169,8 @@ function renderPage(lang) {
     document.getElementById('langLabel').textContent = lang === 'ar' ? 'English' : 'عربي';
     document.getElementById('logoTitle').textContent = siteData.header.logoTitle[lang];
     document.getElementById('logoSub').textContent = siteData.header.logoSub[lang];
+    document.getElementById('topAnnouncementBar').textContent = siteData.header.announcement[lang];
+    document.getElementById('tutorStatusText').textContent = siteData.header.tutorStatus[lang];
 
     document.getElementById('navLinks').innerHTML = siteData.header.navLinks.map(link => 
         `<li><a href="#${link.id}">${link.text[lang]}</a></li>`
@@ -162,6 +186,19 @@ function renderPage(lang) {
     document.getElementById('bioFeatures').innerHTML = siteData.hero.bioCard.features.map(feat => 
         `<li><i class="fa-solid ${feat.icon}"></i> <span>${feat.text[lang]}</span></li>`
     ).join('');
+
+    // تحديث آية اليوم (فكرة 1)
+    document.getElementById('verseSubtitle').textContent = siteData.dailyVerse.subtitle[lang];
+    document.getElementById('dailyVerseText').textContent = siteData.dailyVerse.text[lang];
+    document.getElementById('dailyVerseRef').textContent = siteData.dailyVerse.ref[lang];
+    document.getElementById('dailyVerseTafsir').textContent = siteData.dailyVerse.tafsir[lang];
+
+    // تحديث حاسبة الختمة (فكرة 3)
+    document.getElementById('khatmahTitle').textContent = siteData.khatmah.title[lang];
+    document.getElementById('khatmahSub').textContent = siteData.khatmah.subtitle[lang];
+    document.getElementById('labelPagesPerDay').textContent = siteData.khatmah.labelPages[lang];
+    document.getElementById('khatmahResultTitle').textContent = siteData.khatmah.resultTitle[lang];
+    updateKhatmahResult();
 
     document.getElementById('whyUsTitle').textContent = siteData.whyUs.title[lang];
     document.getElementById('whyUsSub').textContent = siteData.whyUs.subtitle[lang];
@@ -265,6 +302,24 @@ function renderPage(lang) {
     document.getElementById('footerTgText').textContent = siteData.footer.telegramBtn[lang];
 }
 
+// منطق حاسبة الختمة (فكرة 3)
+function updateKhatmahResult() {
+    const pagesSelect = document.getElementById('pagesPerDay');
+    if (!pagesSelect) return;
+    const val = parseInt(pagesSelect.value);
+    const matched = siteData.khatmah.options.find(o => o.pages === val);
+    if (matched) {
+        document.getElementById('khatmahResultOutput').textContent = matched[currentLang];
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const pagesSelect = document.getElementById('pagesPerDay');
+    if (pagesSelect) {
+        pagesSelect.addEventListener('change', updateKhatmahResult);
+    }
+});
+
 function updateTrialLinks() {
     const nameInput = document.getElementById('childName').value.trim() || 'اسم الطفل';
     const ageInput = document.getElementById('childAge').value.trim() || 'سن الطفل';
@@ -272,13 +327,7 @@ function updateTrialLinks() {
     const programSelect = document.getElementById('programName').value;
     const packageSelect = document.getElementById('packageName').value;
 
-    let childTextPhrase = '';
-    if (genderSelect === 'female') {
-        childTextPhrase = `لدي طفلة عمرها ${ageInput} سنوات اسمها ${nameInput}`;
-    } else {
-        childTextPhrase = `لدي طفل عمره ${ageInput} سنوات واسمه ${nameInput}`;
-    }
-
+    let childTextPhrase = genderSelect === 'female' ? `لدي طفلة عمرها ${ageInput} سنوات اسمها ${nameInput}` : `لدي طفل عمره ${ageInput} سنوات واسمه ${nameInput}`;
     const messageText = `السلام عليكم ورحمة الله وبركاته, أريد أن أشترك في منصة تحفيظ أونلاين, ${childTextPhrase} وأريد أن اشترك في برنامج ${programSelect} مع باقة ${packageSelect} وأريد حجز الحصة التجريبية.`;
 
     const encodedMsg = encodeURIComponent(messageText);
@@ -313,7 +362,7 @@ if (loginBtn) {
     loginBtn.addEventListener('click', () => {
         signInWithPopup(auth, googleProvider).catch((error) => {
             console.error("خطأ في تسجيل الدخول:", error);
-            alert("حدث خطأ أثناء تسجيل الدخول. تأكد من تفعيل Google Provider في لوحة Firebase Authentication.");
+            alert("حدث خطأ أثناء تسجيل الدخول.");
         });
     });
 }
@@ -340,9 +389,7 @@ onAuthStateChanged(auth, (user) => {
 
                 try {
                     if (editingId) {
-                        await updateDoc(doc(db, "comments", editingId), {
-                            text: textVal
-                        });
+                        await updateDoc(doc(db, "comments", editingId), { text: textVal });
                         document.getElementById('editingMessageId').value = '';
                         document.getElementById('submitCommentBtn').textContent = currentLang === 'ar' ? 'نشر التعليق' : 'Post Comment';
                         alert(currentLang === 'ar' ? 'تم تعديل التعليق بنجاح!' : 'Comment updated successfully!');
@@ -358,8 +405,7 @@ onAuthStateChanged(auth, (user) => {
                     }
                     document.getElementById('userCommentInput').value = '';
                 } catch (err) {
-                    console.error("خطأ أثناء حفظ التعليق:", err);
-                    alert(currentLang === 'ar' ? 'حدث خطأ أثناء تنفيذ الطلب.' : 'Error processing request.');
+                    console.error("خطأ:", err);
                 }
             };
         }
@@ -384,10 +430,8 @@ window.deleteComment = async function(id) {
     if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من حذف هذا التعليق؟' : 'Are you sure you want to delete this comment?')) {
         try {
             await deleteDoc(doc(db, "comments", id));
-            alert(currentLang === 'ar' ? 'تم الحذف بنجاح' : 'Deleted successfully');
         } catch (error) {
-            console.error("خطأ أثناء الحذف: ", error);
-            alert(currentLang === 'ar' ? 'حدث خطأ أثناء الحذف.' : 'Error deleting comment.');
+            console.error("خطأ:", error);
         }
     }
 };
@@ -467,7 +511,7 @@ window.playTrack = function(trackNum) {
             currentIcon.className = 'fa-solid fa-pause';
             activeAudio = currentAudio;
             activeTrackNum = trackNum;
-        }).catch(err => console.log("Audio play blocked/error:", err));
+        }).catch(err => console.log("Audio play blocked:", err));
     } else {
         currentAudio.pause();
         currentIcon.className = 'fa-solid fa-play';
