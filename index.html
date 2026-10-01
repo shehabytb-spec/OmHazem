@@ -39,6 +39,34 @@
             position: relative;
         }
 
+        /* خلفية 3D Parallax متحركة بعمق عند التمرير */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 120vh;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 20%, #0c2117 0%, #060e0a 70%);
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* علامة مائية واضحة وغير باهتة */
+        .bg-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14vw;
+            color: rgba(16, 185, 129, 0.07); /* لون أوضح وأكثر بروزاً */
+            z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
+            font-family: 'Amiri', serif;
+            user-select: none;
+        }
+
         /* Header & Nav */
         header {
             position: fixed;
@@ -59,27 +87,29 @@
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1250px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 15px 25px;
+            gap: 20px; /* مسافة أمان لمنع التداخل تماماً */
         }
 
-        /* Islamic Ornament Logo Container - تم تحسين الإشعاع ليكون ظاهراً وواضحاً بدون إزعاج */
+        /* Islamic Ornament Logo Container */
         .logo-box {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             text-decoration: none;
             position: relative;
-            padding: 6px 14px;
+            padding: 5px 10px;
             border-radius: 12px;
             background: radial-gradient(circle, rgba(251,191,36,0.12) 0%, transparent 75%);
             border: 1px solid rgba(251, 191, 36, 0.35);
             box-shadow: 0 0 18px rgba(251, 191, 36, 0.15);
             transition: 0.3s;
+            flex-shrink: 0;
         }
 
         .logo-box:hover {
@@ -103,21 +133,21 @@
         }
 
         .logo-icon {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, var(--accent-gold), var(--green-primary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--bg-primary);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             box-shadow: 0 0 15px var(--accent-gold-glow);
         }
 
         .logo-text h1 {
-            font-size: 1.25rem;
-            color: #fde047; /* لون ذهبي مضيء وأكثر بروزاً */
+            font-size: 1.15rem;
+            color: #fde047;
             font-family: 'Amiri', serif;
             letter-spacing: 0.5px;
             text-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
@@ -125,24 +155,26 @@
         }
 
         .logo-text span {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #cbd5e1;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 22px; /* تباعد كافي لعدم تلاصق الكلام */
             align-items: center;
+            margin-right: 15px;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-main);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 500;
             transition: 0.3s;
             position: relative;
+            white-space: nowrap;
         }
 
         .nav-links a::after {
@@ -187,6 +219,7 @@
             align-items: center;
             gap: 12px;
             flex-wrap: nowrap;
+            flex-shrink: 0;
         }
 
         .lang-btn {
@@ -216,7 +249,7 @@
             padding: 7px 16px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -1048,6 +1081,15 @@
             padding-top: 20px;
         }
 
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 12px;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+        }
+
         @media (max-width: 900px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -1086,6 +1128,10 @@
     </style>
 </head>
 <body>
+
+    <!-- خلفية Parallax 3D تتحرك ببطء لتعطي عمق وبُعد -->
+    <div class="parallax-bg" id="parallaxBg"></div>
+    <div class="bg-watermark" id="bgWatermark">تحفيظ أونلاين</div>
 
     <header id="header">
         <div class="nav-container">
@@ -1279,6 +1325,15 @@
     </footer>
 
     <script>
+        // تأثير تحريك الخلفية ببطء عند الـ Scroll (عمق 3D Parallax)
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const parallaxBg = document.getElementById('parallaxBg');
+            if (parallaxBg) {
+                parallaxBg.style.transform = `translateY(${scrollY * 0.35}px)`;
+            }
+        });
+
         // برمجة زر القائمة المنسدلة للجوال وإغلاقها عند الضغط على الروابط
         document.addEventListener('DOMContentLoaded', () => {
             const menuToggle = document.getElementById('menuToggle');
