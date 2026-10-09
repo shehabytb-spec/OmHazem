@@ -67,7 +67,6 @@
             padding: 15px 20px;
         }
 
-        /* Islamic Ornament Logo Container - تم تحسين الإشعاع ليكون ظاهراً وواضحاً بدون إزعاج */
         .logo-box {
             display: flex;
             align-items: center;
@@ -117,7 +116,7 @@
 
         .logo-text h1 {
             font-size: 1.25rem;
-            color: #fde047; /* لون ذهبي مضيء وأكثر بروزاً */
+            color: #fde047;
             font-family: 'Amiri', serif;
             letter-spacing: 0.5px;
             text-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
@@ -164,7 +163,6 @@
             width: 100%;
         }
 
-        /* Mobile Menu Toggle Button */
         .menu-toggle {
             display: none;
             background: transparent;
@@ -208,7 +206,6 @@
             box-shadow: 0 0 20px var(--accent-gold-glow);
         }
 
-        /* زر تسجيل الدخول مع تأثير الإضاءة والتلألؤ ليكون لافت للانتباه */
         .btn-google-header {
             background: #ffffff;
             color: #1f2937;
@@ -228,18 +225,9 @@
         }
 
         @keyframes pulseLogin {
-            0% {
-                box-shadow: 0 0 5px rgba(251, 191, 36, 0.4);
-                transform: scale(1);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 0 0 10px rgba(16, 185, 129, 0.5);
-                transform: scale(1.03);
-            }
-            100% {
-                box-shadow: 0 0 5px rgba(251, 191, 36, 0.4);
-                transform: scale(1);
-            }
+            0% { box-shadow: 0 0 5px rgba(251, 191, 36, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 0 0 10px rgba(16, 185, 129, 0.5); transform: scale(1.03); }
+            100% { box-shadow: 0 0 5px rgba(251, 191, 36, 0.4); transform: scale(1); }
         }
 
         .btn-google-header:hover {
@@ -708,6 +696,58 @@
             }
         }
 
+        /* 🌟 تنسيقات لعبة التحدي القرآنية المضافة خصيصاً */
+        .challenge-hub-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .challenge-quiz-card {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-gold);
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        .quiz-opt-btn {
+            background: rgba(6, 14, 10, 0.9);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 14px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: right;
+            font-family: inherit;
+            font-size: 1.05rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .quiz-opt-btn:hover {
+            border-color: var(--accent-gold);
+            background: rgba(251, 191, 36, 0.1);
+            transform: translateX(-5px);
+        }
+        .quiz-opt-btn.correct-choice {
+            border-color: #34d399 !important;
+            background: rgba(52, 211, 153, 0.15) !important;
+            color: #34d399;
+        }
+        .quiz-opt-btn.wrong-choice {
+            border-color: #ef4444 !important;
+            background: rgba(239, 68, 68, 0.15) !important;
+            color: #ef4444;
+        }
+
         .playlist-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -828,7 +868,6 @@
             color: var(--text-muted);
         }
 
-        /* أزرار التعديل والحذف */
         .msg-actions {
             display: flex;
             gap: 8px;
@@ -865,7 +904,6 @@
             color: #fff;
         }
 
-        /* Firebase Auth & Comment Form */
         .auth-section {
             text-align: center;
             background: var(--bg-card);
@@ -1219,6 +1257,36 @@
         </div>
     </section>
 
+    <!-- 🌟 قسم لعبة تحدي الذاكرة والمسابقات القرآنية (الفكرة الثانية المضافة خصيصاً) -->
+    <section id="quran-game-hub" class="challenge-hub-section">
+        <div class="section-title">
+            <h3 id="gameHubMainTitle">✨ تحدي الذاكرة والمعلومات القرآنية</h3>
+            <p id="gameHubMainSub">اختبر معلوماتك الدينية وتأكد من سرعة بديهتك في ترتيب سور القرآن الكريم</p>
+        </div>
+        <div class="challenge-quiz-card">
+            <div class="package-badge">لعبة تفاعلية ممتعة</div>
+            <div class="card-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <h4 id="currentQuizQuestion" style="color: var(--accent-gold); font-size: 1.3rem; margin-bottom: 10px;">سؤال التحدي: ما هي السورة التي تقع بعد سورة الكهف مباشرة؟</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">اضغط على الإجابة الصحيحة من الخيارات أدناه لاختبار حفظك:</p>
+            
+            <div class="quiz-options" id="interactiveQuizOptions">
+                <button class="quiz-opt-btn" onclick="handleQuizSelection(this, false)">
+                    <span>أ) سورة طه</span>
+                    <i class="fa-regular fa-circle" id="iconOpt1"></i>
+                </button>
+                <button class="quiz-opt-btn" onclick="handleQuizSelection(this, true)" data-correct="true">
+                    <span>ب) سورة مريم</span>
+                    <i class="fa-regular fa-circle" id="iconOpt2"></i>
+                </button>
+                <button class="quiz-opt-btn" onclick="handleQuizSelection(this, false)">
+                    <span>ج) سورة الأنبياء</span>
+                    <i class="fa-regular fa-circle" id="iconOpt3"></i>
+                </button>
+            </div>
+            <div id="quizFeedbackMessage" style="margin-top: 15px; font-weight: bold; font-size: 1rem; min-height: 25px; text-align: center;"></div>
+        </div>
+    </section>
+
     <section id="playlist">
         <div class="section-title">
             <h3 id="playlistTitle">نماذج التلاوات الصوتية</h3>
@@ -1279,7 +1347,7 @@
     </footer>
 
     <script>
-        // برمجة زر القائمة المنسدلة للجوال وإغلاقها عند الضغط على الروابط
+        // برمجة زر القائمة المنسدلة للجوال
         document.addEventListener('DOMContentLoaded', () => {
             const menuToggle = document.getElementById('menuToggle');
             const navLinks = document.getElementById('navLinks');
@@ -1296,6 +1364,41 @@
                 });
             }
         });
+
+        // 🌟 دالة تفاعلية خاصة بلعبة تحدي الذاكرة القرآنية المضافة
+        window.handleQuizSelection = function(buttonElement, isCorrect) {
+            const feedbackBox = document.getElementById('quizFeedbackMessage');
+            const allButtons = document.querySelectorAll('.quiz-opt-btn');
+
+            // تعطيل الأزرار مؤقتاً بعد الإجابة لمنع التكرار
+            allButtons.forEach(btn => btn.style.pointerEvents = 'none');
+
+            if (isCorrect) {
+                buttonElement.classList.add('correct-choice');
+                feedbackBox.style.color = '#34d399';
+                feedbackBox.innerHTML = '🎉 ماشاء الله عليك! إجابة صحيحة وموفقة جداً.';
+            } else {
+                buttonElement.classList.add('wrong-choice');
+                feedbackBox.style.color = '#ef4444';
+                feedbackBox.innerHTML = '❌ إجابة غير دقيقة، حاول التركيز أكثر في المرة القادمة!';
+                
+                // إبراز الإجابة الصحيحة تلقائياً
+                allButtons.forEach(btn => {
+                    if (btn.getAttribute('data-correct') === 'true') {
+                        btn.classList.add('correct-choice');
+                    }
+                });
+            }
+
+            // إعادة تعيين اللعبة تلقائياً بعد 4 ثوانٍ ليتسنى للزوار اللعب مرة أخرى
+            setTimeout(() => {
+                allButtons.forEach(btn => {
+                    btn.classList.remove('correct-choice', 'wrong-choice');
+                    btn.style.pointerEvents = 'auto';
+                });
+                feedbackBox.innerHTML = '';
+            }, 4000);
+        };
     </script>
 
     <!-- ملف المنطق الخاص بالموقع -->
