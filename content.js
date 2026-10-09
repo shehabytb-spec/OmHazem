@@ -33,6 +33,7 @@ const siteData = {
             { id: "packages", text: { ar: "باقات الحصص", en: "Packages" } },
             { id: "steps", text: { ar: "خطوات البدء", en: "How to Start" } },
             { id: "trial-booking", text: { ar: "حجز حصة تجريبية", en: "Book Trial" } },
+            { id: "quran-game-hub", text: { ar: "تحدي الذاكرة", en: "Quran Quiz" } },
             { id: "playlist", text: { ar: "نماذج التلاوات", en: "Recitations" } },
             { id: "testimonials", text: { ar: "آراء وتجارب الحفظ", en: "Reviews" } },
             { id: "faq", text: { ar: "الأسئلة الشائعة", en: "FAQ" } }
@@ -104,6 +105,10 @@ const siteData = {
             whatsappBtn: { ar: "إرسال عبر الواتس", en: "Send via WhatsApp" },
             telegramBtn: { ar: "إرسال عبر تيليجرام", en: "Send via Telegram" }
         }
+    },
+    gameHub: {
+        title: { ar: "✨ تحدي الذاكرة والمعلومات القرآنية", en: "✨ Quran Memory & Trivia Challenge" },
+        subtitle: { ar: "اختبر معلوماتك الدينية وتأكد من سرعة بديهتك في ترتيب سور القرآن الكريم", en: "Test your religious knowledge and Quranic order speed" }
     },
     playlist: {
         title: { ar: "نماذج التلاوات الصوتية", en: "Quran Recitation Samples" },
@@ -223,6 +228,10 @@ function renderPage(lang) {
 
     document.getElementById('trialWaBtn').innerHTML = `<i class="fa-brands fa-whatsapp"></i> ${siteData.trialBooking.labels.whatsappBtn[lang]}`;
     document.getElementById('trialTgBtn').innerHTML = `<i class="fa-brands fa-telegram"></i> ${siteData.trialBooking.labels.telegramBtn[lang]}`;
+
+    // تحديث عناوين قسم لعبة التحدي المضافة
+    document.getElementById('gameHubMainTitle').textContent = siteData.gameHub.title[lang];
+    document.getElementById('gameHubMainSub').textContent = siteData.gameHub.subtitle[lang];
 
     document.getElementById('playlistTitle').textContent = siteData.playlist.title[lang];
     document.getElementById('playlistSub').textContent = siteData.playlist.subtitle[lang];
